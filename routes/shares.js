@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET shares listing. */
 router.get('/', function(req, res, next) {
-	res.sendFile('users.html');
+	res.sendFile('shares.html');
 });
 
 module.exports = router;
