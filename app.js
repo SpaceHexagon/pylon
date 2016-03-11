@@ -16,9 +16,11 @@ var routes = require('./routes/index'),
 	apiRoutes = express.Router(),
 	messageRoutes = require('./routes/messages');
 
-var config = require('./app/config.js');
-var app = express();
-var db = require('mongoskin').db('localhost:27017/pylon');
+var config = require('./app/config.js'),
+    db = require('mongoskin').db('localhost:27017/pylon'),
+    app = express(),
+    secureApp = null,
+    secureIO = null;
 
 var User = require('./app/user.js'),
 	Doc = require('./app/doc.js'),
@@ -43,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api', apiRoutes);
 app.use('/users', userRoutes);
 app.use('/shares', shareRoutes);
 app.use('/apps', appRoutes);
@@ -56,8 +59,7 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-// development error handler
-// will print stacktrace
+// development error handler // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -65,43 +67,17 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// production error handler // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json(err);
-});
-
-apiRoutes.use(function(req, res, next) {
-  // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  // decode token
-  if (token) {
-    // verifies secret and checks exp
-    jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded;
-        next();
-      }
-    });
-  } else {
-    // if there is no token
-    // return an error
-    return res.status(403).send({
-        success: false,
-        message: 'No token provided.'
-    });
-
-  }
 });
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
   // find the user
 	Users.findOne({name: req.body.name}, function(err, result) {
+        var user = result;
 		if (!user) {
 		  res.json({ success: false, message: 'Authentication failed. User not found.' });
 		} else if (user) {
@@ -110,9 +86,12 @@ apiRoutes.post('/authenticate', function(req, res) {
 			res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 		  } else {
 			// if user is found and password is right
-			var token = jwt.sign(user, app.get('superSecret'), {  // create a token
+			var token = jwt.sign({ name: user.name, username: user.username }, app.get('superSecret'), {  // create a token
 			  expiresInMinutes: 1440 // expires in 24 hours
 			});
+
+            var token = jwt.sign({ name: user.name, username: user.username },  app.get('superSecret'), { expiresInMinutes: 1440 });
+
 			res.json({ // return the information including token as JSON
 			  success: true,
 			  message: 'Enjoy your token!',
@@ -120,9 +99,31 @@ apiRoutes.post('/authenticate', function(req, res) {
 			});
 		  }
 		}
-
 	});
+});
 
+apiRoutes.use(function(req, res, next) { // check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, app.get('superSecret'), function(err, decoded) { // verifies secret and checks exp
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {  // if there is no token
+    return res.status(403).send({ // return an error
+        success: false,
+        message: 'No token provided.'
+    });
+  }
+});
+
+apiRoutes.get('/', function(req, res) {
+  res.json({ message: 'Welcome to the coolest API on earth!' });
 });
 
 
@@ -161,9 +162,7 @@ http.listen(8084, "spacehexagon.com", function () {
   console.log('listening on *:8084');
 });
 
-var options = config;
-
-var secureApp = https.createServer(options);
+secureApp = https.createServer(config);
 secureIO = require('socket.io').listen(secureApp);     //socket.io server listens to https connections
 secureApp.listen(8085, "spacehexagon.com");
 secureIO.on('connection', function (socket) {
