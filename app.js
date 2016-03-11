@@ -10,17 +10,30 @@ var express = require('express'),
 	jwt    = require('jsonwebtoken');
 
 var routes = require('./routes/index'),
-	users = require('./routes/users'),
-	shares = require('./routes/shares'),
-	apps = require('./routes/apps'),
+	userRoutes = require('./routes/users'),
+	shareRoutes = require('./routes/shares'),
+	appRoutes = require('./routes/apps'),
 	apiRoutes = express.Router(),
-	messages = require('./routes/messages');
+	messageRoutes = require('./routes/messages');
 
 var config = require('./app/config.js');
-
 var app = express();
 var db = require('mongoskin').db('localhost:27017/pylon');
+
+var User = require('./app/user.js'),
+	Doc = require('./app/doc.js'),
+	Model = require('./app/model.js'),
+	Share = require('./app/share.js'),
+	Message = require('./app/message.js');
+
+var Users = db.collection('users'),
+	Shares = db.collection('shares'),
+	Messages = db.collection('messages'),
+	Notifications = db.collection('notifications'),
+	Documents = db.collection('documents');
+
 var usersOnline = [];
+
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
 app.set('superSecret', config.secret);
 app.set('json spaces', 2);
@@ -30,10 +43,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', users);
-app.use('/shares', shares);
-app.use('/apps', apps);
-app.use('/messages', messages);
+app.use('/users', userRoutes);
+app.use('/shares', shareRoutes);
+app.use('/apps', appRoutes);
+app.use('/messages', messageRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -88,28 +101,27 @@ apiRoutes.use(function(req, res, next) {
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
   // find the user
-	req.body.name
+	Users.findOne({name: req.body.name}, function(err, result) {
+		if (!user) {
+		  res.json({ success: false, message: 'Authentication failed. User not found.' });
+		} else if (user) {
+		  // check if password matches
+		  if (user.password != req.body.password) {
+			res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+		  } else {
+			// if user is found and password is right
+			var token = jwt.sign(user, app.get('superSecret'), {  // create a token
+			  expiresInMinutes: 1440 // expires in 24 hours
+			});
+			res.json({ // return the information including token as JSON
+			  success: true,
+			  message: 'Enjoy your token!',
+			  token: token
+			});
+		  }
+		}
 
-	if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
-    } else if (user) {
-      // check if password matches
-      if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-      } else {
-        // if user is found and password is right
-        // create a token
-        var token = jwt.sign(user, app.get('superSecret'), {
-          expiresInMinutes: 1440 // expires in 24 hours
-        });
-        // return the information including token as JSON
-        res.json({
-          success: true,
-          message: 'Enjoy your token!',
-          token: token
-        });
-      }
-    }
+	});
 
 });
 
