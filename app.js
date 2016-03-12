@@ -6,21 +6,20 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	jwt    = require('jsonwebtoken');
-
-var routes = require('./routes/index'),
-	userRoutes = require('./routes/users'),
-	shareRoutes = require('./routes/shares'),
-	appRoutes = require('./routes/apps'),
-	apiRoutes = express.Router(),
-	messageRoutes = require('./routes/messages');
+	bodyParser = require('body-parser');
 
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
     app = express(),
     secureApp = null,
     secureIO = null;
+
+var routes = require('./routes/index'),
+	userRoutes = require('./routes/users'),
+	shareRoutes = require('./routes/shares'),
+	appRoutes = require('./routes/apps'),
+	apiRoutes = require('./routes/api')(app, db),
+	messageRoutes = require('./routes/messages');
 
 var User = require('./app/user.js'),
 	Doc = require('./app/doc.js'),
@@ -73,91 +72,6 @@ app.use(function(err, req, res, next) {
   res.json(err);
 });
 
-// route to authenticate a user (POST http://localhost:8080/api/authenticate)
-apiRoutes.post('/authenticate', function(req, res) {
-  // find the user
-	Users.findOne({username: req.body.username}, function(err, result) {
-		if (err) {
-		  res.json({ success: false, message: 'Authentication failed. User not found.' });
-		} else {
-		  // check if password matches
-		  if (result.password != req.body.password) {
-			res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-		  } else {
-			// if user is found and password is right
-			var token = jwt.sign({ name: result.name, username: result.username }, app.get('superSecret'), {  // create a token
-			  expiresInMinutes: 1440 // expires in 24 hours
-			});
-
-            res.json({ // return the information including token as JSON
-			  success: true,
-			  message: 'Enjoy your token!',
-			  token: token
-			});
-		  }
-		}
-	});
-});
-
-apiRoutes.use(function(req, res, next) { // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  if (token) {
-    jwt.verify(token, app.get('superSecret'), function(err, decoded) { // verifies secret and checks exp
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded;
-        next();
-      }
-    });
-  } else {  // if there is no token
-    return res.status(403).send({ // return an error
-        success: false,
-        message: 'No token provided.'
-    });
-  }
-});
-
-apiRoutes.get('/', function(req, res) {
-  res.json({ message: 'Welcome to the coolest API on earth!' });
-});
-
-apiRoutes.get('/list', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/search', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/upload', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/update', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/delete', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/share', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
-apiRoutes.get('/message', function(req, res) {
-	var results = {};
- 	res.json(results);
-});
-
 
 function connection (socket, wio) {
     var d = new Date(),
@@ -190,13 +104,13 @@ function connection (socket, wio) {
 
 io.on('connection', function (socket) { connection(socket, io);} );
 
-http.listen(8084, "spacehexagon.com", function () {
+http.listen(8084, "datahexagon.com", function () {
   console.log('listening on *:8084');
 });
 
 secureApp = https.createServer(config);
 secureIO = require('socket.io').listen(secureApp);     //socket.io server listens to https connections
-secureApp.listen(8085, "spacehexagon.com");
+secureApp.listen(8085, "datahexagon.com");
 secureIO.on('connection', function (socket) {
 	connection(socket, secureIO);
 });
