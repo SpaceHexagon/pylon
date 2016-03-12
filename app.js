@@ -76,8 +76,10 @@ app.use(function(err, req, res, next) {
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
   // find the user
-	Users.findOne({name: req.body.name}, function(err, result) {
+	Users.findOne({username: req.body.username}, function(e, result) {
+		 if (e) return next(e);
         var user = result;
+		console.log(result);
 		if (!user) {
 		  res.json({ success: false, message: 'Authentication failed. User not found.' });
 		} else if (user) {
@@ -124,6 +126,41 @@ apiRoutes.use(function(req, res, next) { // check header or url parameters or po
 
 apiRoutes.get('/', function(req, res) {
   res.json({ message: 'Welcome to the coolest API on earth!' });
+});
+
+apiRoutes.get('/list', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/search', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/upload', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/update', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/delete', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/share', function(req, res) {
+	var results = {};
+ 	res.json(results);
+});
+
+apiRoutes.get('/message', function(req, res) {
+	var results = {};
+ 	res.json(results);
 });
 
 
