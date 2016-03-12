@@ -102,7 +102,6 @@ function connection (socket, wio) {
     });
 
 	socket.on('disconnect', function () {
-        userCount --;
         console.log(d.getHours() + ":" + d.getMinutes()+": User Quit");
 		wio.emit('user disconnect', "");
   	});
