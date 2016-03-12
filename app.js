@@ -17,7 +17,7 @@ var routes = require('./routes/index'),
 	messageRoutes = require('./routes/messages');
 
 var config = require('./app/config.js'),
-    db = require('mongoskin').db('localhost:27017/pylon'),
+    db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
     app = express(),
     secureApp = null,
     secureIO = null;
@@ -76,25 +76,20 @@ app.use(function(err, req, res, next) {
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
   // find the user
-	Users.findOne({username: req.body.username}, function(e, result) {
-		 if (e) return next(e);
-        var user = result;
-		console.log(result);
-		if (!user) {
+	Users.findOne({username: req.body.username}, function(err, result) {
+		if (err) {
 		  res.json({ success: false, message: 'Authentication failed. User not found.' });
-		} else if (user) {
+		} else {
 		  // check if password matches
-		  if (user.password != req.body.password) {
+		  if (result.password != req.body.password) {
 			res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 		  } else {
 			// if user is found and password is right
-			var token = jwt.sign({ name: user.name, username: user.username }, app.get('superSecret'), {  // create a token
+			var token = jwt.sign({ name: result.name, username: result.username }, app.get('superSecret'), {  // create a token
 			  expiresInMinutes: 1440 // expires in 24 hours
 			});
 
-            var token = jwt.sign({ name: user.name, username: user.username },  app.get('superSecret'), { expiresInMinutes: 1440 });
-
-			res.json({ // return the information including token as JSON
+            res.json({ // return the information including token as JSON
 			  success: true,
 			  message: 'Enjoy your token!',
 			  token: token
