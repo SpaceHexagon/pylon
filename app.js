@@ -6,7 +6,8 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	subdomain = require('wildcard-subdomains');
 
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
@@ -35,7 +36,6 @@ var Users = db.collection('users'),
 
 var usersOnline = [];
 
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
 app.set('superSecret', config.secret);
 app.set('json spaces', 2);
 app.use(logger('dev'));
@@ -50,7 +50,16 @@ app.use('/shares', shareRoutes);
 app.use('/apps', appRoutes);
 app.use('/messages', messageRoutes);
 
-// catch 404 and forward to error handler
+app.use(subdomain({
+ 	domain: 'datahexagon.com:3000',
+	namespace: 'sub'
+}));
+
+app.get('/sub/test/', function(req, res) {
+	//var domain = request.params.domain;
+  	res.send("Handling Subdomain");
+});
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -58,20 +67,17 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-// development error handler // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development') { // development error handler // will print stacktrace
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.json(err);
   });
 }
 
-// production error handler // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res, next) { // production error handler // no stacktraces leaked to user
   res.status(err.status || 500);
   res.json(err);
 });
-
 
 function connection (socket, wio) {
     var d = new Date(),
@@ -114,7 +120,5 @@ secureApp.listen(8085, "datahexagon.com");
 secureIO.on('connection', function (socket) {
 	connection(socket, secureIO);
 });
-
-
 
 module.exports = app;
