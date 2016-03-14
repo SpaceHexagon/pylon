@@ -95,38 +95,93 @@ module.exports = function (app, db) {
 	  res.json({ message: 'Welcome to the coolest API on earth!' });
 	});
 
-	router.get('/list', function(req, res) {
+	router.get('/search/:terms', function(req, res) { // search everything
+		var results = {"searching for": req.params.terms};
+		res.json(results);
+	});
+
+	router.post('/files/:file', function(req, res) {  // files
+		var results = {"uploading file": ""};
+		res.json(results);
+	});
+
+	router.post('/files/create/', function(req, res) {
+		var results = {"creating file": req.body.file};
+		res.json(results);
+	});
+
+	router.get('/files/:file', function(req, res) {
+		var results = {requesting: req.params.file};
+		res.json(results);
+	});
+
+	router.get('/files/search/:file', function(req, res) {
+		var results = {"searching for": req.params.file};
+		res.json(results);
+	});
+
+	router.put('/files/:file', function(req, res) {
+		var results = {"updating": req.params.file};
+		res.json(results);
+	});
+
+	router.delete('/files/:file', function(req, res) {
+		var results = {"deleting": req.params.file};
+		res.json(results);
+	});
+
+	router.post('/shares/create/', function(req, res) {  // shares
+		var results = {"creating share": req.body.share};
+		res.json(results);
+	});
+
+	router.get('/shares/:share', function(req, res) {
+		var results = {"loading share": req.params.share};
+		res.json(results);
+	});
+
+	router.get('/shares/search/:share', function(req, res) {
+		var results = {"seaching shares": req.params.share};
+		res.json(results);
+	});
+
+	router.put('/shares/:share', function(req, res) {
 		var results = {};
 		res.json(results);
 	});
 
-	router.get('/search', function(req, res) {
+	router.delete('/shares/:share', function(req, res) {
 		var results = {};
 		res.json(results);
 	});
 
-	router.get('/upload', function(req, res) {
+	router.post('/messages/create', function(req, res) { // messages
+		var results = {"creating message": req.body.message};
+		res.json(results);
+	});
+
+	router.post('/messages/send', function(req, res) {
 		var results = {};
 		res.json(results);
 	});
 
-	router.get('/update', function(req, res) {
-		var results = {};
+	router.get('/messages/:message', function(req, res) {
+		var results = {"loading message": req.params.message};
 		res.json(results);
 	});
 
-	router.get('/delete', function(req, res) {
-		var results = {};
+	router.get('/messages/search/:message', function(req, res) {
+		var results = {"searching for message": req.params.message};
 		res.json(results);
 	});
 
-	router.get('/share', function(req, res) {
-		var results = {};
+	router.put('/messages/:message', function(req, res) {
+		var results = {"updating message": req.params.message};
 		res.json(results);
 	});
 
-	router.get('/message', function(req, res) {
-		var results = {};
+	router.delete('/messages/:message', function(req, res) {
+		var results = {"deleting message": req.params.message};
 		res.json(results);
 	});
 
