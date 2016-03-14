@@ -22,13 +22,17 @@ h1 {
     background: black;
 }
 
-p {
-    margin-left: 1em;
+p.logo {
+    vertical-align: top;
+    display: inline-block;
+    margin-left: 0.5em;
 }
 
-.logo {
-    width: 96px;
-    height: 96px;
+img.logo {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    margin-left: 0.5em;
 }
 
 input[type=button] {}
