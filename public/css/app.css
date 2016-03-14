@@ -26,4 +26,9 @@ p {
     margin-left: 1em;
 }
 
+.logo {
+    width: 96px;
+    height: 96px;
+}
+
 input[type=button] {}

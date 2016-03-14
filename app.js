@@ -12,7 +12,7 @@ var express = require('express'),
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
     app = express(),
-    secureApp = null,
+    secureApp = https.createServer(config, app),
     secureIO = null;
 
 var routes = require('./routes/index'),
@@ -51,7 +51,7 @@ app.use('/apps', appRoutes);
 app.use('/messages', messageRoutes);
 
 app.use(subdomain({
- 	domain: 'datahexagon.com:3000',
+ 	domain: 'vpylon.net',
 	namespace: 'sub'
 }));
 
@@ -109,13 +109,12 @@ function connection (socket, wio) {
 
 io.on('connection', function (socket) { connection(socket, io);} );
 
-http.listen(8084, "datahexagon.com", function () {
+http.listen(8084, "vpylon.net", function () {
   console.log('listening on *:8084');
 });
 
-secureApp = https.createServer(config);
 secureIO = require('socket.io').listen(secureApp);     //socket.io server listens to https connections
-secureApp.listen(8085, "datahexagon.com");
+secureApp.listen(8085, "vpylon.net");
 secureIO.on('connection', function (socket) {
 	connection(socket, secureIO);
 });

@@ -10,8 +10,8 @@ fi
 build() {
  local dist="$1"
  [ -d $dist ] || mkdir -p $dist
- echo "browserify $(pwd)/src/js/app.js"
- browserify -d -e src/js/app.js -t babelify -o "$dist/js/app.js" -v
+ echo "browserify $(pwd)/src/js/main.js"
+ browserify -d -e src/js/main.js -t babelify -o "$dist/js/main.js" -v
 
  #echo "myth $(pwd)/app/src/css/app.css"
  #myth src/css/app.css "public/css/app.css"
