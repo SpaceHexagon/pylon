@@ -31,8 +31,16 @@ p.logo {
 img.logo {
     width: 48px;
     height: 48px;
-    display: inline-block;
+    display: none;
     margin-left: 0.5em;
 }
 
 input[type=button] {}
+
+
+
+@media screen and (min-width: 641px) {
+	img.logo {
+		display: inline-block;
+	}
+}
