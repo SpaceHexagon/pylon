@@ -2,7 +2,7 @@
 
 output=$1
 if [[ "$output" == "" ]]; then
- output="$(dirname $0)/app/public"
+ output="$(dirname $0)/public"
 else
  output=$(realpath $output)
 fi
