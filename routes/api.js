@@ -1,21 +1,26 @@
 var express = require('express'),
+    ObjectID = require('mongodb').ObjectID,
 	jwt    = require('jsonwebtoken'),
 	passwordHash = require('password-hash');
 
 var User = require('../app/user.js'),
 	Doc = require('../app/doc.js'),
-	Model = require('../app/model.js'),
+	Group = require('../app/group.js'),
 	Share = require('../app/share.js'),
 	Message = require('../app/message.js');
 	Geometry = require('../app/geometry.js');
 
 module.exports = function (app, db) {
 	var router = express.Router(),
-		Users = Users = db.collection('users'),
+		Users = db.collection('users'),
+        Groups = db.collection('groups'),
 		Shares = db.collection('shares'),
 		Messages = db.collection('messages'),
 		Notifications = db.collection('notifications'),
+        Geometries = db.collection("geometries"),
 		Documents = db.collection('documents');
+
+    Users.ensureIndex([['username', 1]], true, function(err, replies){});
 	// route to authenticate a user (POST http://localhost:8080/api/authenticate)
 	router.post('/authenticate', function(req, res) {
 	  // find the user
@@ -101,7 +106,9 @@ module.exports = function (app, db) {
 		res.json(results);
 	});
 
-	router.post('/files/:file', function(req, res) {  // files
+
+    // File Routes
+	router.post('/files/:file', function(req, res) {
 		var results = {"uploading file": ""};
 		res.json(results);
 	});
@@ -128,10 +135,13 @@ module.exports = function (app, db) {
 
 	router.delete('/files/:file', function(req, res) {
 		var results = {"deleting": req.params.file};
+
 		res.json(results);
 	});
 
-	router.post('/shares/create/', function(req, res) {  // shares
+
+    // Share Routes
+	router.post('/shares/create/', function(req, res) {
 		var results = {"creating share": req.body.share};
 		res.json(results);
 	});
@@ -156,7 +166,36 @@ module.exports = function (app, db) {
 		res.json(results);
 	});
 
-	router.post('/messages/create', function(req, res) { // messages
+
+    // Group Routes
+    router.post('/groups/create/', function(req, res) {
+		var results = {"creating group": req.body.group};
+		res.json(results);
+	});
+
+	router.get('/groups/:group', function(req, res) {
+		var results = {"loading group": req.params.group};
+		res.json(results);
+	});
+
+	router.get('/groups/search/:group', function(req, res) {
+		var results = {"seaching groups": req.params.group};
+		res.json(results);
+	});
+
+	router.put('/groups/:group', function(req, res) {
+		var results = {};
+		res.json(results);
+	});
+
+	router.delete('/groups/:group', function(req, res) {
+		var results = {};
+		res.json(results);
+	});
+
+
+    // Message Routes
+	router.post('/messages/create', function(req, res) {
 		var results = {"creating message": req.body.message};
 		res.json(results);
 	});
@@ -186,29 +225,51 @@ module.exports = function (app, db) {
 		res.json(results);
 	});
 
-	router.post('/geometries/create', function(req, res) { // geometries
-		var results = {"creating geometry": req.body.geometry};
-		res.json(results);
+
+    // Geometry Routes
+	router.post('/geometries', function(req, res) {
+		Geometries.insert({name: req.body.name, data: req.body.data}, function(err){
+            if (err) {
+                return console.log("error inserting geometry ", err);
+            }
+        });
+        res.json({success: true, message: "Geometry Created"});
 	});
 
 	router.get('/geometries/:geometry', function(req, res) {
-		var results = {"loading geometry": req.params.geometry};
-		res.json(results);
+        Geometries.findOne({name: req.params.geometry}, function(err, found) {
+            if (err) {
+                return console.log("error getting geometry ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.get('/geometries/search/:geometry', function(req, res) {
-		var results = {"searching for geometry": req.params.geometry};
-		res.json(results);
+        Geometries.find({name: req.params.geometry}).toArray(function (err, found) {
+            if (err) {
+                return console.log("error searching for geometry: ", err);
+            }
+            res.json(found);
+        });
 	});
 
-	router.put('/geometries/:geometry', function(req, res) {
-		var results = {"updating geometry": req.params.geometry};
-		res.json(results);
+	router.put('/geometries', function(req, res) {
+        Geometries.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
+            if (err) {
+                return console.log("error updating geometry ", err);
+            }
+            res.json({success: true, message: "Geometry Updated"});
+        });
 	});
 
-	router.delete('/geometries/:geometry', function(req, res) {
-		var results = {"deleting geometry": req.params.geometry};
-		res.json(results);
+	router.delete('/geometries', function(req, res) {
+        Geometries.remove({_id: ObjectID(req.body.id)}, function(err) {
+            if(err) {
+                return console.log('error removing geometry: ', err);
+            }
+            res.json({success: true, message: "Geometry Deleted"});
+        });
 	});
 
 	return router;

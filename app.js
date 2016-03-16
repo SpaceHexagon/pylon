@@ -25,11 +25,11 @@ var routes = require('./routes/index'),
 var User = require('./app/user.js'),
 	Group = require('./app/group.js'),
 	Doc = require('./app/doc.js'),
-	Model = require('./app/model.js'),
 	Share = require('./app/share.js'),
 	Message = require('./app/message.js');
 
 var Users = db.collection('users'),
+    Groups = db.collection('groups'),
 	Shares = db.collection('shares'),
 	Messages = db.collection('messages'),
 	Notifications = db.collection('notifications'),
