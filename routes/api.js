@@ -7,6 +7,7 @@ var User = require('../app/user.js'),
 	Model = require('../app/model.js'),
 	Share = require('../app/share.js'),
 	Message = require('../app/message.js');
+	Geometry = require('../app/geometry.js');
 
 module.exports = function (app, db) {
 	var router = express.Router(),
@@ -182,6 +183,31 @@ module.exports = function (app, db) {
 
 	router.delete('/messages/:message', function(req, res) {
 		var results = {"deleting message": req.params.message};
+		res.json(results);
+	});
+
+	router.post('/geometries/create', function(req, res) { // geometries
+		var results = {"creating geometry": req.body.geometry};
+		res.json(results);
+	});
+
+	router.get('/geometries/:geometry', function(req, res) {
+		var results = {"loading geometry": req.params.geometry};
+		res.json(results);
+	});
+
+	router.get('/geometries/search/:geometry', function(req, res) {
+		var results = {"searching for geometry": req.params.geometry};
+		res.json(results);
+	});
+
+	router.put('/geometries/:geometry', function(req, res) {
+		var results = {"updating geometry": req.params.geometry};
+		res.json(results);
+	});
+
+	router.delete('/geometries/:geometry', function(req, res) {
+		var results = {"deleting geometry": req.params.geometry};
 		res.json(results);
 	});
 

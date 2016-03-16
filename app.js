@@ -16,13 +16,14 @@ var config = require('./app/config.js'),
     secureIO = null;
 
 var routes = require('./routes/index'),
-	userRoutes = require('./routes/users'),
+	groupRoutes = require('./routes/groups'),
 	shareRoutes = require('./routes/shares'),
 	appRoutes = require('./routes/apps'),
 	apiRoutes = require('./routes/api')(app, db),
-	messageRoutes = require('./routes/messages');
+	adminRoutes = require('./routes/admin');
 
 var User = require('./app/user.js'),
+	Group = require('./app/group.js'),
 	Doc = require('./app/doc.js'),
 	Model = require('./app/model.js'),
 	Share = require('./app/share.js'),
@@ -45,10 +46,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRoutes);
-app.use('/users', userRoutes);
-app.use('/shares', shareRoutes);
 app.use('/apps', appRoutes);
-app.use('/messages', messageRoutes);
+app.use('/groups', groupRoutes);
+app.use('/shares', shareRoutes);
+app.use('/admin', adminRoutes);
 
 app.use(subdomain({
  	domain: 'vpylon.net',
