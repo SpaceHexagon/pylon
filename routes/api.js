@@ -108,96 +108,159 @@ module.exports = function (app, db) {
 
 
     // File Routes
-	router.post('/files/:file', function(req, res) {
+	router.post('/files', function(req, res) {
 		var results = {"uploading file": ""};
 		res.json(results);
 	});
 
 	router.post('/files/create/', function(req, res) {
-		var results = {"creating file": req.body.file};
-		res.json(results);
+		Files.insert({name: req.body.name, data: req.body.data}, function(err){
+            if (err) {
+                return console.log("Error inserting file ", err);
+            }
+        });
+		res.json({success: true, message: "File Created"});
 	});
 
 	router.get('/files/:file', function(req, res) {
-		var results = {requesting: req.params.file};
-		res.json(results);
+		Files.findOne({name: req.params.file}, function(err, found) {
+            if (err) {
+                return console.log("Error getting file ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.get('/files/search/:file', function(req, res) {
-		var results = {"searching for": req.params.file};
-		res.json(results);
+		Files.find({name: req.params.file}).toArray(function (err, found) {
+            if (err) {
+                return console.log("Error searching for file: ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.put('/files/:file', function(req, res) {
-		var results = {"updating": req.params.file};
-		res.json(results);
+		Files.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
+            if (err) {
+                return console.log("Error updating file ", err);
+            }
+            res.json({success: true, message: "File Updated"});
+        });
 	});
 
 	router.delete('/files/:file', function(req, res) {
-		var results = {"deleting": req.params.file};
-
-		res.json(results);
+		Files.remove({_id: ObjectID(req.body.id)}, function(err) {
+            if(err) {
+                return console.log('Error removing file: ', err);
+            }
+            res.json({success: true, message: "File Deleted"});
+        });
 	});
 
 
     // Share Routes
-	router.post('/shares/create/', function(req, res) {
-		var results = {"creating share": req.body.share};
-		res.json(results);
+	router.post('/shares', function(req, res) {
+		Shares.insert({name: req.body.name, data: req.body.data}, function(err){
+            if (err) {
+                return console.log("Error inserting share ", err);
+            }
+        });
+		res.json({success: true, message: "Geometry Created"});
 	});
 
 	router.get('/shares/:share', function(req, res) {
-		var results = {"loading share": req.params.share};
-		res.json(results);
+		Shares.findOne({name: req.params.share}, function(err, found) {
+            if (err) {
+                return console.log("Error getting share ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.get('/shares/search/:share', function(req, res) {
-		var results = {"seaching shares": req.params.share};
-		res.json(results);
+		Shares.find({name: req.params.share}).toArray(function (err, found) {
+            if (err) {
+                return console.log("Error searching for share: ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.put('/shares/:share', function(req, res) {
-		var results = {};
-		res.json(results);
+		Shares.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
+            if (err) {
+                return console.log("Error updating share ", err);
+            }
+            res.json({success: true, message: "Geometry Updated"});
+        });
 	});
 
 	router.delete('/shares/:share', function(req, res) {
-		var results = {};
-		res.json(results);
+		Shares.remove({_id: ObjectID(req.body.id)}, function(err) {
+            if(err) {
+                return console.log('Error removing share: ', err);
+            }
+            res.json({success: true, message: "Geometry Deleted"});
+        });
 	});
 
 
     // Group Routes
-    router.post('/groups/create/', function(req, res) {
-		var results = {"creating group": req.body.group};
-		res.json(results);
+    router.post('/groups', function(req, res) {
+		Groups.insert({name: req.body.name, members: req.body.members, admin: false}, function(err){
+            if (err) {
+                return console.log("error inserting group ", err);
+            }
+        });
+        res.json({success: true, group: "Group Created"});
 	});
 
 	router.get('/groups/:group', function(req, res) {
-		var results = {"loading group": req.params.group};
-		res.json(results);
+		Groups.findOne({name: req.params.group}, function(err, found) {
+            if (err) {
+                return console.log("Error getting group: ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.get('/groups/search/:group', function(req, res) {
-		var results = {"seaching groups": req.params.group};
-		res.json(results);
+		Groups.find({name: req.params.group}).toArray(function (err, found) {
+            if (err) {
+                return console.log("Error searching for group: ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.put('/groups/:group', function(req, res) {
-		var results = {};
-		res.json(results);
+		Groups.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
+            if (err) {
+                return console.log("Error updating group ", err);
+            }
+            res.json({success: true, group: "Group Updated"});
+        });
 	});
 
 	router.delete('/groups/:group', function(req, res) {
-		var results = {};
-		res.json(results);
+		Groups.remove({_id: ObjectID(req.body.id)}, function(err) {
+            if(err) {
+                return console.log('Error removing group: ', err);
+            }
+            res.json({success: true, group: "Group Deleted"});
+        });
 	});
 
 
     // Message Routes
 	router.post('/messages/create', function(req, res) {
-		var results = {"creating message": req.body.message};
-		res.json(results);
+		Messages.insert({title: req.body.title, body: req.body.body}, function(err){
+            if (err) {
+                return console.log("Error inserting message ", err);
+            }
+        });
+        res.json({success: true, message: "Geometry Created"});
 	});
 
 	router.post('/messages/send', function(req, res) {
@@ -206,23 +269,39 @@ module.exports = function (app, db) {
 	});
 
 	router.get('/messages/:message', function(req, res) {
-		var results = {"loading message": req.params.message};
-		res.json(results);
+		Messages.findOne({name: req.params.message}, function(err, found) {
+            if (err) {
+                return console.log("Error getting message ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.get('/messages/search/:message', function(req, res) {
-		var results = {"searching for message": req.params.message};
-		res.json(results);
+		Messages.find({name: req.params.message}).toArray(function (err, found) {
+            if (err) {
+                return console.log("Error searching for message: ", err);
+            }
+            res.json(found);
+        });
 	});
 
 	router.put('/messages/:message', function(req, res) {
-		var results = {"updating message": req.params.message};
-		res.json(results);
+		Messages.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
+            if (err) {
+                return console.log("Error updating message ", err);
+            }
+            res.json({success: true, message: "Geometry Updated"});
+        });
 	});
 
 	router.delete('/messages/:message', function(req, res) {
-		var results = {"deleting message": req.params.message};
-		res.json(results);
+		Messages.remove({_id: ObjectID(req.body.id)}, function(err) {
+            if(err) {
+                return console.log('Error removing message: ', err);
+            }
+            res.json({success: true, message: "Geometry Deleted"});
+        });
 	});
 
 
@@ -230,7 +309,7 @@ module.exports = function (app, db) {
 	router.post('/geometries', function(req, res) {
 		Geometries.insert({name: req.body.name, data: req.body.data}, function(err){
             if (err) {
-                return console.log("error inserting geometry ", err);
+                return console.log("Error inserting geometry ", err);
             }
         });
         res.json({success: true, message: "Geometry Created"});
@@ -239,7 +318,7 @@ module.exports = function (app, db) {
 	router.get('/geometries/:geometry', function(req, res) {
         Geometries.findOne({name: req.params.geometry}, function(err, found) {
             if (err) {
-                return console.log("error getting geometry ", err);
+                return console.log("Error getting geometry ", err);
             }
             res.json(found);
         });
@@ -248,7 +327,7 @@ module.exports = function (app, db) {
 	router.get('/geometries/search/:geometry', function(req, res) {
         Geometries.find({name: req.params.geometry}).toArray(function (err, found) {
             if (err) {
-                return console.log("error searching for geometry: ", err);
+                return console.log("Error searching for geometry: ", err);
             }
             res.json(found);
         });
@@ -257,7 +336,7 @@ module.exports = function (app, db) {
 	router.put('/geometries', function(req, res) {
         Geometries.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
             if (err) {
-                return console.log("error updating geometry ", err);
+                return console.log("Error updating geometry ", err);
             }
             res.json({success: true, message: "Geometry Updated"});
         });
@@ -266,7 +345,7 @@ module.exports = function (app, db) {
 	router.delete('/geometries', function(req, res) {
         Geometries.remove({_id: ObjectID(req.body.id)}, function(err) {
             if(err) {
-                return console.log('error removing geometry: ', err);
+                return console.log('Error removing geometry: ', err);
             }
             res.json({success: true, message: "Geometry Deleted"});
         });
