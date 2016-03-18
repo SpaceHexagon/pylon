@@ -7,7 +7,8 @@ var express = require('express'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	subdomain = require('wildcard-subdomains');
+	subdomain = require('wildcard-subdomains'),
+    shortId = require('shortid');
 
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
