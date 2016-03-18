@@ -1,6 +1,8 @@
 var express = require('express'),
     ObjectID = require('mongodb').ObjectID,
-    shortId = require('shortid');
+    shortId = require('shortid'),
+    busboy = require('connect-busboy'), //middleware for form/file upload
+    path = require('path');
 
 // File Routes
 module.exports = function (app, db, fs, gfs) {
@@ -9,6 +11,9 @@ module.exports = function (app, db, fs, gfs) {
         gridFiles = db.collection("fs"),
         gridChunks = db.collection("chunks");
 	router.post('/', function(req, res) {
+
+        // need to start using busboy here...
+
         var is = null,
             os = null,
             extension = req.files.file.path.split(/[. ]+/).pop(); //get the extenstion of the file
