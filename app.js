@@ -61,6 +61,10 @@ app.get('/sub/test/', function(req, res) {
   	res.send("Handling Subdomain");
 });
 
+app.post("/oauth2callback", function(req, res) {
+	res.send("OAuth2 Callback... ");
+});
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
