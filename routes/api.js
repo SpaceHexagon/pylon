@@ -1,6 +1,9 @@
 var express = require('express'),
-    ObjectID = require('mongodb').ObjectID,
-	jwt    = require('jsonwebtoken'),
+    mongo = require('mongodb'),
+    ObjectID = mongo.ObjectID,
+    Grid = require('gridfs-stream'),
+    fs = require('fs'),
+	jwt = require('jsonwebtoken'),
 	passwordHash = require('password-hash');
 
 var User = require('../app/user.js'),
@@ -12,17 +15,19 @@ var User = require('../app/user.js'),
 
 module.exports = function (app, db) {
 	var router = express.Router(),
+        gfs = Grid(db, mongo),
 		Users = db.collection('users'),
         Groups = db.collection('groups'),
         userRouter = require("./api/users.js")(app, db),
         groupRouter = require("./api/groups.js")(app, db),
-        fileRouter = require("./api/files.js")(app, db),
-        folderRouter = require("./api/folders.js")(app, db),
+        fileRouter = require("./api/files.js")(app, db, fs, gfs), // using gridfs for files
+        folderRouter = require("./api/folders.js")(app, db, fs, gfs),
         shareRouter = require("./api/shares.js")(app, db),
         messageRouter = require("./api/messages.js")(app, db),
         geometryRouter = require("./api/geometries.js")(app, db);
 
     Users.ensureIndex([['username', 1]], true, function(err, replies){});
+    Groups.ensureIndex([['name', 1]], true, function(err, replies){});
 	// route to authenticate a user (POST http://localhost:8080/api/authenticate)
 	router.post('/authenticate', function(req, res) {
 	  // find the user
