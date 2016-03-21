@@ -15,13 +15,12 @@ var User = require('../app/user.js'),
 
 module.exports = function (app, db) {
 	var router = express.Router(),
-        gfs = Grid(db, mongo),
 		Users = db.collection('users'),
         Groups = db.collection('groups'),
         userRouter = require("./api/users.js")(app, db),
         groupRouter = require("./api/groups.js")(app, db),
-        fileRouter = require("./api/files.js")(app, db, fs, gfs), // using gridfs for files
-        folderRouter = require("./api/folders.js")(app, db, fs, gfs),
+        fileRouter = require("./api/files.js")(app, db, mongo, fs),
+        folderRouter = require("./api/folders.js")(app, db, mongo, fs),
         shareRouter = require("./api/shares.js")(app, db),
         messageRouter = require("./api/messages.js")(app, db),
         geometryRouter = require("./api/geometries.js")(app, db);

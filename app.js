@@ -44,10 +44,11 @@ app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cookieParser());
+
 //app.use(busboy()); // might want to move this above other wares
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + "/uploads"));
 
 app.use('/api', apiRoutes);
 app.use('/apps', appRoutes);
