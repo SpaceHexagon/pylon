@@ -7,7 +7,6 @@ var express = require('express'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	subdomain = require('wildcard-subdomains'),
     shortId = require('shortid');
 
 var config = require('./app/config.js'),
@@ -48,23 +47,12 @@ app.use(cookieParser());
 
 //app.use(busboy()); // might want to move this above other wares
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(__dirname + "/uploads"));
 
 app.use('/api', apiRoutes);
 app.use('/apps', appRoutes);
 app.use('/groups', groupRoutes);
 app.use('/shares', shareRoutes);
 app.use('/admin', adminRoutes);
-
-app.use(subdomain({
- 	domain: 'vpylon.net',
-	namespace: 'sub'
-}));
-
-app.get('/sub/test/', function(req, res) {
-	//var domain = request.params.domain;
-  	res.send("Handling Subdomain");
-});
 
 app.post("/oauth2callback", function(req, res) {
 	res.send("OAuth2 Callback... ");

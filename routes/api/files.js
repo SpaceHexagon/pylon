@@ -11,42 +11,47 @@ var express = require('express'),
 module.exports = function (app, db, mongo, fs) {
 	var router = express.Router(),
         Files = db.collection("files"),
-        gridFiles = db.collection("fs"),
-        gridChunks = db.collection("chunks");
+        gridFiles = db.collection("fs.files"),
+        gridChunks = db.collection("fs.chunks");
+		Grid.mongo = mongo;
+    var gfs = Grid(db),
+		upload = multer({ dest: './tmp/'});
 
-    var gfs = Grid(db, mongo);
+    //router.use(multer({ dest: './tmp/'}).array('files', 12));
 
-    router.use(multer({ dest: './uploads/'}).array('files', 12));
+	router.post('/', upload.single('file'), function(req, res) {
+//		console.log(JSON.stringify(req));
+//		var writestream = gfs.createWriteStream({
+//			filename: req.files.file.name,
+//			mode:'w',
+//			content_type:req.files.file.mimetype,
+//			metadata:req.body,
+//		  });
+//		fs.createReadStream(req.files.file.path).pipe(writestream);
+//
+//		writestream.on('close', function (file) {
+//			res.send("Success!");
+//			fs.unlink(req.files.file.path, function (err) {
+//			  if (err) console.error("Error: " + err);
+//			  console.log('successfully deleted : '+ req.files.file.path );
+//			});
+//		});
+		var dirname = path.dirname(__dirname);
+		 var filename = req.files.file.name;
+		 var path = req.files.file.path;
+		 var type = req.files.file.mimetype;
+		 var read_stream =  fs.createReadStream(dirname + '/' + path);
+		 var writestream = gfs.createWriteStream({
+			filename: filename
+		});
+		writestream.on('finish', function() {
+        	res.writeHead(200);
+	        res.end('done');
+    	});
+		read_stream.pipe(writestream);
+   });
 
-	router.post('/', function(req, res) {
-		/*
-        var dirname = path.dirname(__dirname),
-             filename = req.files.file.name,
-             path = req.files.file.path,
-             type = req.files.file.mimetype,
-             read_stream =  fs.createReadStream(dirname + '/' + path),
-             writestream = gfs.createWriteStream({
-                filename: filename
-            });
-        read_stream.pipe(writestream);
-        res.send(204);
-        */
-        var tempfile    = req.files.filename.path;
-        var origname    = req.files.filename.name;
-        var writestream = gfs.createWriteStream({ filename: origname });
-        // open a stream to the temporary file created by Express...
-        fs.createReadStream(tempfile)
-          .on('end', function() {
-            res.send('OK');
-          })
-          .on('error', function() {
-            res.send('ERR');
-          })
-          .pipe(writestream); // and pipe it to gfs
-
-	});
-
-	router.post('/create/', function(req, res) {
+	router.post('/create', function (req, res) {
 		Files.insert({name: req.body.name, data: req.body.data}, function(err){
             if (err) {
                 return console.log("Error inserting file: ", err);
@@ -56,21 +61,24 @@ module.exports = function (app, db, mongo, fs) {
 		res.json({success: true, message: "File Created"});
 	});
 
-    router.get('/:file', function(req, res) {
-        var readstream = gfs.createReadStream({
-            _id: req.params.file
-        });
-        req.on('error', function(err) {
-            res.send(500, err);
-        });
-        readstream.on('error', function (err) {
-            res.send(500, err);
-        });
+    router.get('/:file', function (req, res) {
+        gfs.files.find({filename: req.params.file}).toArray(function (err, files) {
+			if (err) {
+				res.json(err);
+			}
 
-        readstream.pipe(res);
+			if (files.length > 0) {
+				var mime = 'image/jpeg';
+				res.set('Content-Type', mime);
+				var read_stream = gfs.createReadStream({filename: req.params.file});
+				read_stream.pipe(res);
+			} else {
+				res.json('File Not Found');
+			}
+		});
 	});
 
-	router.get('/search/:file', function(req, res) {
+	router.get('/search/:file', function (req, res) {
         var results = [];
 		gfs.files.find({ filename: req.params.file }).toArray(function (err, files) {
             if (err) {
