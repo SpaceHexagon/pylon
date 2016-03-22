@@ -1,4 +1,5 @@
-var express = require('express'),
+var async = require('async'),
+    express = require('express'),
     ObjectID = require('mongodb').ObjectID,
     multer  = require('multer'),
     Grid = require('gridfs-stream'),
@@ -13,52 +14,48 @@ module.exports = function (app, db, mongo, fs) {
         Files = db.collection("files"),
         gridFiles = db.collection("fs.files"),
         gridChunks = db.collection("fs.chunks");
-		Grid.mongo = mongo;
+
+    Grid.mongo = mongo;
+
     var gfs = Grid(db),
 		upload = multer({ dest: './tmp/'});
 
-    //router.use(multer({ dest: './tmp/'}).array('files', 12));
+    router.use(upload.array('files', 16));
 
-	router.post('/', upload.single('file'), function(req, res) {
-//		console.log(JSON.stringify(req));
-//		var writestream = gfs.createWriteStream({
-//			filename: req.files.file.name,
-//			mode:'w',
-//			content_type:req.files.file.mimetype,
-//			metadata:req.body,
-//		  });
-//		fs.createReadStream(req.files.file.path).pipe(writestream);
-//
-//		writestream.on('close', function (file) {
-//			res.send("Success!");
-//			fs.unlink(req.files.file.path, function (err) {
-//			  if (err) console.error("Error: " + err);
-//			  console.log('successfully deleted : '+ req.files.file.path );
-//			});
-//		});
-		var dirname = path.dirname(__dirname);
-		 var filename = req.files.file.name;
-		 var path = req.files.file.path;
-		 var type = req.files.file.mimetype;
-		 var read_stream =  fs.createReadStream(dirname + '/' + path);
-		 var writestream = gfs.createWriteStream({
-			filename: filename
-		});
-		writestream.on('finish', function() {
-        	res.writeHead(200);
-	        res.end('done');
-    	});
-		read_stream.pipe(writestream);
+	router.post('/', function(req, res) {
+
+        async.eachLimit(Object.keys(req.files), 16, function(file, callback) {
+            var fileobj = req.files[file];
+            console.log(gfs);
+             try {
+                var writeStream = gfs.createWriteStream({
+                  "root": "fs",
+                  "filename": fileobj.originalname
+                });
+
+                fs.createReadStream(fileobj.path).pipe(writeStream);
+
+                writeStream.on('close',function() {
+                  console.log('done');
+                  callback();
+                });
+
+                writeStream.on('error',callback);
+            } catch (e) {
+                console.trace(e);
+            }
+          }, function(err) {
+            if (err) {
+              console.log(err);
+              res.status(500).end();
+            }
+            res.status(200).end();
+        });
+
    });
 
 	router.post('/create', function (req, res) {
-		Files.insert({name: req.body.name, data: req.body.data}, function(err){
-            if (err) {
-                return console.log("Error inserting file: ", err);
-            }
-        });
 
-		res.json({success: true, message: "File Created"});
 	});
 
     router.get('/:file', function (req, res) {
