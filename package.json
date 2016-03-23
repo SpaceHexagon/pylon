@@ -33,6 +33,9 @@
     "shortid": "~2.2.4",
 	"busboy": "~0.2.12",
     "path": "~0.12.7",
-    "pause-stream": "0.0.11"
+    "pause-stream": "0.0.11",
+    "multer": "~1.1.0",
+    "async": "~2.0.0-rc.1",
+    "gridfs-storage-engine": "~0.2.3"
   }
 }
