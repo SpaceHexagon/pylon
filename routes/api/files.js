@@ -1,56 +1,30 @@
-var async = require('async'),
-    express = require('express'),
+var express = require('express'),
     ObjectID = require('mongodb').ObjectID,
     multer  = require('multer'),
     Grid = require('gridfs-stream'),
-	pauseStream = require('pause-stream'),
-	Busboy = require('busboy'),
     shortId = require('shortid'),
-    path = require('path');
+    path = require('path'),
+	gfs = null,
+	storage = require('gridfs-storage-engine')({
+    	database: 'pylon'
+	});
 
 // File Routes
-module.exports = function (app, db, mongo, fs) {
+module.exports = function (app, extDB, mongo, fs) {
 	var router = express.Router(),
-        Files = db.collection("files"),
-        gridFiles = db.collection("fs.files"),
-        gridChunks = db.collection("fs.chunks");
+		upload = multer({ storage: storage }),
+		db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
 
-    Grid.mongo = mongo;
+	db.open(function (err) { // make sure the db instance is open before passing into `Grid`
+	  if (err) return handleError(err);
+	  gfs = Grid(db, mongo);
+	  // all set!
+	});
 
-    var gfs = Grid(db),
-		upload = multer({ dest: './tmp/'});
-
-    router.use(upload.array('files', 16));
-
-	router.post('/', function(req, res) {
-
-        async.eachLimit(Object.keys(req.files), 16, function(file, callback) {
-            var fileobj = req.files[file];
-            console.log(gfs);
-             try {
-                var writeStream = gfs.createWriteStream({
-                  "root": "fs",
-                  "filename": fileobj.originalname
-                });
-
-                fs.createReadStream(fileobj.path).pipe(writeStream);
-
-                writeStream.on('close',function() {
-                  console.log('done');
-                  callback();
-                });
-
-                writeStream.on('error',callback);
-            } catch (e) {
-                console.trace(e);
-            }
-          }, function(err) {
-            if (err) {
-              console.log(err);
-              res.status(500).end();
-            }
-            res.status(200).end();
-        });
+	router.post('/', upload.array('files', 16), function(req, res) {
+		res.status(204); // everything is fine
+		// look up the user maybe?
+		// set metadata?
 
    });
 
@@ -65,8 +39,7 @@ module.exports = function (app, db, mongo, fs) {
 			}
 
 			if (files.length > 0) {
-				var mime = 'image/jpeg';
-				res.set('Content-Type', mime);
+				res.set('Content-Type', files[0].contentType);
 				var read_stream = gfs.createReadStream({filename: req.params.file});
 				read_stream.pipe(res);
 			} else {
@@ -81,16 +54,24 @@ module.exports = function (app, db, mongo, fs) {
             if (err) {
                 return console.log("Error updating file ", err);
             }
-            res.json(files);
+			if (files.length > 0) {
+				res.set('Content-Type', files[0].contentType);
+				var read_stream = gfs.createReadStream({filename: req.params.file});
+				read_stream.pipe(res);
+			} else {
+				res.json('File Not Found');
+			}
         });
+
+
 	});
 
 	router.put('/', function(req, res) {
         res.json({success: true, message: "Put / Update method has been disabled for now."});
 	});
 
-	router.delete('/', function(req, res) {
-        gfs.remove({_id: ObjectID(req.body.id)}, function (err) {
+	router.delete('/:file', function(req, res) {
+        gfs.remove({_id: ObjectID(req.params.file)}, function (err) {
             if(err) {
                 return console.log('Error removing file: ', err);
             }
