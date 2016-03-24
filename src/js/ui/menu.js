@@ -4,18 +4,21 @@ export default class Menu extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {filterText: ''}
+        this.state = {
+            name: 'main',
+            applet: null
+        };
     }
-    handleUserInput(filterText) {
+    bindApplet(applet) {
     	// When there's a change in the state, the component and all its
     	// sub-components get updated.
-        this.setState({filterText: filterText});
+        this.setState({applet: applet});
     }
 	render() {
 		return (
-			<div htmlClass="menu">
+			<aside htmlClass="menu">
 
-			</div>
+			</aside>
 		);
 	}
 }

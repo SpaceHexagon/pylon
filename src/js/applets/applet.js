@@ -1,12 +1,10 @@
 import React from 'react';
-import Applet from './applet.js';
 
-
-export default class Sharing extends Applet {
+export default class Applet extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Sharing'}
+        this.state = {name: 'generic applet'}
     }
     setName(name) {
     	// When there's a change in the state, the component and all its sub-components get updated.
@@ -14,7 +12,7 @@ export default class Sharing extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet sharing">
+			<section htmlClass="applet">
 
 			</section>
 		);
