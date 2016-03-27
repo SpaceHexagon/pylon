@@ -58,6 +58,25 @@ app.post("/oauth2callback", function(req, res) {
 	res.send("OAuth2 Callback... ");
 });
 
+app.get("/:username", function (req, res) {
+	Users.findOne({username: req.params.username}, function(err, result) {
+			if (err || result == null) {
+				res.json({
+					"pylon-user-home": req.params.username,
+					"user-exists": false
+				});
+			} else {
+				res.json({
+					"pylon-user-home": req.params.username,
+					"user-exists": true,
+					"user-name": result.name
+				});
+			}
+		});
+});
+
+
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
