@@ -21,6 +21,7 @@ module.exports = function (app, db) {
         groupRouter = require("./api/groups.js")(app, db),
         fileRouter = require("./api/files.js")(app, db, mongo, fs),
         folderRouter = require("./api/folders.js")(app, db, mongo, fs),
+		folderRouter = require("./api/externals.js")(app, db, mongo, fs),
         shareRouter = require("./api/shares.js")(app, db),
         messageRouter = require("./api/messages.js")(app, db),
         geometryRouter = require("./api/geometries.js")(app, db);
