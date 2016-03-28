@@ -14,7 +14,7 @@ export default class Settings extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet settings">
+			<section className="applet settings">
 
 			</section>
 		);

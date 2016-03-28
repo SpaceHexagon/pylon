@@ -14,7 +14,7 @@ export default class Sharing extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet sharing">
+			<section className="applet sharing">
 
 			</section>
 		);

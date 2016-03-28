@@ -7,13 +7,6 @@ export default class Menu extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-            name: 'main',
-			options: [{src: "images/test.png", title: "Test Icon"},
-					  {src: "images/test.png", title: "Test Icon"},
-					  {src: "images/test.png", title: "Test Icon"},
-					  {src: "images/test.png", title: "Test Icon"},
-					  {src: "images/test.png", title: "Test Icon"},
-					  {src: "images/test.png", title: "Test Icon"}],
             applet: null
         };
     }
@@ -23,14 +16,27 @@ export default class Menu extends React.Component {
         this.setState({applet: applet});
     }
 	render() {
+
 		return (
-			<aside htmlClass="menu">
-				 {this.state.options.map(function(object, i){
-					return <Icon src={object.src} title={object.title} />;
-				})}
+			<aside className="menu">
+				{this.props.options.map(function(option){
+                    return <Icon src={option.src} title={option.title} />;
+                })}
 			</aside>
 		);
 	}
 }
 
+Menu.defaultProps = {
+    name: 'main',
+    options: [
+        {src: "images/pylon-w-a.png", title: "Apps"},
+        {src: "images/star.png", title: "Places"},
+        {src: "images/search.png", title: "Search"},
+		{src: "images/file.png", title: "Files"},
+		{src: "images/sharing.png", title: "Sharing"},
+		{src: "images/messaging.png", title: "Messaging"},
+        {src: "images/configure.png", title: "Settings"},
+    ]
+};
 

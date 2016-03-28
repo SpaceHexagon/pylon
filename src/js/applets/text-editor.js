@@ -14,7 +14,7 @@ export default class TextEditor extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet text-editor">
+			<section className="applet text-editor">
 
 			</section>
 		);

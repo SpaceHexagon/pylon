@@ -16,8 +16,12 @@ export default class Icon extends React.Component {
         this.state.callback();
     }
 	render(){
+        var iconStyle = {
+          backgroundImage: 'url(' + this.props.src + ')'
+        };
+
 		return (
-			<div htmlClass="icon" src="{this.props.src}" title="{this.props.title}">
+			<div className="icon" style={iconStyle} title={this.props.title}>
 
 			</div>
 		);

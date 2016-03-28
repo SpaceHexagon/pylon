@@ -14,7 +14,7 @@ export default class Terminal extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet terminal">
+			<section className="applet terminal">
 
 			</section>
 		);

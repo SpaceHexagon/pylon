@@ -14,7 +14,7 @@ export default class Messaging extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet messaging">
+			<section className="applet messaging">
 
 			</section>
 		);

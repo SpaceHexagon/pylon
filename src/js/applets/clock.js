@@ -14,7 +14,7 @@ export default class Clock extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet clock">
+			<section className="applet clock">
 
 			</section>
 		);

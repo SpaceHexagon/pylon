@@ -14,7 +14,7 @@ export default class ImageEditor extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet image-editor">
+			<section className="applet image-editor">
 
 			</section>
 		);

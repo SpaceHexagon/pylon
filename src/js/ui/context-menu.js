@@ -12,7 +12,7 @@ export default class ContextMenu extends React.Component {
     }
 	render(){
 		return (
-			<div htmlClass="context-menu">
+			<div className="context-menu">
 
 			</div>
 		);

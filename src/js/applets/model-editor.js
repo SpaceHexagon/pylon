@@ -14,7 +14,7 @@ export default class ModelEditor extends Applet {
     }
 	render(){
 		return (
-			<section htmlClass="applet model-editor">
+			<section className="applet model-editor">
 
 			</section>
 		);

@@ -12,7 +12,7 @@ export default class Applet extends React.Component {
     }
 	render(){
 		return (
-			<section htmlClass="applet">
+			<section className="applet">
 
 			</section>
 		);

@@ -13,7 +13,7 @@ export default class FileView extends React.Component {
     }
 	render(){
 		return (
-			<div htmlClass="file-view">
+			<div className="file-view">
 
 			</div>
 		);

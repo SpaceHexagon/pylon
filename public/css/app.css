@@ -41,9 +41,26 @@ img.logo {
 
 input[type=button] {}
 
+.icon {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+}
+
+.menu {
+
+}
+
+
 
 
 @media screen and (min-width: 641px) {
+    .menu {
+        width: 60px;
+    }
+
 	img.logo {
 		display: inline-block;
 	}

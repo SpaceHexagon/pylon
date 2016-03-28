@@ -22,7 +22,7 @@ export default class ListView extends React.Component {
 		}.bind(this));
 
 		return (
-			<div htmlClass="list-view">
+			<div className="list-view">
 				{sections}
 			</div>
 		);

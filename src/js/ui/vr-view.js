@@ -13,7 +13,7 @@ export default class FileView extends React.Component {
     }
 	render(){
 		return (
-			<canvas htmlClass="vr-view">
+			<canvas className="vr-view">
 
 			</canvas>
 		);
