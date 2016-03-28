@@ -66,11 +66,17 @@ app.get("/:username", function (req, res) {
 					"user-exists": false
 				});
 			} else {
-				res.json({
-					"pylon-user-home": req.params.username,
-					"user-exists": true,
-					"user-name": result.name
-				});
+//				res.json({
+//					"pylon-user-home": req.params.username,
+//					"user-exists": true,
+//					"user-name": result.name
+//				});
+				var pylon = "<!DOCTYPE html><html>";
+
+				pylon += "<head> <title>" + req.params.username + "</title></head>";
+				pylon += "<body><main><h1>"+ req.params.username+"'s Pylon</h1></main></body>";
+				pylon += "</html>";
+				res.send(pylon);
 			}
 		});
 });

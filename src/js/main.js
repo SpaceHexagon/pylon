@@ -5,6 +5,7 @@ import React, { Component, PropTypes } from 'react';
 
 // UI Components
 import Menu from './ui/menu.js';
+import Icon from './ui/icon.js';
 import ContextMenu from './ui/context-menu.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
@@ -22,10 +23,11 @@ import Settings from './applets/settings.js';
 import Sharing from './applets/sharing.js';
 import Terminal from './applets/terminal.js';
 
-
 ReactDOM.render(
   (
-    <Menu />
+
+	  <Menu />
+
   ),
   document.getElementsByTagName('main')[0]
 )

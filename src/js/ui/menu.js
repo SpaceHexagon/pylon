@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from './icon.js';
+
 
 export default class Menu extends React.Component {
 	constructor() {
@@ -6,6 +8,12 @@ export default class Menu extends React.Component {
 		// Initial state of the component
         this.state = {
             name: 'main',
+			options: [{src: "images/test.png", title: "Test Icon"},
+					  {src: "images/test.png", title: "Test Icon"},
+					  {src: "images/test.png", title: "Test Icon"},
+					  {src: "images/test.png", title: "Test Icon"},
+					  {src: "images/test.png", title: "Test Icon"},
+					  {src: "images/test.png", title: "Test Icon"}],
             applet: null
         };
     }
@@ -17,8 +25,12 @@ export default class Menu extends React.Component {
 	render() {
 		return (
 			<aside htmlClass="menu">
-
+				 {this.state.options.map(function(object, i){
+					return <Icon src={object.src} title={object.title} />;
+				})}
 			</aside>
 		);
 	}
 }
+
+
