@@ -46,6 +46,10 @@ module.exports = function (app, db) {
 				  expiresInMinutes: 1440 // expires in 24 hours
 				});
 
+				var online = app.get('online');
+				online[token] = req.body.username;
+				console.log(online[token]);
+
 				res.json({ // return the information including token as JSON
 				  success: true,
 				  message: 'Enjoy your token!',
@@ -71,6 +75,11 @@ module.exports = function (app, db) {
 				Users.insert(newUser, function(err, result) {
 					if (err) throw err;
 					if (result) console.log('Added!');
+
+					var online = app.get('online');
+					online[token] = req.body.username;
+					console.log(online[token]);
+
 					res.json({ // return the information including token as JSON
 					  success: true,
 					  message: 'Enjoy your token!',

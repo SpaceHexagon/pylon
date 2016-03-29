@@ -35,8 +35,9 @@ var Users = db.collection('users'),
 	Notifications = db.collection('notifications'),
 	Documents = db.collection('documents');
 
-var usersOnline = [];
+var online = [];
 
+app.set('online', online);
 app.set('superSecret', config.secret);
 app.set('json spaces', 2);
 app.use(logger('dev'));
@@ -66,14 +67,13 @@ app.get("/:username", function (req, res) {
 					"user-exists": false
 				});
 			} else {
-//				res.json({
-//					"pylon-user-home": req.params.username,
-//					"user-exists": true,
-//					"user-name": result.name
-//				});
 				var pylon = "<!DOCTYPE html><html>";
-
-				pylon += "<head> <title>" + req.params.username + "</title></head>";
+				pylon += "<head> <title>" + req.params.username + "</title>";
+				pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+				pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
+				pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
+				pylon += "<style> html { font-family: sans-serif; } </style>";
+				pylon += "</head>";
 				pylon += "<body><main><h1>"+ req.params.username+"'s Pylon</h1></main></body>";
 				pylon += "</html>";
 				res.send(pylon);
