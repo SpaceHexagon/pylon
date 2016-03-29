@@ -5,23 +5,25 @@ export default class Icon extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-			callback: function () {
 
-			}
 		};
     }
-    handleClick() {
-    	// When there's a change in the state, the component and all its
-    	// sub-components get updated.
-        this.state.callback();
+
+    componentDidMount () {
+
     }
-	render(){
+
+    handleClick (component, event) {
+        component.props.open();
+    }
+
+	render() {
         var iconStyle = {
-          backgroundImage: 'url(' + this.props.src + ')'
+            backgroundImage: 'url(' + this.props.src + ')'
         };
 
 		return (
-			<div className="icon" style={iconStyle} title={this.props.title}>
+			<div className="icon" style={iconStyle} title={this.props.title} onClick={(event)=>this.handleClick(this, event)}>
 
 			</div>
 		);

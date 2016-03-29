@@ -20,7 +20,7 @@ export default class Menu extends React.Component {
 		return (
 			<aside className="menu">
 				{this.props.options.map(function(option){
-                    return <Icon src={option.src} title={option.title} />;
+                    return <Icon src={option.src} title={option.title} open={option.open} />;
                 })}
 			</aside>
 		);
@@ -30,13 +30,13 @@ export default class Menu extends React.Component {
 Menu.defaultProps = {
     name: 'main',
     options: [
-        {src: "images/pylon-w-a.png", title: "Apps"},
-        {src: "images/star.png", title: "Places"},
-        {src: "images/search.png", title: "Search"},
-		{src: "images/file.png", title: "Files"},
-		{src: "images/sharing.png", title: "Sharing"},
-		{src: "images/messaging.png", title: "Messaging"},
-        {src: "images/configure.png", title: "Settings"},
+        {src: "images/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
+        {src: "images/star.png", title: "Places", open: function(){ console.log("opening Places app"); } },
+        {src: "images/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
+		{src: "images/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },
+		{src: "images/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
+		{src: "images/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
+        {src: "images/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
 
