@@ -10,7 +10,7 @@ var express = require('express'),
 	});
 
 // File Routes
-module.exports = function (app, extDB, mongo, fs) {
+module.exports = function (app, extDB, mongo, fs, Users) {
 	var router = express.Router(),
 		upload = multer({ storage: storage }),
 		db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));

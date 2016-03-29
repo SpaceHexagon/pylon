@@ -2,7 +2,7 @@ var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
 // Group Routes
-module.exports = function (app, db) {
+module.exports = function (app, db, Users) {
 	var router = express.Router(),
         Group = require('../../app/group.js'),
         Groups = db.collection('groups');

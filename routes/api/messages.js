@@ -2,7 +2,7 @@ var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
 // Message Routes
-module.exports = function (app, db) {
+module.exports = function (app, db, Users) {
 	var router = express.Router(),
         Messages = db.collection('messages');
 

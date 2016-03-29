@@ -17,14 +17,14 @@ module.exports = function (app, db) {
 	var router = express.Router(),
 		Users = db.collection('users'),
         Groups = db.collection('groups'),
-        userRouter = require("./api/users.js")(app, db),
-        groupRouter = require("./api/groups.js")(app, db),
-        fileRouter = require("./api/files.js")(app, db, mongo, fs),
-        folderRouter = require("./api/folders.js")(app, db, mongo, fs),
-		folderRouter = require("./api/externals.js")(app, db, mongo, fs),
-        shareRouter = require("./api/shares.js")(app, db),
-        messageRouter = require("./api/messages.js")(app, db),
-        geometryRouter = require("./api/geometries.js")(app, db);
+        userRouter = require("./api/users.js")(app, db, Users),
+        groupRouter = require("./api/groups.js")(app, db, Users),
+        fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
+        folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
+		externalsRouter = require("./api/externals.js")(app, db, mongo, fs, Users),
+        shareRouter = require("./api/shares.js")(app, db, Users),
+        messageRouter = require("./api/messages.js")(app, db, Users),
+        geometryRouter = require("./api/geometries.js")(app, db, Users);
 
     Users.ensureIndex([['username', 1]], true, function(err, replies){});
     Groups.ensureIndex([['name', 1]], true, function(err, replies){});

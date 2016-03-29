@@ -2,7 +2,7 @@ var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
 // Folder Routes
-module.exports = function (app, db) {
+module.exports = function (app, db, Users) {
 	var router = express.Router(),
         Folders = db.collection("folders");
 
