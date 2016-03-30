@@ -10,9 +10,8 @@ var express = require('express'),
 // File Routes
 module.exports = function (app, extDB, mongo2, fs, Users) {
 	var router = express.Router(),
-		upload = null;
-
-	var db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
+		upload = null,
+        db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
 
 	db.open(function (err) { // make sure the db instance is open before passing into `Grid`
 	  if (err) return handleError(err);
@@ -20,25 +19,25 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 	  // all set!
 	});
 
-
 	router.post('/', function (req, res) {
-		var busboy = new Busboy({ headers : req.headers }),
-			fileId = new mongo.ObjectId();
-			//online = app.get('online'),
-			//username = online[req.headers['x-access-token']];
+		var online = req.app.get('online'),
+            busboy = new Busboy({ headers : req.headers }),
+			fileId = new mongo.ObjectId(),
+			username = online[req.headers['x-access-token']];
+
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 			console.log('got file', filename, mimetype, encoding);
-			// online = app.get('online'),
 			var writeStream = gfs.createWriteStream({
 				_id: fileId,
 				filename:filename,
 				mode:'w',
 				content_type:mimetype,
 				metadata: {
-					modified: Date.now() //,
-				//	username: username
+					modified: Date.now(),
+					username: username
 				}
 			});
+
 			file.pipe(writeStream);
 		}).on('finish', function() {
 			res.status(200).send(' ');
