@@ -1,32 +1,49 @@
 var express = require('express'),
+	mongo = require('mongodb'),
     ObjectID = require('mongodb').ObjectID,
-    multer  = require('multer'),
+	Busboy = require('busboy'),
     Grid = require('gridfs-stream'),
     shortId = require('shortid'),
     path = require('path'),
-	gfs = null,
-	storage = require('gridfs-storage-engine')({
-    	database: 'pylon'
-	});
+	gfs = null;
 
 // File Routes
-module.exports = function (app, extDB, mongo, fs, Users) {
+module.exports = function (app, extDB, mongo2, fs, Users) {
 	var router = express.Router(),
-		upload = multer({ storage: storage }),
-		db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
+		online = app.get('online'),
+		upload = null;
+
+	var db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
 
 	db.open(function (err) { // make sure the db instance is open before passing into `Grid`
 	  if (err) return handleError(err);
-	  gfs = Grid(db, mongo);
+		gfs = Grid(db, mongo);
 	  // all set!
 	});
 
-	router.post('/', upload.array('files', 16), function(req, res) {
-		res.status(204); // everything is fine
-		// look up the user maybe?
-		// set metadata?
 
-   });
+	router.post('/', function (req, res) {
+		var busboy = new Busboy({ headers : req.headers }),
+			fileId = new mongo.ObjectId();
+		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+			console.log('got file', filename, mimetype, encoding);
+			var writeStream = gfs.createWriteStream({
+				_id: fileId,
+				filename:filename,
+				mode:'w',
+				content_type:mimetype,
+				metadata: {
+					ip: req.ip,
+					modified: Date.now(),
+					username: online[req.headers['x-access-token']]
+				}
+			});
+			file.pipe(writeStream);
+		}).on('finish', function() {
+			res.writeHead(200, {'content-type':'text/html'});
+		});
+		req.pipe(busboy);
+	});
 
 	router.post('/create', function (req, res) {
 
@@ -43,7 +60,7 @@ module.exports = function (app, extDB, mongo, fs, Users) {
 				var read_stream = gfs.createReadStream({filename: req.params.file});
 				read_stream.pipe(res);
 			} else {
-				res.json('File Not Found');
+				return res.status(404).send(' ');
 			}
 		});
 	});
@@ -59,7 +76,7 @@ module.exports = function (app, extDB, mongo, fs, Users) {
 				var read_stream = gfs.createReadStream({filename: req.params.file});
 				read_stream.pipe(res);
 			} else {
-				res.json('File Not Found');
+				return res.status(404).send(' ');
 			}
         });
 
