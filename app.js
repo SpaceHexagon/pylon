@@ -13,7 +13,9 @@ var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
     app = express(),
     secureApp = https.createServer(config, app),
-    secureIO = null;
+    secureIO = null,
+	online = [];
+
 
 var routes = require('./routes/index'),
 	groupRoutes = require('./routes/groups'),
@@ -34,8 +36,6 @@ var Users = db.collection('users'),
 	Messages = db.collection('messages'),
 	Notifications = db.collection('notifications'),
 	Documents = db.collection('documents');
-
-var online = [];
 
 app.set('online', online);
 app.set('superSecret', config.secret);

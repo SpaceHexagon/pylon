@@ -10,7 +10,6 @@ var express = require('express'),
 // File Routes
 module.exports = function (app, extDB, mongo2, fs, Users) {
 	var router = express.Router(),
-		online = app.get('online'),
 		upload = null;
 
 	var db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
@@ -25,22 +24,24 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 	router.post('/', function (req, res) {
 		var busboy = new Busboy({ headers : req.headers }),
 			fileId = new mongo.ObjectId();
+			//online = app.get('online'),
+			//username = online[req.headers['x-access-token']];
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 			console.log('got file', filename, mimetype, encoding);
+			// online = app.get('online'),
 			var writeStream = gfs.createWriteStream({
 				_id: fileId,
 				filename:filename,
 				mode:'w',
 				content_type:mimetype,
 				metadata: {
-					ip: req.ip,
-					modified: Date.now(),
-					username: online[req.headers['x-access-token']]
+					modified: Date.now() //,
+				//	username: username
 				}
 			});
 			file.pipe(writeStream);
 		}).on('finish', function() {
-			res.writeHead(200, {'content-type':'text/html'});
+			res.status(200).send(' ');
 		});
 		req.pipe(busboy);
 	});
