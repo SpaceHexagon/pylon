@@ -19,6 +19,8 @@ export default class Icon extends React.Component {
 
 	render() {
         var iconStyle = {
+			opacity: 0.9,
+			cursor: 'pointer',
             backgroundImage: 'url(' + this.props.src + ')'
         };
 
