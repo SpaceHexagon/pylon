@@ -69,12 +69,18 @@ app.get("/:username", function (req, res) {
 			} else {
 				var pylon = "<!DOCTYPE html><html>";
 				pylon += "<head> <title>" + req.params.username + "</title>";
-				pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
-				pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
-				pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
-				pylon += "<style> html { font-family: sans-serif; } </style>";
+					pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+					pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
+					pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
+					pylon += "<style> html { font-family: sans-serif; } </style>";
+					pylon += "<link rel='stylesheet' href='/css/app.css'>";
 				pylon += "</head>";
-				pylon += "<body><main><h1>"+ req.params.username+"'s Pylon</h1></main></body>";
+				pylon += "<body><main><h1>"+ req.params.username+"'s Pylon</h1>";
+					pylon += "<main>Loading Pylon...</main>";
+						pylon += "<script src='/lib/socket.io.js'></script>";
+						pylon += "<script src='/lib/three.min.js'></script>";
+						pylon += "<script src='/js/main.js'></script>";
+				pylon += "</main></body>";
 				pylon += "</html>";
 				res.send(pylon);
 			}

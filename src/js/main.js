@@ -37,4 +37,45 @@ ReactDOM.render(
 
 window.socket = io.connect("https://vpylon.net:8085", {secure:true, port: 8085});
 
+var scene = new THREE.Scene(),
+	camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 ),
+	renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+window.three = {
+	scene: scene,
+	camera: camera,
+	renderer: renderer
+};
+
+var geometry = new THREE.BoxGeometry( 1, 1, 1 ),
+	material = new THREE.MeshBasicMaterial( { color: 0xff00ff } ),
+	cube = new THREE.Mesh( geometry, material );
+
+renderer.setClearColor(0xfafafa);
+scene.add( cube );
+camera.position.z = 5;
+
+
+
+
+var render = function () {
+	requestAnimationFrame( render );
+	cube.rotation.x += 0.02;
+	cube.rotation.y += 0.02;
+	renderer.render(scene, camera);
+};
+
+render();
+
+
+window.onresize = function () {
+	if (!! three.renderer) {
+		three.renderer.setSize(innerWidth, innerHeight);
+		three.camera.aspect = innerWidth / innerHeight;
+		three.camera.updateProjectionMatrix();
+	}
+};
+
 // <Card CardIcon={<Icon src="test" title="test"/>} title="Test Card" text="this is a test card" />
