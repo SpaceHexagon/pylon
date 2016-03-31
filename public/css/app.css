@@ -1,15 +1,19 @@
 body {
     padding: 0;
     margin: 0;
-    background: #f5f5f5;
-    color: #333;
+    background: #fafafa;
+    color: #212121;
     font-family: verdana, sans-serif;
 }
 
 main {
     background: #FFF;
-    box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
-    max-width: 1280px;
+    border: 2px #E5E5E5 solid;
+    max-width: 1920px;
+    min-width: 320px;
+    width: 50%;
+    padding: 3em;
+    padding-top: 1em;
     margin: auto;
     margin-top: 0;
     height: 100%;
@@ -41,6 +45,10 @@ img.logo {
 
 input[type=button] {}
 
+.applet {
+
+}
+
 .icon {
     background-size: cover;
     background-repeat: no-repeat;
@@ -49,8 +57,75 @@ input[type=button] {}
     display: inline-block;
 }
 
-.menu {
+.card {
 
+}
+
+.context-menu {
+
+}
+
+.editor {
+
+}
+
+.file-view {
+
+}
+
+.list-view {
+
+}
+
+.vr-view {
+
+}
+
+
+.menu {
+	position: fixed;
+	top: 0;
+}
+
+.emojis {
+	font-size: 30px;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+.text-editor {
+
+}
+
+.image-editor {
+
+}
+
+.model-editor {
+
+}
+
+.terminal {
+
+}
+
+.sharing {
+
+}
+
+.settings {
+
+}
+
+.messaging {
+
+}
+
+.emojis span {
+	padding: 0.5em;
+	display: inline-block;
+	margin: 0.25em;
+	font-size: 32px;
 }
 
 
@@ -59,6 +134,12 @@ input[type=button] {}
 @media screen and (min-width: 641px) {
     .menu {
         width: 60px;
+    	left: 0;
+    	height: 100%;
+		background: #FFF;
+		border-right: 2px #E5E5E5 solid;
+		padding-top: 10px;
+		padding-left: 10px;
     }
 
 	img.logo {

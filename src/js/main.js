@@ -12,6 +12,7 @@ import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
+import Emojis from './ui/emojis.js';
 
 // Applets
 import Applet from './applets/applet.js';
@@ -28,12 +29,12 @@ ReactDOM.render(
   (
       <div className="root">
 	    <Menu/>
+	    <Emojis/>
       </div>
   ),
   document.getElementsByTagName('main')[0]
 )
 
 window.socket = io.connect("https://vpylon.net:8085", {secure:true, port: 8085});
-
 
 // <Card CardIcon={<Icon src="test" title="test"/>} title="Test Card" text="this is a test card" />
