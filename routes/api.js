@@ -17,12 +17,13 @@ module.exports = function (app, db) {
 	var router = express.Router(),
 		Users = db.collection('users'),
         Groups = db.collection('groups'),
+		Pages = db.collection('pages'),
         userRouter = require("./api/users.js")(app, db, Users),
         groupRouter = require("./api/groups.js")(app, db, Users),
         fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
         folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
 		externalsRouter = require("./api/externals.js")(app, db, mongo, fs, Users),
-        shareRouter = require("./api/shares.js")(app, db, Users),
+        shareRouter = require("./api/shares.js")(app, db, Users, Pages),
         messageRouter = require("./api/messages.js")(app, db, Users),
         geometryRouter = require("./api/geometries.js")(app, db, Users);
 
@@ -72,13 +73,15 @@ module.exports = function (app, db) {
 				  expiresInMinutes: 1440 // expires in 24 hours
 				});
 
-				Users.insert(newUser, function(err, result) {
+				Users.insert(newUser, function(err, insertResult) {
 					if (err) throw err;
-					if (result) console.log('Added!');
+					if (insertResult) console.log('Added!');
 
 					var online = app.get('online');
 					online[token] = req.body.username;
 					console.log(online[token]);
+
+					Pages.insert({user_id: ObjectID(insertResult._id), title: req.body.username, content:"<h1>"+req.body.username+"'s Pylon</h1>"});
 
 					res.json({ // return the information including token as JSON
 					  success: true,

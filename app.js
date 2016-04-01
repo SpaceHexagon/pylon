@@ -11,6 +11,8 @@ var express = require('express'),
 
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
+	mongo = require('mongodb'),
+    ObjectID = mongo.ObjectID,
     app = express(),
     secureApp = https.createServer(config, app),
     secureIO = null,
@@ -70,10 +72,10 @@ app.get("/:username", function (req, res) {
 			});
 		} else {
 			username = req.params.username
-			Pages.findOne({user_id: result._id}, function (err, result) {
+			Pages.findOne({user_id: ObjectID(result._id)}, function (err, pageResult) {
 				var pylon = "<!DOCTYPE html><html>";
-				if (!err && result != null) {
-					pylon += "<head> <title>" + result.title + "</title>";
+				if (!err && pageResult != null) {
+					pylon += "<head> <title>" + pageResult.title + "</title>";
 						pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
 						pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
 						pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
@@ -81,7 +83,7 @@ app.get("/:username", function (req, res) {
 						pylon += "<link rel='stylesheet' href='/css/app.css'>";
 					pylon += "</head>";
 					pylon += "<body>"
-						pylon += "<main>"+result.content+"</main>";
+						pylon += "<main>"+pageResult.content+"</main>";
 							pylon += "<script src='/lib/socket.io.js'></script>";
 							pylon += "<script src='/lib/three.min.js'></script>";
 							pylon += "<script src='/js/main.js'></script>";
@@ -91,7 +93,9 @@ app.get("/:username", function (req, res) {
 				} else {
 					res.json({
 						"user-exists": true,
-						"user-page-exists": false
+						"user-page-exists": false,
+						"err": err,
+						"page-result": pageResult
 					});
 				}
 			});
