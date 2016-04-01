@@ -33,6 +33,7 @@ var User = require('./app/user.js'),
 var Users = db.collection('users'),
     Groups = db.collection('groups'),
 	Shares = db.collection('shares'),
+	Pages = db.collection('pages'),
 	Messages = db.collection('messages'),
 	Notifications = db.collection('notifications'),
 	Documents = db.collection('documents');
@@ -61,30 +62,42 @@ app.post("/oauth2callback", function(req, res) {
 
 app.get("/:username", function (req, res) {
 	Users.findOne({username: req.params.username}, function(err, result) {
-			if (err || result == null) {
-				res.json({
-					"pylon-user-home": req.params.username,
-					"user-exists": false
-				});
-			} else {
+		var username = "";
+		if (err || result == null) {
+			res.json({
+				"pylon-user-home": req.params.username,
+				"user-exists": false
+			});
+		} else {
+			username = req.params.username
+			Pages.findOne({user_id: result._id}, function (err, result) {
 				var pylon = "<!DOCTYPE html><html>";
-				pylon += "<head> <title>" + req.params.username + "</title>";
-					pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
-					pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
-					pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
-					pylon += "<style> html { font-family: sans-serif; } </style>";
-					pylon += "<link rel='stylesheet' href='/css/app.css'>";
-				pylon += "</head>";
-				pylon += "<body><main><h1>"+ req.params.username+"'s Pylon</h1>";
-					pylon += "<main>Loading Pylon...</main>";
-						pylon += "<script src='/lib/socket.io.js'></script>";
-						pylon += "<script src='/lib/three.min.js'></script>";
-						pylon += "<script src='/js/main.js'></script>";
-				pylon += "</main></body>";
-				pylon += "</html>";
-				res.send(pylon);
-			}
-		});
+				if (!err && result != null) {
+					pylon += "<head> <title>" + result.title + "</title>";
+						pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+						pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
+						pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
+						pylon += "<style> html { font-family: sans-serif; } </style>";
+						pylon += "<link rel='stylesheet' href='/css/app.css'>";
+					pylon += "</head>";
+					pylon += "<body>"
+						pylon += "<main>"+result.content+"</main>";
+							pylon += "<script src='/lib/socket.io.js'></script>";
+							pylon += "<script src='/lib/three.min.js'></script>";
+							pylon += "<script src='/js/main.js'></script>";
+					pylon += "</main></body>";
+					pylon += "</html>";
+					res.send(pylon);
+				} else {
+					res.json({
+						"user-exists": true,
+						"user-page-exists": false
+					});
+				}
+			});
+		}
+
+	});
 });
 
 

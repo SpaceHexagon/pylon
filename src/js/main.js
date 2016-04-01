@@ -25,11 +25,13 @@ import Settings from './applets/settings.js';
 import Sharing from './applets/sharing.js';
 import Terminal from './applets/terminal.js';
 
+var content = document.getElementsByTagName('main')[0].innerHTML;
+
 ReactDOM.render(
   (
       <div className="root">
+	  	{content}
 	    <Menu/>
-	    <Emojis/>
       </div>
   ),
   document.getElementsByTagName('main')[0]
