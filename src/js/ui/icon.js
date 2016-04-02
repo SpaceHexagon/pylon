@@ -25,7 +25,7 @@ export default class Icon extends React.Component {
         };
 
 		return (
-			<div className="icon" style={iconStyle} title={this.props.title} onClick={(event)=>this.handleClick(this, event)}>
+			<div className={"icon "+this.props.title} style={iconStyle} title={this.props.title} onClick={(event)=>this.handleClick(this, event)}>
 
 			</div>
 		);

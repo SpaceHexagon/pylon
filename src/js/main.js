@@ -52,7 +52,7 @@ window.three = {
 };
 
 var geometry = new THREE.BoxGeometry( 1, 1, 1 ),
-	material = new THREE.MeshBasicMaterial( { color: 0xff00ff } ),
+	material = new THREE.MeshBasicMaterial( { color: 0x333333 } ),
 	cube = new THREE.Mesh( geometry, material );
 
 renderer.setClearColor(0xfafafa);

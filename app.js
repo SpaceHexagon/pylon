@@ -82,12 +82,12 @@ app.get("/:username", function (req, res) {
 						pylon += "<style> html { font-family: sans-serif; } </style>";
 						pylon += "<link rel='stylesheet' href='/css/app.css'>";
 					pylon += "</head>";
-					pylon += "<body>"
+					pylon += "<body>";
 						pylon += "<main>"+pageResult.content+"</main>";
 							pylon += "<script src='/lib/socket.io.js'></script>";
 							pylon += "<script src='/lib/three.min.js'></script>";
 							pylon += "<script src='/js/main.js'></script>";
-					pylon += "</main></body>";
+					pylon += "</body>";
 					pylon += "</html>";
 					res.send(pylon);
 				} else {
