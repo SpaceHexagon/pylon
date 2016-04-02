@@ -62,49 +62,46 @@ app.post("/oauth2callback", function(req, res) {
 	res.send("OAuth2 Callback... ");
 });
 
-app.get("/:username", function (req, res) {
-	Users.findOne({username: req.params.username}, function(err, result) {
-		var username = "";
-		if (err || result == null) {
-			res.json({
-				"pylon-user-home": req.params.username,
-				"user-exists": false
-			});
-		} else {
-			username = req.params.username
-			Pages.findOne({user_id: ObjectID(result._id)}, function (err, pageResult) {
-				var pylon = "<!DOCTYPE html><html>";
-				if (!err && pageResult != null) {
-					pylon += "<head> <title>" + pageResult.title + "</title>";
-						pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
-						pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
-						pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
-						pylon += "<style> html { font-family: sans-serif; } </style>";
-						pylon += "<link rel='stylesheet' href='/css/app.css'>";
-					pylon += "</head>";
-					pylon += "<body>";
-						pylon += "<main>"+pageResult.content+"</main>";
-							pylon += "<script src='/lib/socket.io.js'></script>";
-							pylon += "<script src='/lib/three.min.js'></script>";
-							pylon += "<script src='/js/main.js'></script>";
-					pylon += "</body>";
-					pylon += "</html>";
-					res.send(pylon);
-				} else {
-					res.json({
-						"user-exists": true,
-						"user-page-exists": false,
-						"err": err,
-						"page-result": pageResult
-					});
-				}
-			});
-		}
-
-	});
-});
-
-
+app.get('/:username', function (req, res, next) {
+		Users.findOne({username: req.params.username}, function(err, result) {
+			var username = "";
+			if (err || result == null) {
+				res.json({
+					"pylon-user-home": req.params.username,
+					"user-exists": false
+				});
+			} else {
+				username = req.params.username
+				Pages.findOne({user_id: ObjectID(result._id)}, function (err, pageResult) {
+					var pylon = "<!DOCTYPE html><html>";
+					if (!err && pageResult != null) {
+						pylon += "<head> <title>" + pageResult.title + "</title>";
+							pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+							pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
+							pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
+							pylon += "<style> html { font-family: sans-serif; } </style>";
+							pylon += "<link rel='stylesheet' href='/css/app.css'>";
+						pylon += "</head>";
+						pylon += "<body>";
+							pylon += "<main>"+pageResult.content+"</main>";
+								pylon += "<script src='/lib/socket.io.js'></script>";
+								pylon += "<script src='/lib/three.min.js'></script>";
+								pylon += "<script src='/js/main.js'></script>";
+						pylon += "</body>";
+						pylon += "</html>";
+						res.send(pylon);
+					} else {
+						res.json({
+							"user-exists": true,
+							"user-page-exists": false,
+							"err": err,
+							"page-result": pageResult
+						});
+					}
+				});
+			}
+		});
+}); // user homepage / portals
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

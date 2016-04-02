@@ -1,6 +1,6 @@
 var express = require('express'),
     mongo = require('mongodb'),
-    ObjectID = mongo.ObjectID,
+    ObjectId = mongo.ObjectID,
     Grid = require('gridfs-stream'),
     fs = require('fs'),
 	jwt = require('jsonwebtoken'),
@@ -68,7 +68,9 @@ module.exports = function (app, db) {
 		Users.findOne({username: req.body.username}, function(err, result) {
 			if (err || result == null) {
 				var newUser = User(),
-					token = null;
+					token = null,
+					username = req.body.username;
+
 				newUser.name = newUser.username = req.body.username;
 				newUser.password = passwordHash.generate(req.body.password);
 				token = jwt.sign({ name: newUser.name, username: newUser.username }, app.get('superSecret'), {  // create a token
@@ -80,15 +82,20 @@ module.exports = function (app, db) {
 					if (insertResult) console.log('Added!');
 
 					var online = app.get('online');
-					online[token] = req.body.username;
+					online[token] = username;
 					console.log(online[token]);
 
-					Pages.insert({user_id: ObjectID(insertResult._id), title: req.body.username, content:"<h1>"+req.body.username+"'s Pylon</h1>"});
+					Users.findOne({username: username}, function(err, foundNewUser) { // work around to get ObjectId of newly created user
+						if (err) throw err;
+						if (foundNewUser != null) {
+							Pages.insert({user_id: ObjectId(foundNewUser._id), title: username, content: username+"'s Pylon"});
 
-					res.json({ // return the information including token as JSON
-					  success: true,
-					  message: 'Enjoy your token!',
-					  token: token
+							res.json({ // return the information including token as JSON
+							  success: true,
+							  message: 'Enjoy your token!',
+							  token: token
+							});
+						}
 					});
 				});
 

@@ -14,8 +14,18 @@ export default class Icon extends React.Component {
     }
 
     handleClick (component, event) {
+		this.vibrate();
         component.props.open();
     }
+
+	vibrate (data) {
+		if (!! navigator.vibrate) {
+			if (!data) {
+				data = 30;
+			}
+			navigator.vibrate(data);
+		}
+	}
 
 	render() {
         var iconStyle = {
