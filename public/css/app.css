@@ -69,6 +69,10 @@ input[type=button] {}
 	display: none;
 }
 
+.icon.Messaging {
+	display: none;
+}
+
 
 .card {
 
@@ -92,6 +96,19 @@ input[type=button] {}
 
 .vr-view {
 
+}
+
+.signin {
+
+}
+
+.signin div {
+
+}
+
+.signin div input {
+	margin-left: 1em;
+	margin-bottom: 1em;
 }
 
 
@@ -176,6 +193,10 @@ input[type=button] {}
     	margin-left: 0em;
 	}
 	.icon.Sharing {
+		display: inline-block !important;
+	}
+
+	.icon.Messaging {
 		display: inline-block !important;
 	}
 

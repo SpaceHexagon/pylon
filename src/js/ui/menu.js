@@ -19,8 +19,8 @@ export default class Menu extends React.Component {
 
 		return (
 			<aside className="menu">
-				{this.props.options.map(function(option){
-                    return <Icon src={option.src} title={option.title} open={option.open} />;
+				{this.props.options.map(function(option, i){
+                    return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
                 })}
 			</aside>
 		);
@@ -36,7 +36,8 @@ Menu.defaultProps = {
         {src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
 		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
 		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
-        {src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
+        {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
+		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
 

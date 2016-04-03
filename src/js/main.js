@@ -13,6 +13,7 @@ import ListView from './ui/list-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
+import SignIn from './ui/signin.js';
 
 // Applets
 import Applet from './applets/applet.js';
@@ -27,11 +28,15 @@ import Terminal from './applets/terminal.js';
 
 var content = document.getElementsByTagName('main')[0].innerHTML;
 
+if (window.location.href.split(".net/")[1] == "") {
+	content = <SignIn />;
+}
+
 ReactDOM.render(
   (
       <div className="root">
-	  	{content}
-	    <Menu/>
+		{content}
+	  	<Menu />
       </div>
   ),
   document.getElementsByTagName('main')[0]
@@ -40,7 +45,7 @@ ReactDOM.render(
 window.socket = io.connect("https://vpylon.net:8085", {secure:true, port: 8085});
 
 var scene = new THREE.Scene(),
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 ),
+	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ),
 	renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
