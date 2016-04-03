@@ -28,6 +28,8 @@ import Terminal from './applets/terminal.js';
 
 var content = document.getElementsByTagName('main')[0].innerHTML;
 
+var token = localStorage.getItem("token");
+
 if (window.location.href.split(".net/")[1] == "") {
 	content = <SignIn />;
 }

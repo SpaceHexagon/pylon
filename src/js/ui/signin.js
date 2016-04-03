@@ -17,38 +17,44 @@ export default class SignIn extends React.Component {
         component.props.open();
     }
 
-	signin (component, event) {
+	signin (component, event, signup) {
+		if (!! event) {
+			event.preventDefault();
+		}
 		console.log("signin state", this.state.login);
 
 		var xhr = new XMLHttpRequest(),
-			mode =  this.state.login == 0 ? "authenticate" : "signup",
+			mode =  !signup ? "authenticate" : "signup",
 			username = document.querySelector("#username").value,
 			password = document.querySelector("#password").value;
-		xhr.onreadystatechange = (function (comp, user) {
-			if (xhr.status == 200 && xhr.readyState == 4) {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
 				var data = JSON.parse(xhr.responseText);
+				console.log("data", data);
 				if (data.success) {
 					// data.token
+					component.state.login = 2; // authenticate success
 					localStorage.setItem("token", data.token);
-					console.log("state", comp.state.login);
-					comp.state.login = 2;
+					console.log("state", component.state.login);
+					window.location.href = "/"+username;
 
 				}
-
 			}
-		})(component, username);
+		};
 
-		setTimeout((function (comp) {
-			if (comp.state.login == 0) {
-				comp.state.login = 1;
-				comp.signin(comp);
-			}
-		})(component), 2000);
+		setTimeout(function () {
+						if (component.state.login == 0) {
+							component.state.login = 1;
+							console.log("timeout");
+							component.signin(component, null, true);
+						}
+					}, 1000);
 
-		xhr.open("POST", "/api/authenticate", true);
+		xhr.open("POST", "/api/"+mode, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("username="+username+"&password="+password);
-		console.log("signing in...");
+		console.log("signing in... " + mode);
+		return false;
 	}
 
 	render() {
@@ -57,7 +63,7 @@ export default class SignIn extends React.Component {
         };
 
 		return (
-			<form className="signin" style={signinStyle}  >
+			<form className="signin" style={signinStyle} onSubmit={(event)=>this.signin(this, event)} >
 				<h2>Sign in or Register</h2>
 				<div>
 					<label>Username</label>
@@ -71,7 +77,7 @@ export default class SignIn extends React.Component {
 					<div>
 						<label>Remember me?</label>
 						<input type='checkbox' id='rememberme'/>
-						<input type='button' id='submit' value="Sign In" onClick={(event)=>this.signin(this, event)}/>
+						<input type='submit' id='submit' value="Sign In" />
 					</div>
 				</div>
 			</form>
