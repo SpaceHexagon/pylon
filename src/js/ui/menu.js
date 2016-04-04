@@ -31,12 +31,12 @@ Menu.defaultProps = {
     name: 'main',
     options: [
         {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
+		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
         {src: "/images/dark/star.png", title: "Places", open: function(){ console.log("opening Places app"); } },
 		{src: "/images/dark/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },
-        {src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
-		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
 		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
-        {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
+		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
+//      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
 		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
