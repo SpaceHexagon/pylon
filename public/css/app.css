@@ -74,12 +74,48 @@ input[type=button] {}
 }
 
 
-.card {
+article.card {
+	background: white;
+	border: 2px solid #f1f1f1;
+	padding: 1em;
+	margin: 1em;
+	min-width: 240px;
+	min-height: 60px;
+	display: inline-block;
+}
 
+.card h3 {
+	display: inline-block;
+    vertical-align: top;
+    margin-top: 0.6em;
+    margin-bottom: 0;
+}
+
+.card .icon {
+	margin-left: 0;
+}
+
+.card p {
+	margin-left: 52px;
+    margin-top: 0;
 }
 
 .context-menu {
 
+}
+
+.user-menu {
+
+}
+
+.notifications-area {
+	max-width:960px;
+	width: 25%;
+	min-width: 280px;
+	display: block;
+	margin: auto;
+	position: fixed;
+	top:0;
 }
 
 .editor {

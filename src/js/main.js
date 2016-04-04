@@ -44,10 +44,12 @@ ReactDOM.render(
   document.getElementsByTagName('main')[0]
 )
 
+// <Card CardIcon={<Icon src="/images/dark/star.png" title="test"/>} title="New Activity!" text="This is a test activity cards" />
+
 window.socket = io.connect("https://vpylon.net:8085", {secure:true, port: 8085});
 
 var scene = new THREE.Scene(),
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ),
+	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 2, 100000 ),
 	renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
@@ -113,4 +115,4 @@ window.onresize = function () {
 	}
 };
 
-// <Card CardIcon={<Icon src="test" title="test"/>} title="Test Card" text="this is a test card" />
+
