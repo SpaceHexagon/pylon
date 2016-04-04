@@ -51,11 +51,26 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 			username = online[req.headers['x-access-token']];
 	});
 
+
+	router.get('/all', function (req, res) {
+		var online = req.app.get('online'),
+			username = online[req.headers['x-access-token']],
+			userFiles = db.collection(username+".files");
+
+        userFiles.find({}).toArray(function (err, files) {
+			if (err) {
+				res.json(err);
+			}
+			res.json(files);
+		});
+	});
+
     router.get('/:file', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']];
+			username = online[req.headers['x-access-token']],
+			userFiles = db.collection(username+".files");
 
-        gfs.files.find({root: username, filename: req.params.file}).toArray(function (err, files) {
+        userFiles.find({filename: req.params.file}).toArray(function (err, files) {
 			if (err) {
 				res.json(err);
 			}
@@ -73,29 +88,15 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 		});
 	});
 
-	router.get('/all', function (req, res) {
-		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']];
 
-        gfs.files.find({root: username}).toArray(function (err, files) {
-			if (err) {
-				res.json(err);
-			}
-
-			if (files.length < 1) {
-				return res.status(404).send(' ');
-			}
-
-			res.json(files);
-		});
-	});
 
 	router.get('/search/:file', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']],
-       		results = [];
+			userFiles = db.collection(username+".files"),
+			results = [];
 
-		gfs.files.find({root: username, filename: req.params.file }).toArray(function (err, files) {
+		userFiles.find({ filename: req.params.file }).toArray(function (err, files) {
             if (err) {
                 return console.log("Error updating file ", err);
             }
@@ -120,12 +121,14 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	router.delete('/:file', function(req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']];
+			username = online[req.headers['x-access-token']],
+			userFiles = db.collection(username+".files"),
+			userChunks = db.collection(username+".chunks");
 
-        gfs.remove({_id: ObjectID(req.params.file)}, function (err) {
-            if(err) {
-                return console.log('Error removing file: ', err);
-            }
+        userFiles.remove({_id: ObjectID(req.params.file)}, function (err) {
+			if(err) {
+				return console.log('Error removing file: ', err);
+			}
             res.json({success: true, message: "File Deleted"});
         });
 	});
