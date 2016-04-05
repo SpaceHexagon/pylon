@@ -5,11 +5,14 @@ import React, { Component, PropTypes } from 'react';
 
 // UI Components
 import Menu from './ui/menu.js';
+import UserMenu from './ui/user-menu.js';
 import Icon from './ui/icon.js';
 import Card from './ui/card.js';
 import ContextMenu from './ui/context-menu.js';
+import NotificationsArea from './ui/notifications-area.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
+import ActivitiesView from './ui/activities-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
@@ -39,6 +42,9 @@ ReactDOM.render(
       <div className="root">
 		{content}
 	  	<Menu />
+	  	<UserMenu />
+	  	<NotificationsArea />
+	  	<ActivitiesView />
       </div>
   ),
   document.getElementsByTagName('main')[0]

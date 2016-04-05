@@ -26,9 +26,7 @@ export default class UserMenu extends React.Component {
 UserMenu.defaultProps = {
     name: 'user-menu',
     options: [
-        {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
-		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } }
-
+		{src: "/images/dark/electron.png", title: "User Preferences", open: function(){ console.log("opening user preferences.."); } },
+        {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening notifications.."); } }
     ]
 };
-

@@ -17,7 +17,7 @@ export default class NotificationsArea extends React.Component {
 		return (
 			<aside className="notifications-area">
 				{this.props.options.map(function(option, i){
-                    return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
+                    return <Card  key={i} CardIcon={<Icon src={option.src} open={option.open} title={option.title} />} title={option.title} text={option.text} />
                 })}
 			</aside>
 		);
@@ -27,9 +27,22 @@ export default class NotificationsArea extends React.Component {
 NotificationsArea.defaultProps = {
     name: 'notifications-area',
     options: [
-        {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
-		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } }
-
+        {
+			src: "/images/dark/star.png",
+			title: "Pylon Desktop",
+			text:"Welcome to your newly created V-Pylon. You now have access to file storage, documents, messaging and basic web hosting through the web or virtual reality.",
+			open: function(){
+				console.log("opening notifications..");
+			}
+		},
+		{
+			src: "/images/dark/messaging.png",
+			title: "Test Message",
+			text:"Hello world. Testing message notifications.",
+			open: function() {
+				console.log("opening user message notification..");
+			}
+		}
     ]
 };
 

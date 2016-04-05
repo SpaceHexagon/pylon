@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class FileView extends React.Component {
+export default class VRView extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component

@@ -105,17 +105,34 @@ article.card {
 }
 
 .user-menu {
-
+	position: fixed;
+    top: 0;
+    right: 0;
+    padding-top: 0.5em;
+    padding-right: 0.33em;
 }
 
 .notifications-area {
 	max-width:960px;
 	width: 25%;
-	min-width: 280px;
-	display: block;
+	min-width: 120px;
+	display: none;
 	margin: auto;
 	position: fixed;
 	top:0;
+	right: 0px;
+}
+
+.notifications-area.visible {
+	display: block;
+}
+
+.activities-view {
+	display: none;
+}
+
+.activities-view.visible {
+	display: block;
 }
 
 .editor {
@@ -144,7 +161,13 @@ article.card {
 
 .signin div input {
 	margin-left: 1em;
-	margin-bottom: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.signin div label {
+	    min-width: 80px;
+    display: inline-block;
 }
 
 

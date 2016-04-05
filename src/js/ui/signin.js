@@ -64,7 +64,7 @@ export default class SignIn extends React.Component {
 
 		return (
 			<form className="signin" style={signinStyle} onSubmit={(event)=>this.signin(this, event)} >
-				<h2>Sign in or Register</h2>
+				<h2>Sign in or register a new pylon 🗼</h2>
 				<div>
 					<label>Username</label>
 					<input type='text' id='username'/>
