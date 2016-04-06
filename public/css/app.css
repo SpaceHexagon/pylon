@@ -86,13 +86,19 @@ input[type=button] {}
 }
 
 article.card {
-	background: white;
-	border: 2px solid #f1f1f1;
-	padding: 1em;
-	margin: 1em;
-	min-width: 240px;
-	min-height: 60px;
-	display: inline-block;
+	background: #FFF;
+    border: 2px solid #f1f1f1;
+    border-radius: 4px;
+    padding: 1em;
+    margin: 1em;
+    margin-top: 1em;
+    margin-bottom: 0;
+    min-width: 240px;
+    min-height: 60px;
+    display: inline-block;
+	-webkit-transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	transition: all 0.5s ease-out;
 }
 
 .card h3 {
@@ -104,6 +110,11 @@ article.card {
 
 .card .icon {
 	margin-left: 0;
+}
+
+.card .icon.close {
+	opacity: 0.8;
+    float: right;
 }
 
 .card p {
@@ -124,14 +135,15 @@ article.card {
 }
 
 .notifications-area {
-	max-width:960px;
-	width: 25%;
+	max-width: 466px;
 	min-width: 120px;
 	display: none;
 	margin: auto;
+	margin-top: 4em;
 	position: fixed;
 	top:0;
 	right: 0px;
+
 }
 
 .notifications-area.visible {
@@ -280,7 +292,15 @@ article.card {
 	.icon.Messaging {
 		display: inline-block !important;
 	}
-
+	.notifications-area {
+		width: 33.3%;
+		display: inline-block;
+		padding-bottom: 1em;
+		border-bottom-left-radius: 7px;
+		border-top-left-radius: 7px;
+		box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 7px;
+		background-color: rgba(255, 255, 255, 0.592157);
+	}
 
 
 	img.logo {
