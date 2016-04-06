@@ -2,6 +2,7 @@ console.log('Pylon Interface Loading...');
 
 import ReactDOM from 'react-dom';
 import React, { Component, PropTypes } from 'react';
+import EventEmitter from 'events';
 
 // UI Components
 import Menu from './ui/menu.js';
@@ -29,6 +30,10 @@ import Settings from './applets/settings.js';
 import Sharing from './applets/sharing.js';
 import Terminal from './applets/terminal.js';
 
+
+class SystemEvents extends EventEmitter {}
+const systemEvents = new SystemEvents();
+
 var content = document.getElementsByTagName('main')[0].innerHTML;
 
 var token = localStorage.getItem("token");
@@ -41,10 +46,10 @@ ReactDOM.render(
   (
       <div className="root">
 		{content}
-	  	<Menu />
-	  	<UserMenu />
-	  	<NotificationsArea />
-	  	<ActivitiesView />
+	  	<Menu systemEvents={systemEvents}/>
+	  	<UserMenu systemEvents={systemEvents} />
+	  	<NotificationsArea systemEvents={systemEvents}/>
+	  	<ActivitiesView systemEvents={systemEvents} />
       </div>
   ),
   document.getElementsByTagName('main')[0]
@@ -52,10 +57,10 @@ ReactDOM.render(
 
 // <Card CardIcon={<Icon src="/images/dark/star.png" title="test"/>} title="New Activity!" text="This is a test activity cards" />
 
-window.socket = io.connect("https://vpylon.net:8085", {secure:true, port: 8085});
+window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
 
 var scene = new THREE.Scene(),
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 2, 100000 ),
+	camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 2, 100000 ),
 	renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from './icon.js';
-
+import EventEmitter from 'events';
 
 export default class UserMenu extends React.Component {
 	constructor() {
@@ -9,15 +9,20 @@ export default class UserMenu extends React.Component {
         this.state = {
             applet: null
         };
+
+		this.toggleNotifications = this.toggleNotifications.bind(this);
+
     }
 
-	render() {
+	toggleNotifications () {
+		this.props.systemEvents.emit("toggle-notifications", {});
+	}
 
+	render() {
 		return (
 			<aside className="user-menu">
-				{this.props.options.map(function(option, i){
-                    return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
-                })}
+				<Icon key={1} src="/images/dark/electron.png" title="User Preferences" text="Guest" open={()=>{}} />
+                <Icon key={2} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
 			</aside>
 		);
 	}
@@ -26,7 +31,6 @@ export default class UserMenu extends React.Component {
 UserMenu.defaultProps = {
     name: 'user-menu',
     options: [
-		{src: "/images/dark/electron.png", title: "User Preferences", open: function(){ console.log("opening user preferences.."); } },
-        {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening notifications.."); } }
+
     ]
 };

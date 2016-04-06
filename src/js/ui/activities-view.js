@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from './icon.js';
 import Card from './card.js';
-
+import EventEmitter from 'events';
 
 export default class ActivitiesView extends React.Component {
 	constructor() {

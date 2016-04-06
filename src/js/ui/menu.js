@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from './icon.js';
-
+import EventEmitter from 'events';
 
 export default class Menu extends React.Component {
 	constructor() {

@@ -32,12 +32,24 @@ export default class Icon extends React.Component {
 			opacity: 0.9,
 			cursor: 'pointer',
             backgroundImage: 'url(' + this.props.src + ')'
-        };
-
+        },
+		textClass = (this.props.text.length >1 ? "text" : "");
 		return (
-			<div className={"icon "+this.props.title} style={iconStyle} title={this.props.title} onClick={(event)=>this.handleClick(this, event)}>
-
+			<div className={"icon "+this.props.title+" "+textClass} style={iconStyle} title={this.props.title} onClick={(event)=>this.handleClick(this, event)}>
+				{this.props.text}
 			</div>
 		);
 	}
 }
+
+
+
+
+
+
+
+Icon.defaultProps = {
+	title: "Icon",
+	src: "",
+	text: ""
+};
