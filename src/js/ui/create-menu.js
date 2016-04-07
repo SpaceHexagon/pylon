@@ -39,7 +39,7 @@ export default class CreateMenu extends React.Component {
 CreateMenu.defaultProps = {
     name: 'main',
     options: [
-        {src: "/images/dark/new.png", title: "+", open: function(){ console.log("Create / Upload Menu"); } },
+//        {src: "/images/dark/new.png", title: "Create & Upload", open: function(){ console.log("Create / Upload Menu"); } },
 //		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
 //        {src: "/images/dark/star.png", title: "Places", open: function(){ console.log("opening Places app"); } },
 //		{src: "/images/dark/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },

@@ -4,7 +4,9 @@ body {
     margin: 0;
     background: #fafafa;
     color: #303030;
-    font-family: verdana, sans-serif;
+/*    font-family: verdana, sans-serif;*/
+/*    font-family: 'Ubuntu', sans-serif;*/
+    font-family: 'Open Sans', sans-serif;
 }
 
 main {
@@ -49,13 +51,32 @@ img.logo {
     margin-left: 0.5em;
 }
 
-input[type=button] {}
+input[type=button], input[type=submit] {
+    padding: 0.5em;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.33);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    background: #0095FF;
+    font-size: 16px;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 3px;
+    -webkit-transition: all 0.25s ease-out;
+	-moz-transition: all 0.25s ease-out;
+	transition: all 0.25s ease-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover {
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+}
+
 
 .applet {
 
 }
 
 .icon {
+    opacity: 0.9;
     background-size: contain;
     background-repeat: no-repeat;
     width: 48px;
@@ -70,7 +91,7 @@ input[type=button] {}
 	display: none;
 }
 
-.icon.Messaging {
+.icon.Messages {
 	display: none;
 }
 
@@ -204,6 +225,15 @@ article.card {
     max-width: 50%;
 }
 
+.signin div input[type=text], .signin div input[type=password] {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+    font-size: 16px;
+    border: 2px solid #EBEBEB;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.10);
+}
+
 .signin div label {
 	    min-width: 80px;
     display: inline-block;
@@ -270,7 +300,7 @@ article.card {
 
 @media screen and (min-width: 961px) {
 	main {
-		margin-top: 0;
+		margin-top: 1em;
 	}
 
     .menu {
@@ -305,7 +335,7 @@ article.card {
 		display: inline-block !important;
 	}
 
-	.icon.Messaging {
+	.icon.Messages {
 		display: inline-block !important;
 	}
 	.notifications-area {

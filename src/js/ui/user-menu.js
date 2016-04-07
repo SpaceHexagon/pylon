@@ -21,12 +21,14 @@ export default class UserMenu extends React.Component {
 	render() {
 		return (
 			<aside className="user-menu">
-				<Icon key={1} src="/images/dark/electron.png" title="User Preferences" text="Guest" open={()=>{}} />
-                <Icon key={2} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
+				<Icon key={1} src="/images/dark/circle.png" title="User Preferences" text="Guest" open={()=>{}} />
+                <Icon key={3} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
 			</aside>
 		);
 	}
 }
+
+/* <Icon key={2} src="/images/dark/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 
 UserMenu.defaultProps = {
     name: 'user-menu',
@@ -34,3 +36,4 @@ UserMenu.defaultProps = {
 
     ]
 };
+
