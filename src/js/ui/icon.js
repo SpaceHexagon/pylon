@@ -29,13 +29,12 @@ export default class Icon extends React.Component {
 
 	render() {
         var iconStyle = {
-			opacity: 0.9,
 			cursor: 'pointer',
             backgroundImage: 'url(' + this.props.src + ')'
         },
 		textClass = (this.props.text.length >1 ? "text" : "");
 		return (
-			<div className={"icon "+this.props.title+" "+textClass} style={iconStyle} title={this.props.title} onTouchStart={(event)=>this.handleClick(this, event)} onMouseDown={(event)=>this.handleClick(this, event)}>
+			<div className={"icon "+this.props.title+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
 				{this.props.text}
 			</div>
 		);

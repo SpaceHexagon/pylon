@@ -10,6 +10,7 @@ import UserMenu from './ui/user-menu.js';
 import Icon from './ui/icon.js';
 import Card from './ui/card.js';
 import ContextMenu from './ui/context-menu.js';
+import CreateMenu from './ui/create-menu.js';
 import NotificationsArea from './ui/notifications-area.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
@@ -49,6 +50,7 @@ ReactDOM.render(
 	  	<Menu systemEvents={systemEvents}/>
 	  	<UserMenu systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
+	  	<CreateMenu />
 	  	<ActivitiesView systemEvents={systemEvents} />
       </div>
   ),
