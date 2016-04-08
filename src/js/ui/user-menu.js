@@ -21,7 +21,7 @@ export default class UserMenu extends React.Component {
 	render() {
 		return (
 			<aside className="user-menu">
-				<Icon key={1} src="/images/dark/circle.png" title="User Preferences" text="Guest" open={()=>{}} />
+				<Icon key={1} src="/images/dark/circle.png" title="User Preferences" text={this.props.username} open={()=>{}} />
                 <Icon key={3} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
 			</aside>
 		);
@@ -32,6 +32,7 @@ export default class UserMenu extends React.Component {
 
 UserMenu.defaultProps = {
     name: 'user-menu',
+	username: localStorage.getItem("username") || "Guest",
     options: [
 
     ]

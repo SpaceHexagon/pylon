@@ -35,6 +35,7 @@ export default class SignIn extends React.Component {
 					// data.token
 					component.state.login = 2; // authenticate success
 					localStorage.setItem("token", data.token);
+					localStorage.setItem("username", username);
 					console.log("state", component.state.login);
 					window.location.href = "/"+username;
 
