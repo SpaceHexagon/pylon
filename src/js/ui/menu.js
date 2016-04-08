@@ -19,10 +19,23 @@ export default class Menu extends React.Component {
 
 	toggleCreateMenu () {
 		this.props.systemEvents.emit("toggle-create-menu", {});
+		this.props.systemEvents.emit("toggle-activity-view", {visible: false});
+		this.props.systemEvents.emit("toggle-search-bar", {visible: false});
+		this.props.systemEvents.emit("toggle-notifications", {visible: false});
 	}
 
 	toggleSearchBar () {
 		this.props.systemEvents.emit("toggle-search-bar", {});
+		this.props.systemEvents.emit("toggle-activity-view", {visible: false});
+		this.props.systemEvents.emit("toggle-create-menu", {visible: false});
+		this.props.systemEvents.emit("toggle-notifications", {visible: false});
+	}
+
+	toggleActivityView () {
+		this.props.systemEvents.emit("toggle-activity-view", {});
+		this.props.systemEvents.emit("toggle-create-menu", {visible: false});
+		this.props.systemEvents.emit("toggle-search-bar", {visible: false});
+		this.props.systemEvents.emit("toggle-notifications", {visible: false});
 	}
 
 	render() {
@@ -40,16 +53,20 @@ export default class Menu extends React.Component {
 Menu.defaultProps = {
     name: 'main',
     options: [
-        {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
+        {src: "/images/dark/pylon-w-a.png", title: "Activities", open: function(evt, menu) {
+			console.log("opening Launcher / activity view..");
+			menu.toggleActivityView();
+		} },
 		{src: "/images/dark/search.png", title: "Search", open: function(evt, menu) {
 			console.log("opening Search app..");
 			menu.toggleSearchBar();
 		} },
-//        {src: "/images/dark/star.png", title: "Activities", open: function(){ console.log("opening Activity View"); } },
 		{src: "/images/dark/folder.png", title: "File Browser", open: function(){ console.log("opening Files app.."); } },
 		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
 		//		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
-        {src: "/images/dark/plus.png", title: "Create & Upload", open: function(evt, menu){ menu.toggleCreateMenu();} }
+        {src: "/images/dark/plus.png", title: "Create & Upload", open: function(evt, menu) {
+			menu.toggleCreateMenu();}
+		}
 //      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
 //		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]

@@ -10,9 +10,15 @@ export default class SearchBar extends React.Component {
 		};
     }
 
-    toggle () {
+    toggle (set) {
 		this.setState({
-			visible: !this.state.visible
+			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
+		});
+	}
+
+	minimize () {
+		this.setState({
+			visible: false
 		});
 	}
 
@@ -20,7 +26,7 @@ export default class SearchBar extends React.Component {
 		var comp = this;
 		console.log(this.props);
 		this.props.systemEvents.on("toggle-search-bar", function (evt) {
-			comp.toggle();
+			comp.toggle(evt);
 		});
 	}
 
@@ -55,7 +61,6 @@ export default class SearchBar extends React.Component {
 	render() {
         var searchBarStyle = {
 			display: this.state.visible ? "inline-block" : "none"
-            /* backgroundImage: 'url(' + this.props.src + ')' */
         };
 
 		return (
@@ -83,9 +88,6 @@ SearchBar.defaultProps = {
 		{src: "/images/dark/folder.png", title: "Folders", open: function(){ console.log("opening Files app.."); } },
 		{src: "/images/dark/star.png", title: "Pages", open: function(){ console.log("opening Messaging app.."); } },
 		{src: "/images/dark/messaging.png", title: "Messages", open: function(){ console.log("opening Sharing app.."); } },
-		{src: "/images/dark/sharing.png", title: "Comments", open: function(){ console.log("Create / Upload Menu"); } },
-        {src: "/images/dark/plus.png", title: "Comments", open: function(){ console.log("Create / Upload Menu"); } }
-//      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
-//		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
+		{src: "/images/dark/sharing.png", title: "Shares", open: function(){ console.log("Create / Upload Menu"); } }
     ]
 };

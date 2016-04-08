@@ -15,9 +15,9 @@ export default class NotificationsArea extends React.Component {
 
     }
 
-	toggle () {
+	toggle (set) {
 		this.setState({
-			visible: !this.state.visible
+			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
 		});
 	}
 
@@ -25,7 +25,7 @@ export default class NotificationsArea extends React.Component {
 		var comp = this;
 		console.log(this.props);
 		this.props.systemEvents.on("toggle-notifications", function (evt) {
-			comp.toggle();
+			comp.toggle(evt);
 		});
 	}
 

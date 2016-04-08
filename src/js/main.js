@@ -15,7 +15,7 @@ import CreateMenu from './ui/create-menu.js';
 import NotificationsArea from './ui/notifications-area.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
-import ActivitiesView from './ui/activities-view.js';
+import ActivityView from './ui/activity-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
@@ -53,7 +53,7 @@ ReactDOM.render(
 	  	<SearchBar systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
 	  	<CreateMenu systemEvents={systemEvents}/>
-	  	<ActivitiesView systemEvents={systemEvents} />
+	  	<ActivityView systemEvents={systemEvents} />
       </div>
   ),
   document.getElementsByTagName('main')[0]

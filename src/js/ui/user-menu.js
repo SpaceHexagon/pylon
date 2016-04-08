@@ -16,6 +16,9 @@ export default class UserMenu extends React.Component {
 
 	toggleNotifications () {
 		this.props.systemEvents.emit("toggle-notifications", {});
+		this.props.systemEvents.emit("toggle-activity-view", {visible: false});
+		this.props.systemEvents.emit("toggle-search-bar", {visible: false});
+		this.props.systemEvents.emit("toggle-create-menu", {visible: false});
 	}
 
 	render() {

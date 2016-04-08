@@ -8,13 +8,13 @@ export default class CreateMenu extends React.Component {
 		// Initial state of the component
         this.state = {
             applet: null,
-        	mode: "minimized"
+        	visible: false
 		};
     }
 
-	toggleMenu () {
+	toggle (set) {
 		this.setState({
-			mode: (this.state.mode == "minimized" ? "expanded" : "minimized")
+			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
 		});
 	}
 
@@ -22,7 +22,7 @@ export default class CreateMenu extends React.Component {
 		var comp = this;
 		console.log(this.props);
 		this.props.systemEvents.on("toggle-create-menu", function (evt) {
-			comp.toggleMenu();
+			comp.toggle(evt);
 		});
 	}
 
@@ -35,7 +35,7 @@ export default class CreateMenu extends React.Component {
 	render() {
 
 		var menuStyle = {
-			display: this.state.mode == "minimized" ? "none" : "inline-block"
+			display: this.state.visible ? "inline-block" : "none"
 		}
 
 		return (

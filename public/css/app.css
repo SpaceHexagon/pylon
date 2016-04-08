@@ -261,7 +261,7 @@ form.search {
 }
 
 .signin div input {
-	margin-left: 1em;
+	margin-left: 0em;
     margin-bottom: 1em;
     max-width: 50%;
 }
@@ -343,7 +343,9 @@ form.search {
 	main {
 		margin-top: 1em;
 	}
-
+	form.search ul li div span, .create-menu ul li div span {
+		padding-top: 0em;
+	}
     .menu {
         width: 60px;
     	left: 0;

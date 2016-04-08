@@ -76,8 +76,6 @@ export default class SignIn extends React.Component {
 				</div>
 				<div>
 					<div>
-						<label>Remember me?</label>
-						<input type='checkbox' id='rememberme'/>
 						<input type='submit' id='submit' value="Sign In" />
 					</div>
 				</div>
