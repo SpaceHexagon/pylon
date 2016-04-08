@@ -66,7 +66,28 @@ export default class SearchBar extends React.Component {
 						<input type='submit' id='submit' value="Search" />
 					</div>
 				</div>
+				<ul>
+					{this.props.options.map(function(option, i){
+                	    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} /><span className="title">{option.title}</span></li>;
+                	})}
+				</ul>
 			</form>
 		);
 	}
 }
+
+
+SearchBar.defaultProps = {
+    name: 'main',
+    options: [
+        {src: "/images/dark/circle.png", title: "People", open: function(){ console.log("opening Activity View"); } },
+		{src: "/images/dark/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },
+		{src: "/images/dark/folder.png", title: "Folders", open: function(){ console.log("opening Files app.."); } },
+		{src: "/images/dark/star.png", title: "Pages", open: function(){ console.log("opening Messaging app.."); } },
+		{src: "/images/dark/messaging.png", title: "Messages", open: function(){ console.log("opening Sharing app.."); } },
+		{src: "/images/dark/sharing.png", title: "Comments", open: function(){ console.log("Create / Upload Menu"); } },
+        {src: "/images/dark/plus.png", title: "Comments", open: function(){ console.log("Create / Upload Menu"); } }
+//      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
+//		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
+    ]
+};

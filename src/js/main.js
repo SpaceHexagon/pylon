@@ -50,7 +50,7 @@ ReactDOM.render(
 	  	<Menu systemEvents={systemEvents}/>
 	  	<UserMenu systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
-	  	<CreateMenu />
+	  	<CreateMenu systemEvents={systemEvents}/>
 	  	<ActivitiesView systemEvents={systemEvents} />
       </div>
   ),

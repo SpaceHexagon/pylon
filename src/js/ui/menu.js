@@ -10,17 +10,23 @@ export default class Menu extends React.Component {
             applet: null
         };
     }
+
     bindApplet(applet) {
     	// When there's a change in the state, the component and all its
     	// sub-components get updated.
         this.setState({applet: applet});
     }
-	render() {
 
+	toggleCreateMenu () {
+		this.props.systemEvents.emit("toggle-create-menu", {});
+	}
+
+	render() {
+		var menu = this;
 		return (
 			<aside className="menu">
 				{this.props.options.map(function(option, i){
-                    return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
+                    return <Icon key={i} src={option.src} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
                 })}
 			</aside>
 		);
@@ -32,11 +38,11 @@ Menu.defaultProps = {
     options: [
         {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
 		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
-        {src: "/images/dark/star.png", title: "Places", open: function(){ console.log("opening Places app"); } },
-//		{src: "/images/dark/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },
-//		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
-		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
-        {src: "/images/dark/plus.png", title: "Create & Upload", open: function(){ console.log("Create / Upload Menu"); } }
+        {src: "/images/dark/star.png", title: "Activities", open: function(){ console.log("opening Activity View"); } },
+		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
+		//		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
+		{src: "/images/dark/folder.png", title: "File Browser", open: function(){ console.log("opening Files app.."); } },
+        {src: "/images/dark/plus.png", title: "Create & Upload", open: function(evt, menu){ menu.toggleCreateMenu();} }
 //      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
 //		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
