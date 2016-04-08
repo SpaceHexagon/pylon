@@ -34,8 +34,8 @@ export default class Icon extends React.Component {
         },
 		textClass = (this.props.text.length >1 ? "text" : "");
 		return (
-			<div className={"icon "+this.props.title+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
-				{this.props.text}
+			<div className={"icon "+this.props.title.replace(" ", "-")+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
+				<span>{this.props.text}</span>
 			</div>
 		);
 	}

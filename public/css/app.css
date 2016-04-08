@@ -106,6 +106,11 @@ input[type=button]:hover, input[type=submit]:hover {
 	width: auto;
 }
 
+.icon.System-Settings {
+	display: none;
+}
+
+
 article.card {
 	background: #FFF;
     border: 2px solid #f1f1f1;
@@ -183,13 +188,22 @@ article.card {
 	margin-bottom: 11px;
 }
 
-.create-menu ul li span {
+form.search ul li div, .create-menu ul li div {
 	position: relative;
-    top: 14px;
-	color: #6E6E6E;
+    top: 4px;
+    color: #6E6E6E !important;
+    cursor: pointer;
+    background-position-x: 0% !important;
+    padding-left: 50px;
 }
 
-ul li span.title {
+form.search ul li div span, .create-menu ul li div span {
+	width: 200px;
+    display: inline-block;
+    padding-top: 1em;
+}
+
+ul li div.title {
 	cursor: pointer;
 }
 
@@ -235,6 +249,10 @@ ul li span.title {
 }
 
 .signin {
+
+}
+
+form.search {
 
 }
 
@@ -370,7 +388,9 @@ ul li span.title {
 	.icon.Messaging {
 		display: inline-block !important;
 	}
-
+	.icon.System-Settings {
+		display: inline-block !important;
+	}
 	.icon.Messages {
 		display: inline-block !important;
 	}

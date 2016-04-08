@@ -21,6 +21,10 @@ export default class Menu extends React.Component {
 		this.props.systemEvents.emit("toggle-create-menu", {});
 	}
 
+	toggleSearchBar () {
+		this.props.systemEvents.emit("toggle-search-bar", {});
+	}
+
 	render() {
 		var menu = this;
 		return (
@@ -37,7 +41,10 @@ Menu.defaultProps = {
     name: 'main',
     options: [
         {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
-		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } },
+		{src: "/images/dark/search.png", title: "Search", open: function(evt, menu) {
+			console.log("opening Search app..");
+			menu.toggleSearchBar();
+		} },
 //        {src: "/images/dark/star.png", title: "Activities", open: function(){ console.log("opening Activity View"); } },
 		{src: "/images/dark/folder.png", title: "File Browser", open: function(){ console.log("opening Files app.."); } },
 		{src: "/images/dark/messaging.png", title: "Messaging", open: function(){ console.log("opening Messaging app.."); } },

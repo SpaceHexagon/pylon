@@ -7,6 +7,7 @@ import EventEmitter from 'events';
 // UI Components
 import Menu from './ui/menu.js';
 import UserMenu from './ui/user-menu.js';
+import SearchBar from './ui/search-bar.js';
 import Icon from './ui/icon.js';
 import Card from './ui/card.js';
 import ContextMenu from './ui/context-menu.js';
@@ -49,6 +50,7 @@ ReactDOM.render(
 		{content}
 	  	<Menu systemEvents={systemEvents}/>
 	  	<UserMenu systemEvents={systemEvents} />
+	  	<SearchBar systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
 	  	<CreateMenu systemEvents={systemEvents}/>
 	  	<ActivitiesView systemEvents={systemEvents} />

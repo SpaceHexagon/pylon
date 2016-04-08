@@ -22,7 +22,8 @@ export default class UserMenu extends React.Component {
 		return (
 			<aside className="user-menu">
 				<Icon key={1} src="/images/dark/circle.png" title="User Preferences" text={this.props.username} open={()=>{}} />
-                <Icon key={3} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
+                <Icon key={2} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
+				<Icon key={3} src="/images/dark/configure.png" title="System Settings"  open={()=>{ console.log("system settings"); }} />
 			</aside>
 		);
 	}

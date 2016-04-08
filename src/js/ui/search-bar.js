@@ -1,17 +1,28 @@
 import React from 'react';
+import Icon from './icon.js';
 
 export default class SearchBar extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
         this.state = {
-			login: 0
+			visible: false
 		};
     }
 
-    componentDidMount () {
+    toggle () {
+		this.setState({
+			visible: !this.state.visible
+		});
+	}
 
-    }
+	componentDidMount () {
+		var comp = this;
+		console.log(this.props);
+		this.props.systemEvents.on("toggle-search-bar", function (evt) {
+			comp.toggle();
+		});
+	}
 
     handleClick (component, event) {
         component.props.open();
@@ -30,45 +41,32 @@ export default class SearchBar extends React.Component {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				var data = JSON.parse(xhr.responseText);
 				console.log("data", data);
-				if (data.success) {
-					// data.token
-					component.state.login = 2; // authenticate success
-					localStorage.setItem("token", data.token);
-					console.log("state", component.state.login);
 
-				}
 			}
 		};
 
 		xhr.open("POST", "/api/"+mode, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("terms="+terms);
-		console.log("signing in... " + mode);
+		console.log("Searching.. " + mode);
 		return false;
 	}
 
 	render() {
-        var signinStyle = {
+        var searchBarStyle = {
+			display: this.state.visible ? "inline-block" : "none"
             /* backgroundImage: 'url(' + this.props.src + ')' */
         };
 
 		return (
-			<form className="search" style={signinStyle} onSubmit={(event)=>this.search(this, event)} >
-				<h2>Sign in or Register</h2>
+			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div>
 					<label>Terms</label>
-					<input type='text' id='terms'/>
-				</div>
-				<div>
-					<div>
-						<label>Remember me?</label>
-						<input type='checkbox' id='rememberme'/>
-						<input type='submit' id='submit' value="Search" />
-					</div>
+					<input type='text' id='terms'/><input type='submit' id='submit' value="Search" />
 				</div>
 				<ul>
 					{this.props.options.map(function(option, i){
-                	    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} /><span className="title">{option.title}</span></li>;
+                	    return <li><Icon key={i} src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
                 	})}
 				</ul>
 			</form>

@@ -42,7 +42,7 @@ export default class CreateMenu extends React.Component {
 			<aside className="create-menu" style={menuStyle}>
 				<ul>
 				{this.props.options.map(function(option, i){
-                    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} text={'<span className="title">'+option.title+'</span>'} /></li>;
+                    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} text={option.title} /></li>;
                 })}
 				</ul>
 			</aside>
