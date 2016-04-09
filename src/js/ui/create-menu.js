@@ -43,10 +43,8 @@ export default class CreateMenu extends React.Component {
 //		app.lightbox.setAttribute("style", "pointer-events: all;");
 //		app.lightbox.innerHTML = "Uploading...";
 
-		formData.append("")
-
 		for (var x = 0; x < ins; x++) {
-		   formData.append("fileUpload"+x, files[x]);
+		   formData.append("files[]", files[x]);
 		}
 
 		xhr.onload = function () {
@@ -61,7 +59,6 @@ export default class CreateMenu extends React.Component {
 			}
 		};
 		if ("upload" in new XMLHttpRequest) { // add upload progress event
-			if (!! app.lightbox) {
 				xhr.upload.onprogress = function (event) {
 				if (event.lengthComputable) {
 					var complete = (event.loaded / event.total * 100 | 0);
@@ -69,7 +66,6 @@ export default class CreateMenu extends React.Component {
 					//document.querySelector("#lightbox").innerHTML = "Uploading "+complete+"%";
 					}
 				}
-			}
 		}
 
 		xhr.open("POST", "/api/files", true);
@@ -95,7 +91,7 @@ export default class CreateMenu extends React.Component {
 				<ul>
 				{this.props.options.map(function(option, i){
 					if (option.title == "Upload Files") {
-						uploadInput = <input type="file" multiple="multiple" id="file-upload" onchange={(evt)=>{this.uploadFile(evt, comp)}} />;
+						uploadInput = <input type="file" multiple="multiple" id="file-upload" onChange={(evt)=>{comp.uploadFiles(evt, comp)}} />;
 					} else {
 						uploadInput = "";
 					}

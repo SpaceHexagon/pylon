@@ -22,12 +22,12 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 	router.post('/', function (req, res) {
 		var online = req.app.get('online'),
             busboy = new Busboy({ headers : req.headers }),
-			fileId = new mongo.ObjectId(),
 			username = online[req.headers['x-access-token']];
 
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 			console.log('got file', filename, mimetype, encoding);
-			var writeStream = gfs.createWriteStream({
+			var fileId = new mongo.ObjectId(),
+				writeStream = gfs.createWriteStream({
 				_id: fileId,
 				filename:filename,
 				root: username,
