@@ -207,6 +207,12 @@ ul li div.title {
 	cursor: pointer;
 }
 
+input#file-upload {
+	    position: relative;
+    left: -157px;
+    top: 17px;
+    opacity: 0;
+}
 
 .notifications-area {
 	max-width: 466px;

@@ -23,12 +23,15 @@ import SignIn from './ui/signin.js';
 
 // Applets
 import Applet from './applets/applet.js';
+import Upload from './applets/upload.js';
+import FileBrowser from './applets/file-browser.js';
 import TextEditor from './applets/text-editor.js';
 import ImageEditor from './applets/image-editor.js';
 import ModelEditor from './applets/model-editor.js';
 import Messenger from './applets/messaging.js';
 import Clock from './applets/clock.js';
 import Settings from './applets/settings.js';
+import UserPreferences from './applets/user-preferences.js';
 import Sharing from './applets/sharing.js';
 import Terminal from './applets/terminal.js';
 
@@ -75,13 +78,17 @@ window.three = {
 	renderer: renderer
 };
 
-var geometry = new THREE.BoxGeometry( 1, 1, 1 ),
-	material = new THREE.MeshBasicMaterial( { color: 0x333333 } ),
+var geometry = new THREE.OctahedronGeometry( 3, 0),
+	material = new THREE.MeshBasicMaterial( {
+//		wireframe: true,
+		color: 0xf1f1f1
+//		color: 0x333333
+	} ),
 	cube = new THREE.Mesh( geometry, material );
 
 renderer.setClearColor(0xfafafa);
 scene.add( cube );
-camera.position.z = 5;
+camera.position.z = 15;
 
 
 var world = { skybox: null };
@@ -114,8 +121,8 @@ var world = { skybox: null };
 
 var render = function () {
 	requestAnimationFrame( render );
-	cube.rotation.x += 0.02;
-	cube.rotation.y += 0.02;
+	cube.rotation.x += 0.005;
+	cube.rotation.y += 0.015;
 	renderer.render(scene, camera);
 };
 

@@ -34,6 +34,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 				mode:'w',
 				content_type:mimetype,
 				metadata: {
+					public: false,
 					modified: Date.now(),
 					username: username
 				}
@@ -54,7 +55,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	router.get('/all', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']],
+			username = online[req.headers['x-access-token'] || req.params.token],
 			userFiles = db.collection(username+".files");
 
         userFiles.find({}).toArray(function (err, files) {
@@ -67,7 +68,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
     router.get('/:file', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']],
+			username = online[req.headers['x-access-token'] || req.params.token],
 			userFiles = db.collection(username+".files");
 
         userFiles.find({filename: req.params.file}).toArray(function (err, files) {
@@ -92,21 +93,22 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	router.get('/search/:file', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']],
+			username = online[req.headers['x-access-token'] || req.params.token],
 			userFiles = db.collection(username+".files"),
 			results = [];
 
-		userFiles.find({ filename: req.params.file }).toArray(function (err, files) {
+		userFiles.find({ filename: { $regex: new RegExp(".*"+req.params.file+".*", 'i')}}).toArray(function (err, files) {
             if (err) {
-                return console.log("Error updating file ", err);
+                return console.log("Error searching for files ", err);
             }
 			if (files.length > 0) {
-				res.set('Content-Type', files[0].contentType);
-				var read_stream = gfs.createReadStream({
-					root: username,
-					filename: req.params.file
-				});
-				read_stream.pipe(res);
+				res.json(files);
+//				res.set('Content-Type', files[0].contentType);
+//				var read_stream = gfs.createReadStream({
+//					root: username,
+//					filename: req.params.file
+//				});
+//				read_stream.pipe(res);
 			} else {
 				return res.status(404).send(' ');
 			}
