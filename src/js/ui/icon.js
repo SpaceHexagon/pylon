@@ -36,6 +36,7 @@ export default class Icon extends React.Component {
 		return (
 			<div className={"icon "+this.props.title.replace(" ", "-")+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
 				<span>{this.props.text}</span>
+					{!! this.props.uploadInput ? this.props.uploadInput : ""}
 			</div>
 		);
 	}

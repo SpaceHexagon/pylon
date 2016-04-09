@@ -95,7 +95,7 @@ export default class CreateMenu extends React.Component {
 					} else {
 						uploadInput = "";
 					}
-                    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} text={option.title} />{uploadInput}</li>;
+                    return <li><Icon key={i} src={option.src} title={option.title} open={option.open} text={option.title} uploadInput={uploadInput} /></li>;
                 })}
 				</ul>
 			</aside>
