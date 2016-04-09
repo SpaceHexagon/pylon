@@ -222,6 +222,7 @@ ul li div.title {
 }
 
 input#file-upload {
+	cursor: pointer;
 	position: relative;
     left: -58px;
     top: -30px;
@@ -231,6 +232,13 @@ input#file-upload {
     border-radius: 2px;
     padding: 10px;
     box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+	-webkit-transition: all 0.25s ease-out;
+	-moz-transition: all 0.25s ease-out;
+	transition: all 0.25s ease-out;
+}
+
+input#file-upload:hover {
+	opacity: 1;
 }
 
 .notifications-area {
