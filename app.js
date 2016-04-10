@@ -7,17 +7,18 @@ var express = require('express'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-    shortId = require('shortid');
+    shortId = require('shortid'),
+	Grid = require('gridfs-stream');
 
 var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
+	gfs = null,
 	mongo = require('mongodb'),
     ObjectID = mongo.ObjectID,
     app = express(),
     secureApp = https.createServer(config, app),
     secureIO = null,
 	online = [];
-
 
 var routes = require('./routes/index'),
 	groupRoutes = require('./routes/groups'),
@@ -40,6 +41,11 @@ var Users = db.collection('users'),
 	Notifications = db.collection('notifications'),
 	Documents = db.collection('documents');
 
+db.open(function (err) { // make sure the db instance is open before passing into `Grid`
+	if (err) return handleError(err);
+	gfs = Grid(db, mongo);
+});
+
 app.set('online', online);
 app.set('superSecret', config.secret);
 app.set('json spaces', 2);
@@ -61,6 +67,34 @@ app.use('/admin', adminRoutes);
 app.post("/oauth2callback", function(req, res) {
 	res.send("OAuth2 Callback... ");
 });
+
+app.get('/:username/:file', function (req, res) {
+		var online = req.app.get('online'),
+			username = req.params.username,
+			userFiles = db.collection(username+".files");
+
+        userFiles.find({filename: req.params.file}).toArray(function (err, files) {
+			if (err) {
+				res.json(err);
+			}
+
+			if (files.length > 0) {
+				if (files[0].metadata.public == true) {
+					res.set('Content-Type', files[0].contentType);
+					var read_stream = gfs.createReadStream({
+						root: username,
+						filename: req.params.file
+					});
+					read_stream.pipe(res);
+				} else {
+					res.status(403).send("Forbidden");
+				}
+
+			} else {
+				return res.status(404).send(' ');
+			}
+		});
+	});
 
 app.get('/:username', function (req, res, next) {  // user homepage / portals
 

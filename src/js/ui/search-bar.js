@@ -16,6 +16,9 @@ export default class SearchBar extends React.Component {
 		this.setState({
 			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
 		});
+		if (this.state.visible) {
+			document.querySelector("#terms").focus();
+		}
 	}
 
 	minimize () {
@@ -35,6 +38,12 @@ export default class SearchBar extends React.Component {
     handleClick (component, event) {
         component.props.open();
     }
+
+	handleKeyDown (comp, evt) {
+		if (evt.which == 27) {
+			comp.toggle({visible: false});
+		}
+	}
 
 	search (component, event) {
 		if (!! event) {
@@ -70,18 +79,18 @@ export default class SearchBar extends React.Component {
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div style={{marginBottom: 2.2+'em'}}>
-					<input type='text' id='terms'/><input type='submit' id='submit' value="Search" />
+					<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
 				</div>
 				<ul>
 					{this.props.options.map(function(option, i){
-                	    return <li><Icon key={i} src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
+                	    return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
                 	})}
 				</ul>
 				<ul className="results">
 					{this.state.results.map(function(result, i){
 					 	var cardSrc = fileTypes[result.contentType] || "",
-							cardText = "Type "+result.contentType+" Length "+result.length+" Date"+result.uploadDate;
-						return <li><Card  key={i} CardIcon={<Icon src={cardSrc} open={()=>{}} title={result.filename} />} title={result.filename} text={cardText} /></li>;
+							cardText = " Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;
+						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{}} title={result.filename} />} title={result.filename} text={cardText} fileId={result._id} /></li>;
                 	})}
 				</ul>
 
