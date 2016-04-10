@@ -1,12 +1,14 @@
 import React from 'react';
 import Icon from './icon.js';
+import Card from './card.js';
 
 export default class SearchBar extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
         this.state = {
-			visible: false
+			visible: false,
+			results: []
 		};
     }
 
@@ -34,34 +36,36 @@ export default class SearchBar extends React.Component {
         component.props.open();
     }
 
-	search (component, event, signup) {
+	search (component, event) {
 		if (!! event) {
 			event.preventDefault();
 		}
-		console.log("signin state", this.state.login);
+
+		component.setState({results: []});
 
 		var xhr = new XMLHttpRequest(),
-			mode =  !signup ? "authenticate" : "signup",
-			terms = document.querySelector("#terms");
+			mode =  "files",
+			terms = document.querySelector("#terms").value;
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				var data = JSON.parse(xhr.responseText);
-				console.log("data", data);
-
+				component.setState({results: data});
 			}
 		};
 
-		xhr.open("POST", "/api/"+mode, true);
+		xhr.open("GET", "/api/"+mode+"/search/"+terms, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("terms="+terms);
-		console.log("Searching.. " + mode);
+		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
+		xhr.send();
+		console.log("searching " + mode +"...");
 		return false;
 	}
 
 	render() {
         var searchBarStyle = {
-			display: this.state.visible ? "inline-block" : "none"
-        };
+				display: this.state.visible ? "inline-block" : "none"
+        	},
+			fileTypes = this.props.fileTypes;
 
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
@@ -73,6 +77,14 @@ export default class SearchBar extends React.Component {
                 	    return <li><Icon key={i} src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
                 	})}
 				</ul>
+				<ul className="results">
+					{this.state.results.map(function(result, i){
+					 	var cardSrc = fileTypes[result.contentType] || "",
+							cardText = "Type "+result.contentType+" Length "+result.length+" Date"+result.uploadDate;
+						return <li><Card  key={i} CardIcon={<Icon src={cardSrc} open={()=>{}} title={result.filename} />} title={result.filename} text={cardText} /></li>;
+                	})}
+				</ul>
+
 			</form>
 		);
 	}
@@ -81,12 +93,25 @@ export default class SearchBar extends React.Component {
 
 SearchBar.defaultProps = {
     name: 'main',
+	results: [],
     options: [
-        {src: "/images/dark/circle.png", title: "People", open: function(){ console.log("opening Activity View"); } },
-		{src: "/images/dark/file.png", title: "Files", open: function(){ console.log("opening Files app.."); } },
-		{src: "/images/dark/folder.png", title: "Folders", open: function(){ console.log("opening Files app.."); } },
-		{src: "/images/dark/star.png", title: "Pages", open: function(){ console.log("opening Messaging app.."); } },
-		{src: "/images/dark/messaging.png", title: "Messages", open: function(){ console.log("opening Sharing app.."); } },
-		{src: "/images/dark/sharing.png", title: "Shares", open: function(){ console.log("Create / Upload Menu"); } }
-    ]
+        {src: "/images/dark/circle.png", title: "People", open: function() {
+			console.log("searching for people"); } },
+		{src: "/images/dark/file.png", title: "Files", open: function() {
+			console.log("searching for files"); } },
+		{src: "/images/dark/folder.png", title: "Folders", open: function() {
+			console.log("searching for folders"); } },
+		{src: "/images/dark/star.png", title: "Pages", open: function() {
+			console.log("searching for pages"); } },
+		{src: "/images/dark/messaging.png", title: "Messages", open: function() {
+			console.log("searching for messages"); } },
+		{src: "/images/dark/sharing.png", title: "Shares", open: function() {
+			console.log("searching for shares"); } }
+    ],
+	fileTypes: {
+		"image/png": "/images/files/dark/image.png",
+		"image/jpeg": "/images/files/dark/image.png",
+		"text/plain": "/images/dark/file.png",
+		"text/json": "/images/dark/file.png"
+	}
 };
