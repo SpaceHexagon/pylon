@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from './icon.js';
 import Card from './card.js';
+import FileContextMenu from './file-context-menu.js';
 
 export default class SearchBar extends React.Component {
 	constructor() {
@@ -89,7 +90,7 @@ export default class SearchBar extends React.Component {
 				<ul className="results">
 					{this.state.results.map(function(result, i){
 					 	var cardSrc = fileTypes[result.contentType] || "",
-							cardText = " Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;
+							cardText = ""; /*" Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;*/
 						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{}} title={result.filename} />} title={result.filename} text={cardText} fileId={result._id} /></li>;
                 	})}
 				</ul>

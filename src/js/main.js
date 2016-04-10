@@ -27,6 +27,7 @@ import SignIn from './ui/signin.js';
 // Applets
 import Applet from './applets/applet.js';
 import Upload from './applets/upload.js';
+import FileProperties from './applets/file-properties.js';
 import FileBrowser from './applets/file-browser.js';
 import TextEditor from './applets/text-editor.js';
 import ImageEditor from './applets/image-editor.js';
@@ -90,14 +91,12 @@ document.body.onkeydown = function (evt) {
 		if (evt.which == 27) {
 			visible = false;
 		}
-//		if ( document.activeElement == document.body) {
 		if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
 			systemEvents.emit("toggle-search-bar", {visible: visible});
 			systemEvents.emit("toggle-activity-view", {visible: false});
 			systemEvents.emit("toggle-create-menu", {visible: false});
 			systemEvents.emit("toggle-notifications", {visible: false});
 		}
-//		}
 	}
 };
 
