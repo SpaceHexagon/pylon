@@ -27,13 +27,20 @@ export default class Card extends React.Component {
 	render() {
         var cardStyle = {
             display: this.state.visible ? "inline-block" : "none"
-        };
+        },
+        contextMenu = null;
+
+        if (!!this.props.contextMenu) {
+            contextMenu = this.props.contextMenu;
+        } else {
+            contextMenu = <Icon src="/images/dark/x.png" title="close" open={()=>{this.close()}} />;
+        }
 
 		return (
 			<article className="card" style={cardStyle} title={this.props.title} >
                 {this.props.CardIcon}
                 <h3>{this.props.title}</h3>
-				<Icon src="/images/dark/x.png" title="close" open={()=>{this.close()}} />
+				{contextMenu}
                 <p>{this.props.text}</p>
 			</article>
 		);

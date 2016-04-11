@@ -137,8 +137,9 @@ article.card {
 .card h3 {
 	display: inline-block;
     vertical-align: top;
-    margin-top: 0.6em;
+    margin-top: 19px;
     margin-bottom: 0;
+    font-size: 16px;
 }
 
 .card .icon {
@@ -161,6 +162,14 @@ article.card {
 
 .context-menu {
 
+}
+
+.card .file-context-menu {
+    float: right;
+}
+
+.file-context-menu .icon {
+    margin-right:0;
 }
 
 .user-menu {
@@ -204,7 +213,7 @@ form.search ul li div, .create-menu ul li div {
     background-position-x: 0% !important;
     padding-left: 50px;
 }
-form.search ul.results li div {
+form.search ul.results li div.icon {
 	padding-left: 0;
 	float: left;
 }
@@ -285,11 +294,15 @@ input#file-upload:hover {
 	position: fixed;
 	top:0;
 	right: 0px;
-
+    font-size: 16px;
 }
 
 .notifications-area.visible {
 	display: block;
+}
+
+.notifications-area .card h3 {
+    margin-top: 14px;
 }
 
 .activities-view {

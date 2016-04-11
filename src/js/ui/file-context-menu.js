@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from './icon.js';
 
 export default class FileContextMenu extends React.Component {
 	constructor() {
@@ -26,14 +27,15 @@ export default class FileContextMenu extends React.Component {
 
 FileContextMenu.defaultProps = {
     name: 'main',
+    file_id: "",
     options: [
-        {src: "/images/dark/x.png", title: "Delete", text: "", open: function(evt, menu) {
-			console.log("deleting file");
-
-		} },
-		{src: "/images/dark/configure.png", title: "Edit", text: "", open: function(evt, menu) {
-			console.log("editing file");
-
-		} },
+		{ src: "/images/dark/configure.png", title: "Edit", text: "", open: function(evt, menu) {
+                console.log("editing file");
+            }
+        },
+        { src: "/images/dark/x.png", title: "Delete", text: "", open: function(evt, menu) {
+                console.log("deleting file");
+            }
+        }
 	]
 };

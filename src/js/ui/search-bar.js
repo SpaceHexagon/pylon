@@ -92,7 +92,8 @@ export default class SearchBar extends React.Component {
 					 	var cardSrc = fileTypes[result.contentType] || "",
 					 		fileURL = "/"+localStorage.getItem("username")+"/"+result.filename,
 							cardText = ""; /*" Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;*/
-						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ window.location.href = fileURL; }} title={result.filename} />} title={result.filename} text={cardText} fileId={result._id} /></li>;
+						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ window.location.href = fileURL; }} title={result.filename} />}
+                                   title={result.filename} text={cardText} contextMenu={<FileContextMenu file_id={result._id} />}/></li>;
                 	})}
 				</ul>
 
