@@ -14,6 +14,7 @@ var config = require('./app/config.js'),
     db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
 	gfs = null,
 	mongo = require('mongodb'),
+	gridDB = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017)),
     ObjectID = mongo.ObjectID,
     app = express(),
     secureApp = https.createServer(config, app),
@@ -41,9 +42,9 @@ var Users = db.collection('users'),
 	Notifications = db.collection('notifications'),
 	Documents = db.collection('documents');
 
-db.open(function (err) { // make sure the db instance is open before passing into `Grid`
+gridDB.open(function (err) { // make sure the db instance is open before passing into `Grid`
 	if (err) return handleError(err);
-	gfs = Grid(db, mongo);
+	gfs = Grid(gridDB, mongo);
 });
 
 app.set('online', online);
