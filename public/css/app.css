@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url(/fonts/OpenSans-Light.ttf);
+}
+
 body {
 	overflow-x: hidden;
     padding: 0;
@@ -7,6 +12,7 @@ body {
 /*    font-family: verdana, sans-serif;*/
 /*    font-family: 'Ubuntu', sans-serif;*/
     font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
 }
 
 main {
@@ -97,6 +103,7 @@ input[type=button]:hover, input[type=submit]:hover {
 
 
 .icon.text {
+	font-size: 16px;
     width: 48px;
     color: rgba(0, 0, 0, 0);
 }
@@ -160,8 +167,9 @@ article.card {
 	position: fixed;
     top: 0;
     right: 0;
-    padding-top: 0.5em;
+    padding-top: 0.4em;
     padding-right: 0.33em;
+    font-size: 16px;
 }
 
 .create-menu {
@@ -203,7 +211,8 @@ form.search ul.results li div {
 form.search ul li div span, .create-menu ul li div span {
 	width: 200px;
     display: inline-block;
-    padding-top: 1em;
+    padding-top: 0.66em;
+    padding-left: 0.4em;
 }
 .search ul {
 	list-style-type: none;
@@ -238,6 +247,13 @@ form.search ul li div span, .create-menu ul li div span {
 
 ul li div.title {
 	cursor: pointer;
+}
+
+div.User-Preferences span {
+	position: relative;
+    bottom: 8px;
+    right: 14px;
+    font-size: 20px;
 }
 
 input#file-upload {
@@ -342,6 +358,7 @@ form.search {
 
 
 .menu {
+	font-size: 16px;
 	position: fixed;
     top: 0;
     left: 0;
@@ -458,6 +475,12 @@ form.search {
 		height: 32px;
 		vertical-align: top;
 		background-position-x: 100%;
+	}
+	.User-Preferences.icon.text {
+		padding-top: 17px;
+		padding-right: 0.25em;
+		text-align: left;
+		height: 32px;
 	}
 	.menu .icon {
 		margin-top: 0.5em;
