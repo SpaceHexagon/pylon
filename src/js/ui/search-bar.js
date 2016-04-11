@@ -90,8 +90,9 @@ export default class SearchBar extends React.Component {
 				<ul className="results">
 					{this.state.results.map(function(result, i){
 					 	var cardSrc = fileTypes[result.contentType] || "",
+					 		fileURL = "/"+localStorage.getItem("username")+"/"+result.filename,
 							cardText = ""; /*" Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;*/
-						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{}} title={result.filename} />} title={result.filename} text={cardText} fileId={result._id} /></li>;
+						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ window.location.href = fileURL; }} title={result.filename} />} title={result.filename} text={cardText} fileId={result._id} /></li>;
                 	})}
 				</ul>
 
@@ -116,7 +117,9 @@ SearchBar.defaultProps = {
 		{src: "/images/dark/messaging.png", title: "Messages", open: function() {
 			console.log("searching for messages"); } },
 		{src: "/images/dark/sharing.png", title: "Shares", open: function() {
-			console.log("searching for shares"); } }
+			console.log("searching for shares"); } },
+		{src: "/images/dark/groups.png", title: "Groups", open: function(){
+			console.log("Searching Groups"); } }
     ],
 	fileTypes: {
 		"image/png": "/images/files/dark/image.png",
