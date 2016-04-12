@@ -19,7 +19,7 @@ main {
     background: rgba(255, 255, 255, 0.94);
     border-top: 2px #FFF solid;
     max-width: 1920px;
-    min-width: 226px;
+    min-width: 228px;
     min-height: 320px;
     width: 50%;
     padding: 3em;
@@ -159,24 +159,19 @@ article.card {
     left: 0.5em;
     bottom: 0.4em;
 }
-
 .card p {
 	margin-left: 52px;
     margin-top: 0;
 }
-
 .context-menu {
 
 }
-
 .card .file-context-menu {
     float: right;
 }
-
 .file-context-menu .icon {
     margin-right:0;
 }
-
 .user-menu {
 	position: fixed;
     top: 0;
@@ -185,12 +180,13 @@ article.card {
     padding-right: 0.33em;
     font-size: 16px;
 }
-
 .user-menu .icon {
 	opacity: 1;
 	color: white;
 }
-
+.user-menu .icon.text {
+	color: transparent;
+}
 .create-menu {
 	position: fixed;
     top: 72px;
@@ -199,22 +195,18 @@ article.card {
     width: 100%;
     box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
 }
-
 .create-menu .icon {
     margin-right: 0.4em;
     margin-bottom: 0.3em;
     margin-left: 0.2em;
 }
-
 .create-menu ul {
 	padding-left: 0.5em;
 }
-
 .create-menu ul li {
 	list-style-type: none;
 	margin-bottom: 11px;
 }
-
 form.search ul li div, .create-menu ul li div {
 	position: relative;
     top: 4px;
@@ -273,7 +265,7 @@ div.User-Preferences span {
     bottom: 8px;
     right: 14px;
     font-size: 20px;
-	color: white;
+	color: transparent;
 }
 
 .User-Preferences .icon {
@@ -518,6 +510,9 @@ form.search {
 		height: 32px;
 		vertical-align: top;
 		background-position-x: 100%;
+	}
+	div.User-Preferences span {
+		color: white;
 	}
 	.User-Preferences.icon.text {
 		padding-top: 17px;
