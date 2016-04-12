@@ -144,7 +144,7 @@ module.exports = function (app, db) {
     router.use('/posts', postsRouter);
     router.use('/comments', commentsRouter);
     router.use('/files', fileRouter);
-    router.use('/files', thumbRouter);
+    router.use('/thumbs', thumbRouter);
     router.use('/folders', folderRouter);
     router.use('/shares', shareRouter);
     router.use('/messages', messageRouter);
