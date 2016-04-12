@@ -64,6 +64,14 @@ NotificationsArea.defaultProps = {
 			open: function () {
 				console.log("opening user message notification..");
 			}
+		},
+		{
+			src: "/images/dark/upload.png",
+			title: "Upload Complete",
+			text:"Hello World.txt was uploaded successfully",
+			open: function () {
+				console.log("opening user message notification..");
+			}
 		}
     ]
 };

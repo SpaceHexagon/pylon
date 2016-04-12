@@ -20,12 +20,43 @@
         <meta name="twitter:description" content="Web based desktop environment, storage and sharing engine, built for virtual reality." />
         <meta name="twitter:image" content="https://vpylon.net/images/pylon-c-a.png" />
 		<link rel='icon' type="image/png" sizes='192x192' href="images/pylon-c-a.png">
-		<link rel='stylesheet' href="css/app.css">
-<!--		<link href='https://fonts.googleapis.com/css?family=Ubuntu:300' rel='stylesheet' type='text/css'>-->
-<!--		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>-->
+		<style>
+			body {
+				overflow-x: hidden;
+				padding: 0;
+				margin: 0;
+				background: #fafafa;
+				color: #303030;
+				font-size: 20px;
+			}
+			main {
+				background: rgba(255, 255, 255, 0.94);
+				border-top: 2px #FFF solid;
+				max-width: 1920px;
+				min-width: 226px;
+				min-height: 320px;
+				width: 50%;
+				padding: 3em;
+				padding-top: 1em;
+				margin: auto;
+				border-radius: 2px;
+				margin-top: 80px;
+				position: absolute;
+				left: 0;
+				right: 0;
+			}
+			canvas {
+				position: fixed;
+				z-index: -1;
+			}
+			.root {
+				width: 100%;
+			}
+		</style>
 	</head>
 	<body>
 		<main></main>
+		<link rel='stylesheet' href="css/app.css">
 		<script src="lib/socket.io.js"></script>
 		<script src="lib/three.min.js"></script>
 		<script src="js/main.js"></script>

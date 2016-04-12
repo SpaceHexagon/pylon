@@ -188,6 +188,7 @@ article.card {
 
 .user-menu .icon {
 	opacity: 1;
+	color: white;
 }
 
 .create-menu {
@@ -272,6 +273,7 @@ div.User-Preferences span {
     bottom: 8px;
     right: 14px;
     font-size: 20px;
+	color: white;
 }
 
 .User-Preferences .icon {
@@ -476,6 +478,7 @@ form.search {
 		background: rgba(255,255,255,0.9);
 		border-bottom-right-radius: 3px;
 		margin-bottom: 0;
+		margin-top: 0;
 	}
 	.search ul li div {
 		float: left;

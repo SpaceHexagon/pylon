@@ -35,6 +35,9 @@ export default class Card extends React.Component {
         } else {
             contextMenu = <Icon src="/images/dark/x.png" title="close" open={()=>{this.close()}} />;
         }
+		if (!!this.props.background && this.props.background.length > 1) {
+			cardStyle.backgroundImage = "url(/api/files/"+this.props.background+"?token="+localStorage.getItem("token")+")";
+		}
 
 		return (
 			<article className="card" style={cardStyle} title={this.props.title} >

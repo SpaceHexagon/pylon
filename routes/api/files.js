@@ -55,7 +55,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	router.get('/all', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token'] || req.params.token],
+			username = online[req.headers['x-access-token'] || req.query.token],
 			userFiles = db.collection(username+".files");
 
         userFiles.find({}).toArray(function (err, files) {
@@ -68,7 +68,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
     router.get('/:file', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token'] || req.params.token],
+			username = online[req.headers['x-access-token'] || req.query.token],
 			userFiles = db.collection(username+".files");
 
         userFiles.find({filename: req.params.file}).toArray(function (err, files) {
