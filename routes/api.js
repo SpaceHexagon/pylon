@@ -23,6 +23,7 @@ module.exports = function (app, db) {
         postsRouter = require("./api/posts.js")(app, db, Users),
         commentsRouter = require("./api/comments.js")(app, db, Users),
         fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
+        thumbRouter = require("./api/thumbs.js")(app, db, mongo, fs, Users),
         folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
 		externalsRouter = require("./api/externals.js")(app, db, mongo, fs, Users),
         shareRouter = require("./api/shares.js")(app, db, Users, Pages),
@@ -81,9 +82,13 @@ module.exports = function (app, db) {
 					if (err) throw err;
 					if (insertResult) console.log('Added!');
 
-					var online = app.get('online');
+					var online = app.get('online'),
+                        userFolders = null;
 					online[token] = username;
 					console.log(online[token]);
+                    db.createCollection(username + ".folders");
+                    userFolders = db.collection(username + ".folders");
+                    userFolders.insert({name: "home", public: false});
 
 					Users.findOne({username: username}, function(err, foundNewUser) { // work around to get ObjectId of newly created user
 						if (err) throw err;
@@ -139,6 +144,7 @@ module.exports = function (app, db) {
     router.use('/posts', postsRouter);
     router.use('/comments', commentsRouter);
     router.use('/files', fileRouter);
+    router.use('/files', thumbRouter);
     router.use('/folders', folderRouter);
     router.use('/shares', shareRouter);
     router.use('/messages', messageRouter);

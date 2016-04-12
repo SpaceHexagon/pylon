@@ -7,7 +7,11 @@ module.exports = function (app, db, Users) {
         Folders = db.collection("folders");
 
     router.post('/', function(req, res) {
-		Folders.insert({name: req.body.name, data: req.body.data}, function(err){
+        var online = req.app.get('online'),
+            username = online[req.headers['x-access-token']],
+            userFolders = db.collection(username+".folders");
+
+		userFolders.insert({name: req.body.name, data: req.body.data}, function(err){
             if (err) {
                 return console.log("Error inserting folder ", err);
             }
@@ -16,7 +20,11 @@ module.exports = function (app, db, Users) {
 	});
 
 	router.get('/:folder', function(req, res) {
-		Folders.findOne({name: req.params.folder}, function(err, found) {
+        var online = req.app.get('online'),
+            username = online[req.headers['x-access-token']],
+            userFolders = db.collection(username+".folders");
+
+		userFolders.findOne({name: req.params.folder}, function(err, found) {
             if (err) {
                 return console.log("Error getting folder: ", err);
             }
@@ -25,7 +33,11 @@ module.exports = function (app, db, Users) {
 	});
 
 	router.get('/search/:folder', function(req, res) {
-		Folders.find({name: req.params.folder}).toArray(function (err, found) {
+        var online = req.app.get('online'),
+            username = online[req.headers['x-access-token']],
+            userFolders = db.collection(username+".folders");
+
+		userFolders.find({name: req.params.folder}).toArray(function (err, found) {
             if (err) {
                 return console.log("Error searching for folder: ", err);
             }
@@ -33,17 +45,12 @@ module.exports = function (app, db, Users) {
         });
 	});
 
-	router.put('/:folder', function(req, res) {
-		Folders.update({_id: ObjectID(req.body.id)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
-            if (err) {
-                return console.log("Error updating folder: ", err);
-            }
-            res.json({success: true, message: "Folder Updated"});
-        });
-	});
-
 	router.delete('/:folder', function(req, res) {
-		Folders.remove({_id: ObjectID(req.body.id)}, function(err) {
+        var online = req.app.get('online'),
+            username = online[req.headers['x-access-token']],
+            userFolders = db.collection(username+".folders");
+
+		userFolders.remove({_id: ObjectID(req.body.id)}, function(err) {
             if(err) {
                 return console.log('Error removing folder: ', err);
             }
