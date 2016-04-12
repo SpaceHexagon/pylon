@@ -93,7 +93,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	router.get('/search/:file', function (req, res) {
 		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token'] || req.params.token],
+			username = online[req.headers['x-access-token'] || req.query.token],
 			userFiles = db.collection(username+".files"),
 			results = [];
 
