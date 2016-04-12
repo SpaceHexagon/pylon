@@ -53,23 +53,23 @@ export default class Menu extends React.Component {
 Menu.defaultProps = {
     name: 'main',
     options: [
-        {src: "/images/dark/pylon-w-a.png", title: "Activities", text: "Activities", open: function(evt, menu) {
+        {src: "/images/pylon-w-a.png", title: "Activities", text: "Activities", open: function(evt, menu) {
 			console.log("opening Launcher / activity view..");
 			menu.toggleActivityView();
 		} },
-		{src: "/images/dark/plus.png", title: "Create & Upload", text: "Create & Upload", open: function(evt, menu) {
+		{src: "/images/plus.png", title: "Create & Upload", text: "Create & Upload", open: function(evt, menu) {
 			menu.toggleCreateMenu();}
 		},
-		{src: "/images/dark/search.png", title: "Search", text: "Search", open: function(evt, menu) {
+		{src: "/images/search.png", title: "Search", text: "Search", open: function(evt, menu) {
 			console.log("opening Search app..");
 			menu.toggleSearchBar();
 		} },
-		{src: "/images/dark/folder.png", title: "File Browser", text: "File Browser", open: function(){ console.log("opening Files app.."); } },
-		{src: "/images/dark/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } }
-		//		{src: "/images/dark/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
+		{src: "/images/folder.png", title: "File Browser", text: "File Browser", open: function(){ console.log("opening Files app.."); } },
+		{src: "/images/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } }
+		//		{src: "/images/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
 
-//      {src: "/images/dark/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
-//		{src: "/images/dark/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
+//      {src: "/images/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
+//		{src: "/images/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
 

@@ -16,15 +16,16 @@ body {
 }
 
 main {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px #E5E5E5 solid;
+    background: rgba(255, 255, 255, 0.94);
+    border-top: 2px #FFF solid;
     max-width: 1920px;
     min-width: 226px;
-	min-height: 320px;
+    min-height: 320px;
     width: 50%;
     padding: 3em;
     padding-top: 1em;
     margin: auto;
+    border-radius: 2px;
     margin-top: 80px;
     position: absolute;
     left: 0;
@@ -91,6 +92,10 @@ input[type=button]:hover, input[type=submit]:hover {
     margin-left: 0.2em;
     display: inline-block;
 	vertical-align: top;
+}
+
+.menu .icon {
+	opacity : 1;
 }
 
 .icon.Messaging {
@@ -181,6 +186,10 @@ article.card {
     font-size: 16px;
 }
 
+.user-menu .icon {
+	opacity: 1;
+}
+
 .create-menu {
 	position: fixed;
     top: 72px;
@@ -263,6 +272,10 @@ div.User-Preferences span {
     bottom: 8px;
     right: 14px;
     font-size: 20px;
+}
+
+.User-Preferences .icon {
+	opacity: 1;
 }
 
 input#file-upload {
@@ -379,8 +392,8 @@ form.search {
     padding-left: 9px;
     height: 52px;
     width: 100%;
-    background: #FFF;
-    border-bottom: 2px #E5E5E5 solid;
+   	background: rgba(0, 0, 0, 0.47);
+	border-bottom: 2px rgba(0, 0, 0, 0.26) solid;
 }
 
 .emojis {
@@ -434,7 +447,7 @@ form.search {
 	form.search {
 		position: fixed;
 		top: 147px;
-		left: 71px;
+		left: 72px;
 		background: rgba(255, 255, 255, 0.9);
 		width: 284px;
 		margin: auto;
@@ -442,7 +455,8 @@ form.search {
 		text-align: center;
 		padding: 0.25em;
 		overflow-y: hidden;
-    	height: auto;
+		border-top-right-radius: 3px;
+		height: auto;
 	}
 	.search ul.results {
 		position: fixed;
@@ -455,29 +469,42 @@ form.search {
 		padding-left: 0;
 		float: left;
 		position: fixed;
-		left: 86px;
-		 top: 192px;
+		left: 72px;
+		padding-left: 11px;
+		top: 192px;
+		width: 283px;
+		background: rgba(255,255,255,0.9);
+		border-bottom-right-radius: 3px;
+		margin-bottom: 0;
+	}
+	.search ul li div {
+		float: left;
+		margin-bottom: 1em;
 	}
     .menu {
         width: 60px;
-    	left: 0;
-    	height: 100%;
-		background: #FFF;
+		left: 0;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.47);
 		margin-top: 0 !important;
-		border-right: 2px #E5E5E5 solid;
+		border-right: 2px rgba(0, 0, 0, 0.26) solid;
 		padding-top: 10px;
 		padding-left: 10px;
     }
 	.create-menu {
-		top: 0px;
+		top: 72px;
 		left: 72px;
-		background: rgba(255, 255, 255, 0.0);
+		background: rgba(255, 255, 255, 0.9);
 		width: auto;
 		box-shadow: none;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
 	}
 	.create-menu ul {
-		padding-left: 1em;
-    	padding-top: 66px;
+		 padding-left: 1em;
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		width: 200px;
 	}
 	.icon.text {
 		color: #303030;

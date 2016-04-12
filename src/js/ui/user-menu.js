@@ -24,15 +24,15 @@ export default class UserMenu extends React.Component {
 	render() {
 		return (
 			<aside className="user-menu">
-				<Icon key={1} src="/images/dark/circle.png" title="User Preferences" text={this.props.username} open={()=>{}} />
-                <Icon key={2} src="/images/dark/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
-				<Icon key={3} src="/images/dark/configure.png" title="System Settings"  open={()=>{ console.log("system settings"); }} />
+				<Icon key={1} src="/images/circle.png" title="User Preferences" text={this.props.username} open={()=>{}} />
+                <Icon key={2} src="/images/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
+				<Icon key={3} src="/images/configure.png" title="System Settings"  open={()=>{ console.log("system settings"); }} />
 			</aside>
 		);
 	}
 }
 
-/* <Icon key={2} src="/images/dark/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
+/* <Icon key={2} src="/images/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 
 UserMenu.defaultProps = {
     name: 'user-menu',
