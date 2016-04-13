@@ -241,7 +241,6 @@ form.search ul li div span, .create-menu ul li div span {
     width: 100%;
 	padding-bottom: 1em;
     max-height: 100%;
-    max-width: 50%;
     background: rgba(255, 255, 255, 0.64);
     box-shadow: 0px 2px 3px rgba(0,0,0,.1);
     border-radius: 12px;
@@ -249,6 +248,8 @@ form.search ul li div span, .create-menu ul li div span {
 
 .search ul li {
 	margin-bottom: 1em;
+}
+.search ul.results li {
 	display: inline;
 }
 /*
@@ -498,6 +499,9 @@ form.search {
 		margin-bottom: 0;
 		margin-top: 0;
 		position: inherit !important;
+	}
+	.search ul.results {
+		max-width: 50%;
 	}
 	.search ul li div {
 		float: left;
