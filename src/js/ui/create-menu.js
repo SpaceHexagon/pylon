@@ -31,56 +31,119 @@ export default class CreateMenu extends React.Component {
         this.setState({applet: applet});
     }
 
-	uploadFiles (evt, comp) {
+	uploadFiles (files, comp) {
 		console.log("uploading files");
 		var xhr = new XMLHttpRequest(),
 			formData = new FormData(),
-			files = document.querySelector("#file-upload").files,
-			ins = files.length;
-//		app.uploading = true;
-//		app.lightbox.setAttribute("class", "lightbox hover");
-//		app.lightbox.setAttribute("title", "Uploading...");
-//		app.lightbox.setAttribute("style", "pointer-events: all;");
-//		app.lightbox.innerHTML = "Uploading...";
+			ins = files.length,
+            thumbs = [],
+            images = /(\.jpg|\.jpeg|\.png|\.webp)$/i;
+
+		app.uploading = true;
+		app.lightbox.setAttribute("class", "lightbox hover");
+		app.lightbox.setAttribute("title", "Uploading...");
+		app.lightbox.setAttribute("style", "pointer-events: all;");
+		app.lightbox.innerHTML = "Uploading...";
 
 		for (var x = 0; x < ins; x++) {
+            if (images.test(files[x].name)) {
+                thumbs.push(files[x]);
+            }
 		   formData.append("files[]", files[x]);
 		}
 
 		xhr.onload = function () {
 			if (xhr.status == 200) {
-//				app.uploading = false;
-//				app.lightbox.setAttribute("class", "lightbox");
-//				app.lightbox.setAttribute("title", "Close");
-//				app.lightbox.setAttribute("style", "display: none;");
-//				app.lightbox.innerHTML = "";
+				app.uploading = false;
+				app.lightbox.setAttribute("class", "lightbox");
+				app.lightbox.setAttribute("title", "Close");
+				app.lightbox.setAttribute("style", "display: none;");
+				app.lightbox.innerHTML = "";
 				console.log("finished uploading");
 				alert("Upload Complete");
-				//socket.emit("pylon event", {user: app.user.name, dir: app.cwd, type: "refresh"});
+				socket.emit("pylon event", {type: "refresh", user: app.username, dir: app.cwd});
 			}
 		};
+
+		xhr.open("POST", "/api/files", true);
+		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
 		if ("upload" in new XMLHttpRequest) { // add upload progress event
 				xhr.upload.onprogress = function (event) {
 				if (event.lengthComputable) {
 					var complete = (event.loaded / event.total * 100 | 0);
 					window.title = "Uploading "+complete+"%";
 					//document.querySelector("#lightbox").innerHTML = "Uploading "+complete+"%";
-					}
 				}
+            }
 		}
 
-		xhr.open("POST", "/api/files", true);
-		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
-		xhr.send(formData);
+        if (thumbs.length < 1) {
+             xhr.send(formData);
+        } else {
+            comp.uploadThumbs(thumbs, function () {
+                console.log("thumbnail upload callback");
+                xhr.send(formData);
+            });
+        }
+
 		if (!! document.querySelector("#file-upload")) {
 			document.querySelector("#file-upload").files = [];
 		}
 		return false;
 	}
 
+    uploadThumbs (files, callback) {
+        console.log("uploading files");
+		var xhr = new XMLHttpRequest(),
+			formData = new FormData(),
+			ins = files.length;
+
+        console.log("uploading thumbs");
+
+		for (var x = 0; x < ins; x++) {
+            var reader = new FileReader();
+            reader.onload = function(event){
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement("canvas"),
+                        ctx = canvas.getContext("2d");
+                    canvas.setAttribute("style", "display: none;");
+                    document.body.appendChild(canvas);
+                    canvas.width = 1024;
+                    canvas.height = 1024;
+                    ctx.drawImage(img, 0, 0, 1024, 1024);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(files[x]);
+		   //formData.append("files[]", files[x]);
+		}
+
+//		xhr.onload = function () {
+//			if (xhr.status == 200) {
+//				console.log("finished uploading thumbs");
+//            }
+//		};
+//
+//		xhr.open("POST", "/api/thumbs", true);
+//        if ("upload" in new XMLHttpRequest) { // add upload progress event
+//            xhr.upload.onprogress = function (event) {
+//                if (event.lengthComputable) {
+//                    var complete = (event.loaded / event.total * 100 | 0);
+//                    console.log("uploading thumbnail "+complete);
+//                }
+//            }
+//        }
+//		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
+//        xhr.send(formData);
+
+        callback();
+		return false;
+    }
+
+
 
 	render() {
-
 		var comp = this,
 			menuStyle = {
 				display: this.state.visible ? "inline-block" : "none"
@@ -92,7 +155,7 @@ export default class CreateMenu extends React.Component {
 				<ul>
 				{this.props.options.map(function(option, i){
 					if (option.title == "Upload Files") {
-						uploadInput = <input type="file" multiple="multiple" id="file-upload" onChange={(evt)=>{comp.uploadFiles(evt, comp)}} />;
+						uploadInput = <input type="file" multiple="multiple" id="file-upload" onChange={(evt)=>{comp.uploadFiles(evt.target.files, comp)}} />;
 					} else {
 						uploadInput = "";
 					}

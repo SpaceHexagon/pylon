@@ -18,7 +18,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
         gfs = Grid(db, mongo);
 	});
 
-    router.post('/:fileid', function (req, res) {
+    router.post('/', function (req, res) {
 		var online = req.app.get('online'),
             busboy = new Busboy({ headers : req.headers }),
 			username = online[req.headers['x-access-token']];
@@ -41,7 +41,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 			file.pipe(writeStream);
 		}).on('finish', function() {
-			res.status(200).send(' ');
+			//res.status(200).send(' ');
 		});
 		req.pipe(busboy);
 	});
@@ -73,27 +73,13 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 				res.set('Content-Type', thumbs[0].contentType);
 				var read_stream = gfs.createReadStream({
 					root: username,
-					thumbname: req.params.thumb
+					filename: req.params.thumb
 				});
 				read_stream.pipe(res);
 			} else {
 				return res.status(404).send(' ');
 			}
 		});
-	});
-
-	router.delete('/:thumb', function(req, res) {
-		var online = req.app.get('online'),
-			username = online[req.headers['x-access-token']],
-			userThumbs = db.collection(username+".thumbs"),
-            thumbId = req.params.thumb;
-
-        userThumbs.remove({_id: ObjectID(thumbId)}, function (err) {
-			if(err) {
-				return console.log('Error removing thumb: ', err);
-			}
-            res.json({success: true, message: "Thumbnail Deleted"});
-        });
 	});
 
     router.delete('/:thumb', function(req, res) {

@@ -7,11 +7,21 @@ export default class UserMenu extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-            applet: null
+            applet: null,
+            resized: false
         };
-
 		this.toggleNotifications = this.toggleNotifications.bind(this);
+    }
 
+    componentDidMount () {
+		var comp = this;
+		this.props.systemEvents.on("window-resized", function (evt) {
+			comp.flagResized();
+		});
+	}
+
+    flagResized () {
+        this.setState({resized: !this.state.resized});
     }
 
 	toggleNotifications () {

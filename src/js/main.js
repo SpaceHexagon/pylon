@@ -61,6 +61,7 @@ ReactDOM.render(
 	  	<NotificationsArea systemEvents={systemEvents}/>
 	  	<CreateMenu systemEvents={systemEvents}/>
 	  	<ActivityView systemEvents={systemEvents} />
+        <div className="lightbox" style={{display: "none"}}></div>
       </div>
   ),
   document.getElementsByTagName('main')[0]
@@ -69,9 +70,13 @@ ReactDOM.render(
 window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
 
 window.app = {
+    username: localStorage.getItem("username"),
 	mode: "desktop",
+    cwd: "/home",
 	world: null,
-	typeToSearch: true
+	typeToSearch: true,
+    uploading: false,
+    lightbox: document.querySelector(".lightbox")
 }
 
 app.world = world = new World();
@@ -99,4 +104,8 @@ document.body.onkeydown = function (evt) {
 		}
 	}
 };
+
+window.onresize = function () {
+    systemEvents.emit("window-resized", {});
+}
 
