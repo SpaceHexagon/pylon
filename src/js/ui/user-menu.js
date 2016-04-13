@@ -22,23 +22,31 @@ export default class UserMenu extends React.Component {
 	}
 
 	render() {
+		var menu = this;
 		return (
 			<aside className="user-menu">
-				<Icon key={1} src="/images/circle.png" title="User Preferences" text={this.props.username} open={()=>{}} />
-                <Icon key={2} src="/images/notification.png" title="Notifications" text="" open={this.toggleNotifications} />
-				<Icon key={3} src="/images/configure.png" title="System Settings"  open={()=>{ console.log("system settings"); }} />
+			{this.props.options.map(function(option, i){
+				var iconSRC = option.src;
+				if (window.innerWidth <= 640) {
+					iconSRC = iconSRC.replace("/images", "/images/dark");
+				}
+				return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
+            })}
 			</aside>
+
 		);
 	}
 }
 
-/* <Icon key={2} src="/images/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 
+/* <Icon key={2} src="/images/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 UserMenu.defaultProps = {
     name: 'user-menu',
 	username: localStorage.getItem("username") || "Guest",
     options: [
-
+		{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
+		{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }},
+		{src:"/images/configure.png", title:"System Settings" , text: "", open: (evt, menu)=>{} }
     ]
 };
 

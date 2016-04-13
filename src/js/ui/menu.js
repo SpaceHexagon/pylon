@@ -43,7 +43,11 @@ export default class Menu extends React.Component {
 		return (
 			<aside className="menu">
 				{this.props.options.map(function(option, i){
-                    return <Icon key={i} src={option.src} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
+					var iconSRC = option.src;
+					if (window.innerWidth <= 640) {
+						iconSRC = iconSRC.replace("/images", "/images/dark");
+					}
+                    return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
                 })}
 			</aside>
 		);
