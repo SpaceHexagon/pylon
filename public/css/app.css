@@ -475,7 +475,7 @@ form.search {
 		height: auto;
 	}
 	.search div.results {
-		    position: fixed;
+		position: fixed;
 		overflow-x: hidden;
 		max-width: 50%;
 		background: rgba(255, 255, 255, 0.34);

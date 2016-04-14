@@ -93,49 +93,77 @@ export default class CreateMenu extends React.Component {
 	}
 
     uploadThumbs (files, callback) {
-        console.log("uploading files");
 		var xhr = new XMLHttpRequest(),
 			formData = new FormData(),
-			ins = files.length;
+			ins = files.length,
+			thumbs = files.length;
 
         console.log("uploading thumbs");
 
 		for (var x = 0; x < ins; x++) {
-            var reader = new FileReader();
+            var reader = new FileReader(),
+				file = files[x];
             reader.onload = function(event){
                 var img = new Image();
                 img.onload = function() {
                     var canvas = document.createElement("canvas"),
-                        ctx = canvas.getContext("2d");
+                        ctx = canvas.getContext("2d"),
+						shortest = 1,
+						padding = [0, 0];
+
+					if (img.width > img.height) {
+						padding[0] = (img.width - img.height) / 2;
+					} else {
+						padding[1] = (img.height - img.width) / 2;
+					}
+
                     canvas.setAttribute("style", "display: none;");
                     document.body.appendChild(canvas);
+					shortest = Math.min(img.width, img.height);
                     canvas.width = 1024;
                     canvas.height = 1024;
-                    ctx.drawImage(img, 0, 0, 1024, 1024);
-                }
+                    ctx.drawImage(img, padding[0], padding[1], shortest, shortest, 0, 0, 1024, 1024);
+
+                	var o = canvas.toDataURL("image/jpeg", 0.75);
+					var jpeg = o.split(',')[1];
+					var s = window.atob(jpeg);
+					var blob = new Blob([s],  {type: 'image/jpeg', encoding: 'utf-8'});
+
+					formData.append("blob", blob, file.name);
+
+					if (thumbs == 1) {
+						console.log("finished processing thumbnails");
+						xhr.send(formData);
+
+					}
+
+					thumbs --;
+
+				}
                 img.src = event.target.result;
             }
             reader.readAsDataURL(files[x]);
-		   //formData.append("files[]", files[x]);
+
 		}
 
-//		xhr.onload = function () {
-//			if (xhr.status == 200) {
-//				console.log("finished uploading thumbs");
-//            }
-//		};
-//
-//		xhr.open("POST", "/api/thumbs", true);
-//        if ("upload" in new XMLHttpRequest) { // add upload progress event
-//            xhr.upload.onprogress = function (event) {
-//                if (event.lengthComputable) {
-//                    var complete = (event.loaded / event.total * 100 | 0);
-//                    console.log("uploading thumbnail "+complete);
-//                }
-//            }
-//        }
-//		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
-//        xhr.send(formData);
+		xhr.onload = function () {
+			if (xhr.status == 200) {
+				console.log("finished uploading thumbs");
+				//callback();
+            }
+		};
+
+		xhr.open("POST", "/api/thumbs", true);
+        if ("upload" in new XMLHttpRequest) { // add upload progress event
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    var complete = (event.loaded / event.total * 100 | 0);
+                    console.log("uploading thumbnail "+complete);
+                }
+            }
+        }
+		xhr.setRequestHeader("x-access-token", localStorage.getItem("token"));
+//      xhr.send(formData);
 
         callback();
 		return false;

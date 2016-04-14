@@ -106,6 +106,7 @@ document.body.onkeydown = function (evt) {
 };
 
 window.onresize = function () {
+	app.three.renderer.setSize(window.innerWidth, window.innerHeight);
     systemEvents.emit("window-resized", {});
 }
 

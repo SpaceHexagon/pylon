@@ -62,9 +62,9 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
     router.get('/:thumb', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			userThumbs = db.collection(username+".thumbs");
+			userThumbs = db.collection(username+".thumbs.files");
 
-        userThumbs.find({file_id: req.params.thumb}).toArray(function (err, thumbs) {
+        userThumbs.find({filename: req.params.thumb}).toArray(function (err, thumbs) {
 			if (err) {
 				res.json(err);
 			}
@@ -72,7 +72,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 			if (thumbs.length > 0) {
 				res.set('Content-Type', thumbs[0].contentType);
 				var read_stream = gfs.createReadStream({
-					root: username,
+					root: username+".thumbs",
 					filename: req.params.thumb
 				});
 				read_stream.pipe(res);
