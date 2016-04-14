@@ -79,15 +79,17 @@ export default class SearchBar extends React.Component {
 
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
-				<div style={{marginBottom: 35+'px'}}>
-					<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
+				<div className="options">
+					<div style={{marginBottom: 35+'px'}}>
+						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
+					</div>
+					<ul>
+						{this.props.options.map(function(option, i){
+							return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
+						})}
+					</ul>
 				</div>
-				<ul>
-					{this.props.options.map(function(option, i){
-                	    return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
-                	})}
-				</ul>
-				<ul className="results">
+					<ul className="results">
 					{this.state.results.map(function(result, i){
 					 	var cardSrc = fileTypes[result.contentType] || "",
 					 		fileURL = "/api/files/"+result.filename+"?token="+localStorage.getItem("token"),

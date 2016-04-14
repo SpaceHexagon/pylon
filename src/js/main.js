@@ -91,20 +91,22 @@ document.body.addEventListener("click", function(evt) {
 	console.log(window.app.typeToSearch);
 }, true);
 
-document.body.onkeydown = function (evt) {
+document.body.addEventListener("keydown", function (evt) {
 	var visible = true;
-	if (app.mode == "desktop" && app.typeToSearch) {
+	if (app.mode == "desktop") {
 		if (evt.which == 27) {
 			visible = false;
 		}
-		if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
-			systemEvents.emit("toggle-search-bar", {visible: visible});
-			systemEvents.emit("toggle-activity-view", {visible: false});
-			systemEvents.emit("toggle-create-menu", {visible: false});
-			systemEvents.emit("toggle-notifications", {visible: false});
-		}
+//		if (app.typeToSearch) {
+			if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
+				systemEvents.emit("toggle-search-bar", {visible: visible});
+				systemEvents.emit("toggle-activity-view", {visible: false});
+				systemEvents.emit("toggle-create-menu", {visible: false});
+				systemEvents.emit("toggle-notifications", {visible: false});
+			}
+//		}
 	}
-};
+}, true);
 
 window.onresize = function () {
     systemEvents.emit("window-resized", {});
