@@ -6,6 +6,9 @@ import EventEmitter from 'events';
 
 // World
 import World from './world.js';
+// User Input
+import UserInput from './user-input.js';
+
 
 // UI Components
 import Menu from './ui/menu.js';
@@ -45,7 +48,8 @@ const systemEvents = new SystemEvents();
 
 var content = document.getElementsByTagName('main')[0].innerHTML;
 var token = localStorage.getItem("token"),
-	world = null;
+	world = null,
+	userInput = null;
 
 if (window.location.href.split(".net/")[1] == "") {
 	content = <SignIn />;
@@ -74,13 +78,14 @@ window.app = {
 	mode: "desktop",
     cwd: "/home",
 	world: null,
+	userInput: null,
 	typeToSearch: true,
     uploading: false,
     lightbox: document.querySelector(".lightbox")
 }
 
 app.world = world = new World();
-
+app.userInput = userInput = new UserInput();
 
 document.body.addEventListener("click", function(evt) {
 	if (evt.target.nodeName == "MAIN" || evt.target.nodeName == "CANVAS") {

@@ -558,7 +558,7 @@ form.search {
         width: 60px;
 		left: 0;
 		height: 100%;
-		background: rgba(0, 0, 0, 0.47) !important;
+		background-color: rgba(0, 0, 0, 0.75) !important;
 		background: white;
 		margin-top: 0 !important;
 		border-right: 2px rgba(0, 0, 0, 0.26) solid;
