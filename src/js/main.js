@@ -98,13 +98,14 @@ document.body.addEventListener("keydown", function (evt) {
 			visible = false;
 		}
 //		if (app.typeToSearch) {
+		if (evt.target.tagName.toLowerCase() != "input") {
 			if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
 				systemEvents.emit("toggle-search-bar", {visible: visible});
 				systemEvents.emit("toggle-activity-view", {visible: false});
 				systemEvents.emit("toggle-create-menu", {visible: false});
 				systemEvents.emit("toggle-notifications", {visible: false});
 			}
-//		}
+		}
 	}
 }, true);
 

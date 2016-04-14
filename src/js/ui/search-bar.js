@@ -14,11 +14,14 @@ export default class SearchBar extends React.Component {
     }
 
     toggle (set) {
+		var input = null;
 		this.setState({
 			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
 		});
 		if (this.state.visible) {
-			document.querySelector("#terms").focus();
+			input = document.querySelector("#terms");
+			input.focus();
+			input.select();
 		}
 	}
 
@@ -80,7 +83,7 @@ export default class SearchBar extends React.Component {
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div className="options">
-					<div style={{marginBottom: 35+'px'}}>
+					<div style={{height: 38+'px'}}>
 						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
 					</div>
 					<ul>

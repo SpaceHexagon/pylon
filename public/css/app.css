@@ -153,6 +153,11 @@ article.card {
     min-height: 60px;
     max-width: 432px;
 }
+.search .options {
+	background: #FFF;
+    padding-bottom: 0.25em;
+}
+
 
 .card h3 {
 	display: inline-block;
@@ -296,14 +301,17 @@ form.search ul li div span, .create-menu ul li div span {
 .search label, .search input {
 	margin-right: 0em;
     float: left;
-    margin-left: 1.5em;
+    margin-left: 1em;
+    margin-top: 3px;
+    position: relative;
+    z-index: 999;
 }
 .search input[type=text] {
-	    margin-top: 8px;
+	margin-top: 7px;
     margin-left: 1em;
     margin-right: 0;
     font-size: 20px;
-    max-width: 167px;
+    max-width: 230px;
 }
 
 ul li div.title {
@@ -393,7 +401,7 @@ input#file-upload:hover {
 
 form.search {
     position: fixed;
-    top: 72px;
+    top: 58px;
     left: 0px;
     background: transparent;
     width: 100%;
@@ -517,7 +525,7 @@ form.search {
 		position: fixed;
 		left: 72px;
 		padding-left: 11px;
-		top: 192px;
+		top: 200px;
 		width: 283px;
 		background: rgba(255,255,255,0.9);
 		border-bottom-right-radius: 3px;
@@ -527,12 +535,13 @@ form.search {
 	}
 	.search div.options {
 		background: rgba(255, 255, 255, 0.9);
-		width: 293px;
+		width: 294px;
 		margin: auto;
 		height: auto;
 		position: fixed;
-		left: 73px;
+		left: 72px;
 		top: 157px;
+		border-top-right-radius: 3px;
 	}
 	.search ul.results {
 		max-width: 50%;
@@ -540,6 +549,10 @@ form.search {
 	.search ul li div {
 		float: left;
 		margin-bottom: 1em;
+	}
+	.search input[type=text] {
+		margin-top: 7px;
+    	max-width: 169px;
 	}
     .menu {
         width: 60px;
