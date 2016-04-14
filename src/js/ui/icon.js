@@ -14,8 +14,11 @@ export default class Icon extends React.Component {
     }
 
     handleClick (component, event) {
-		this.vibrate();
-        component.props.open();
+		var evt = event.nativeEvent;
+		if (evt.which != 3) {
+			this.vibrate();
+        	component.props.open();
+		}
     }
 
 	vibrate (data) {

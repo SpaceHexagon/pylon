@@ -81,6 +81,7 @@ window.app = {
 
 app.world = world = new World();
 
+
 document.body.addEventListener("click", function(evt) {
 	if (evt.target.nodeName == "MAIN" || evt.target.nodeName == "CANVAS") {
 		window.app.typeToSearch = true;
@@ -106,7 +107,10 @@ document.body.onkeydown = function (evt) {
 };
 
 window.onresize = function () {
-	app.three.renderer.setSize(window.innerWidth, window.innerHeight);
     systemEvents.emit("window-resized", {});
+	world.three.renderer.setSize(window.innerWidth, window.innerHeight);
+	world.three.renderer.setSize(innerWidth, innerHeight);
+	world.three.camera.aspect = innerWidth / innerHeight;
+	world.three.camera.updateProjectionMatrix();
 }
 

@@ -19,10 +19,10 @@ main {
     background: rgba(255, 255, 255, 0.94);
     border-top: 2px #FFF solid;
     max-width: 1920px;
-    min-width: 228px;
+    min-width: 264px;
     min-height: 320px;
     width: 50%;
-    padding: 3em;
+    padding: 1.5em;
     padding-top: 1em;
     margin: auto;
     border-radius: 2px;
@@ -95,7 +95,7 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 
 .menu .icon {
-	opacity : 1;
+	opacity : 0.75;
 }
 
 .icon.Messaging {
@@ -124,20 +124,35 @@ input[type=button]:hover, input[type=submit]:hover {
 
 
 article.card {
-	    background: #FFF;
+	background: #FFF;
     border: 2px solid #f1f1f1;
     border-radius: 4px;
-    padding: 1em;
+    padding: 0.5em;
     margin: 1em;
     margin-top: 1em;
     margin-bottom: 0;
-    min-width: 240px;
+    margin-left: 0;
+    min-width: 300px;
     min-height: 60px;
     max-width: 432px;
     display: inline-block;
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
+}
+
+.search article.card {
+	background: #FFF;
+    border: 2px solid #f1f1f1;
+    border-radius: 4px;
+    padding: 0.5em;
+    margin: 1em;
+    margin-top: 1em;
+    margin-left: 0em;
+    margin-bottom: 0;
+    min-width: 300px;
+    min-height: 60px;
+    max-width: 432px;
 }
 
 .card h3 {
@@ -171,8 +186,18 @@ article.card {
 .card .file-context-menu {
     float: right;
 }
+.search .card .file-context-menu {
+	padding-left: 0;
+}
 .file-context-menu .icon {
     margin-right:0;
+	opacity: 0.2;
+	-webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+.file-context-menu .icon:hover {
+	opacity: 1;
 }
 .user-menu {
 	position: fixed;
@@ -183,7 +208,7 @@ article.card {
     font-size: 16px;
 }
 .user-menu .icon {
-	opacity: 1;
+	opacity: 0.75;
 	color: white;
 }
 .user-menu .icon.text {
@@ -193,7 +218,7 @@ article.card {
 	position: fixed;
     top: 72px;
     left: 0px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     width: 100%;
     box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
 }
@@ -293,6 +318,7 @@ div.User-Preferences span {
 .User-Preferences .icon {
 	opacity: 1;
 }
+
 
 input#file-upload {
 	cursor: pointer;
@@ -553,10 +579,15 @@ form.search {
 		height: 32px;
 	}
 	.menu .icon {
+		opacity: 1;
 		margin-top: 0.5em;
 		margin-bottom: 0.5em;
 		margin-right: 0em;
     	margin-left: 0em;
+	}
+
+	.user-menu .icon {
+		opacity: 1;
 	}
 
 	.icon.Messaging {

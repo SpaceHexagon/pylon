@@ -18,19 +18,19 @@ export default class World {
 			var geometry = new THREE.OctahedronGeometry( 3, 0),
 				material = new THREE.MeshBasicMaterial( {
 			//		wireframe: true,
-					color: 0xf1f1f1
+					color: 0xffffff
 			//		color: 0x333333
 				} ),
 				cube = new THREE.Mesh(geometry, material );
 
-			renderer.setClearColor(0xfafafa);
+			renderer.setClearColor(0x383838);
 			scene.add(cube);
 			camera.position.z = 15;
 
 			this.skybox = null;
 
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky.png", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -55,24 +55,21 @@ export default class World {
 
 
 
+//			var groundGeom = new THREE.PlaneGeometry(100000, 100000, 12, 12);
+//			var groundMat = new THREE.MeshBasicMaterial({color: 0xf0f0f0});
+//			var ground = new THREE.Mesh(groundGeom, groundMat);
+//			ground.rotateX(Math.PI / 2);
+//			three.scene.add(ground);
+
 
 			function render () {
 				requestAnimationFrame( render );
-				cube.rotation.x += 0.005;
-				cube.rotation.y += 0.015;
+				cube.rotation.x += 0.0025;
+				cube.rotation.y += 0.005;
 				renderer.render(scene, camera);
 			};
 
 			render();
-
-
-			window.onresize = function () {
-				if (!! three.renderer) {
-					three.renderer.setSize(innerWidth, innerHeight);
-					three.camera.aspect = innerWidth / innerHeight;
-					three.camera.updateProjectionMatrix();
-				}
-			};
     }
 
 };
