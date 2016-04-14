@@ -9,7 +9,8 @@ export default class SearchBar extends React.Component {
 		// Initial state of the component
         this.state = {
 			visible: false,
-			results: []
+			results: [],
+			lastSearch: ""
 		};
     }
 
@@ -46,6 +47,11 @@ export default class SearchBar extends React.Component {
 	handleKeyDown (comp, evt) {
 		if (evt.which == 27) {
 			comp.toggle({visible: false});
+		} else {
+			if (comp.state.lastSearch != evt.target.value) {
+				comp.search(comp, event);
+			}
+			comp.setState({lastSearch: evt.target.value});
 		}
 	}
 
