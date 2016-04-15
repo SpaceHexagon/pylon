@@ -160,11 +160,13 @@ article.card {
 
 
 .card h3 {
-	display: inline-block;
+    display: inline-block;
     vertical-align: top;
     margin-top: 19px;
     margin-bottom: 0;
     font-size: 16px;
+    font-weight: 100;
+    max-width: 214px;
 }
 
 .card .icon {
@@ -189,6 +191,8 @@ article.card {
 }
 .card .file-context-menu {
     float: right;
+    max-width: 50px;
+    max-height: 400px;
 }
 .search .card .file-context-menu {
 	padding-left: 0;
@@ -203,6 +207,14 @@ article.card {
 .file-context-menu .icon:hover {
 	opacity: 1;
 }
+.file-context-menu ul.context-options {
+    overflow: hidden;
+    position: relative;
+    right: 258px;
+    top: -60px;
+    width: 60px;
+}
+
 .user-menu {
 	position: fixed;
     top: 0;
@@ -496,6 +508,9 @@ form.search {
 	main {
 		margin-top: 1em;
 	}
+    .card h3 {
+        max-width: auto;
+    }
 	form.search {
 		position: fixed;
 		top: 0px;
@@ -519,7 +534,7 @@ form.search {
 	form.search ul li div span, .create-menu ul li div span {
 		padding-top: 0em;
 	}
-	.search ul {
+	.search ul.modes {
 		padding-left: 0;
 		float: left;
 		position: fixed;

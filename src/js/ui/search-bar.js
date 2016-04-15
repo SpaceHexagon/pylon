@@ -92,7 +92,7 @@ export default class SearchBar extends React.Component {
 					<div style={{height: 38+'px'}}>
 						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
 					</div>
-					<ul>
+					<ul className="modes">
 						{this.props.options.map(function(option, i){
 							return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
 						})}
