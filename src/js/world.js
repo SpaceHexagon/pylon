@@ -36,8 +36,9 @@ export default class World {
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
 				        map: skyTexture,
 						side: 1,
-						fog: false
-				        }),
+						fog: false,
+                        color:0x50eaff // too dark.. not dark enough? 0x60daff//  0x80faff too green
+				    }),
 					skyboxTopMat = new THREE.MeshBasicMaterial(),
 					x = 0;
 				while (x < 4) {
