@@ -75,6 +75,7 @@ window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085}
 
 window.app = {
     username: localStorage.getItem("username"),
+	mobile: (window.innerWidth <= 640),
 	mode: "desktop",
     cwd: "/home",
 	world: null,
@@ -120,5 +121,6 @@ window.onresize = function () {
 	world.three.renderer.setSize(innerWidth, innerHeight);
 	world.three.camera.aspect = innerWidth / innerHeight;
 	world.three.camera.updateProjectionMatrix();
+	app.mobile = (window.innerWidth <= 640);
 }
 
