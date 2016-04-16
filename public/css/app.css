@@ -156,6 +156,7 @@ article.card {
 .search .options {
 	background: #FFF;
     padding-bottom: 0.25em;
+    pointer-events: all;
 }
 
 
@@ -167,6 +168,21 @@ article.card {
     font-size: 16px;
     font-weight: 100;
     max-width: 214px;
+}
+.card h3 a {
+	position: relative;
+	z-index: 999999;
+	color: #7D7D7D;
+	text-decoration: none;
+}
+.card h3 a:hover {
+	text-decoration: underline;
+}
+.iconLink {
+	padding: 1em;
+    position: absolute;
+    left: 4px;
+    top: 4px;
 }
 
 .card .icon {
@@ -271,6 +287,7 @@ form.search ul li div span, .create-menu ul li div span {
 .search ul {
 	list-style-type: none;
 	padding-left: 0.5em;
+    pointer-events: all;
 }
 .search ul.results {
 	float: none;
@@ -420,6 +437,7 @@ form.search {
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+	pointer-events: none;
 }
 
 .signin div {

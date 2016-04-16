@@ -26,9 +26,11 @@ export default class Card extends React.Component {
 
 	render() {
         var cardStyle = {
-            display: this.state.visible ? "inline-block" : "none"
-        },
-        contextMenu = null;
+            	display: this.state.visible ? "inline-block" : "none"
+        	},
+        	contextMenu = null,
+			title = (this.props.link.length < 1 ? <h3>{this.props.title}</h3> : ""),
+			link = (this.props.link.length > 1 ? <h3><a href={this.props.link} target="_blank">{this.props.title}</a></h3> : "");
 
         if (!!this.props.contextMenu) {
             contextMenu = this.props.contextMenu;
@@ -42,10 +44,17 @@ export default class Card extends React.Component {
 		return (
 			<article className="card" style={cardStyle} title={this.props.title} >
                 {this.props.CardIcon}
-                <h3>{this.props.title}</h3>
+                {title}
+				{link}
 				{contextMenu}
-                <p>{this.props.text}</p>
+                {this.props.text}
 			</article>
 		);
 	}
 }
+
+
+Card.defaultProps = {
+	text: "",
+	link: ""
+};

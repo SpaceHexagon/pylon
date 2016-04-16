@@ -35,10 +35,16 @@ export default class Icon extends React.Component {
 			cursor: 'pointer',
             backgroundImage: 'url(' + this.props.src + ')'
         },
-		textClass = (this.props.text.length >1 ? "text" : "");
+		textClass = (this.props.text.length >1 ? "text" : ""),
+			link = (this.props.link.length > 1 ? <a className="iconLink" href={this.props.link} target="_blank"></a> : ""),
+			text = this.props.text;
+
 		return (
 			<div className={"icon "+this.props.title.replace(" ", "-")+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
-				<span>{this.props.text}</span>
+				<span>
+					{text}
+					{link}
+				</span>
 					{!! this.props.uploadInput ? this.props.uploadInput : ""}
 			</div>
 		);
@@ -46,13 +52,9 @@ export default class Icon extends React.Component {
 }
 
 
-
-
-
-
-
 Icon.defaultProps = {
 	title: "Icon",
 	src: "",
-	text: ""
+	text: "",
+	link: ""
 };
