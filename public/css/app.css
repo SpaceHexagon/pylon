@@ -504,7 +504,8 @@ form.search {
 
 @media screen and (min-width: 961px) {
 	main {
-		margin-top: 1em;
+		margin-top: 3.5em;
+		min-height: 480px;
 	}
     .card h3 {
         max-width: auto;

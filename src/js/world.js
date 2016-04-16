@@ -30,14 +30,14 @@ export default class World {
 			this.skybox = null;
 
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky.jpg", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-c.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
 				        map: skyTexture,
 						side: 1,
 						fog: false,
-                        color:0x50eaff // too dark.. not dark enough? 0x60daff//  0x80faff too green
+                        color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 				    }),
 					skyboxTopMat = new THREE.MeshBasicMaterial(),
 					x = 0;
