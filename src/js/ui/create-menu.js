@@ -24,6 +24,9 @@ export default class CreateMenu extends React.Component {
 		this.props.systemEvents.on("toggle-create-menu", function (evt) {
 			comp.toggle(evt);
 		});
+		this.props.systemEvents.on("upload-files", function (evt) {
+			comp.upload(evt.files, comp);
+		});
 	}
 
 
@@ -43,7 +46,7 @@ export default class CreateMenu extends React.Component {
 		app.lightbox.setAttribute("class", "lightbox hover");
 		app.lightbox.setAttribute("title", "Uploading...");
 		app.lightbox.setAttribute("style", "pointer-events: all;");
-		app.lightbox.innerHTML = "Uploading...";
+		app.lightbox.innerHTML = "<h3>Uploading...</h3>";
 
 		for (var x = 0; x < ins; x++) {
             if (images.test(files[x].name)) {
@@ -60,7 +63,6 @@ export default class CreateMenu extends React.Component {
 				app.lightbox.setAttribute("style", "display: none;");
 				app.lightbox.innerHTML = "";
 				console.log("finished uploading");
-				alert("Upload Complete");
 				socket.emit("pylon event", {type: "refresh", user: app.username, dir: app.cwd});
 			}
 		};
@@ -71,8 +73,7 @@ export default class CreateMenu extends React.Component {
 				xhr.upload.onprogress = function (event) {
 				if (event.lengthComputable) {
 					var complete = (event.loaded / event.total * 100 | 0);
-					window.title = "Uploading "+complete+"%";
-					//document.querySelector("#lightbox").innerHTML = "Uploading "+complete+"%";
+					app.lightbox.innerHTML = "<h3>Uploading "+complete+"%</h3>";
 				}
             }
 		}

@@ -80,6 +80,7 @@ window.app = {
     cwd: "/home",
 	world: null,
 	userInput: null,
+	lightboxTimeout: 0,
 	typeToSearch: true,
     uploading: false,
     lightbox: document.querySelector(".lightbox")
@@ -123,4 +124,27 @@ window.onresize = function () {
 	world.three.camera.updateProjectionMatrix();
 	app.mobile = (window.innerWidth <= 640);
 }
+
+document.body.ondragover = function () {
+       app.lightbox.setAttribute("class", "lightbox hover");
+       clearTimeout(app.lightboxTimeout);
+       app.lightboxTimeout = setTimeout(function () {
+                    if (!app.uploading) {
+                        app.lightbox.setAttribute("class", "lightbox");
+                        app.lightbox.setAttribute("style", "display: none;");
+                    }
+       }, 1000);
+       return false;
+};
+
+document.body.ondragend = function () { app.lightbox.setAttribute("class", "lightbox"); return false; };
+	//        window.onblur = function () {
+	//            app.lightbox.setAttribute("class", "lightbox");
+	//        };
+document.body.ondrop = function (e) {
+	app.lightbox.setAttribute("class", "lightbox");
+	e.preventDefault();
+	document.querySelector("#file-upload").files = e.dataTransfer.files;
+	//systemEvents.emit("start-upload", {files: e.dataTransfer.files});
+};
 
