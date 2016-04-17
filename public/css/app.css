@@ -139,11 +139,24 @@ article.card {
     -moz-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
 }
+.searchInputs {
+	height: 38px;
+    top: 0;
+    right: 0;
+    float: right;
+    display: inline-block;
+    background: #FFF;
+    padding-right: 20px;
+    border-radius: 3px;
+}
 
 .search article.card {
-	background: #FFF;
-    border: 2px solid #f1f1f1;
+	    background: #FFF;
+    border: 2px solid #B7B7B7;
     border-radius: 4px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 1px solid #B7B7B7;
     padding: 0.5em;
     margin: 1em;
     margin-top: 1em;
@@ -299,7 +312,7 @@ form.search ul li div span, .create-menu ul li div span {
     width: 100%;
     padding-bottom: 1em;
     max-height: 100%;
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.58);
     box-shadow: 0px 2px 3px rgba(0,0,0,.1);
     border-radius: 12px;
 }
@@ -531,7 +544,7 @@ form.search {
 	form.search {
 		position: fixed;
 		top: 0px;
-		left: 72px;
+		left: 0px;
 		text-align: center;
 		padding: 0.25em;
 		overflow-y: hidden;
@@ -558,22 +571,24 @@ form.search {
 		left: 72px;
 		padding-left: 11px;
 		top: 200px;
-		width: 283px;
+		width: 156px;
 		background: rgba(255,255,255,0.9);
 		border-bottom-right-radius: 3px;
+		border-top-right-radius: 3px;
 		margin-bottom: 0;
 		margin-top: 0;
 		position: inherit !important;
 	}
 	.search div.options {
-		background: rgba(255, 255, 255, 0.9);
+		background: transparent;
 		width: 294px;
 		margin: auto;
 		height: auto;
-		position: fixed;
-		left: 72px;
-		top: 157px;
 		border-top-right-radius: 3px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 60%;
 	}
 	.search ul.results {
 		max-width: 50%;
@@ -583,7 +598,7 @@ form.search {
 		margin-bottom: 1em;
 	}
 	.search input[type=text] {
-		margin-top: 7px;
+		margin-top: 5px;
     	max-width: 169px;
 	}
     .menu {

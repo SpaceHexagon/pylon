@@ -89,7 +89,7 @@ export default class SearchBar extends React.Component {
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div className="options">
-					<div style={{height: 38+'px'}}>
+					<div className="searchInputs">
 						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
 					</div>
 					<ul className="modes">

@@ -47,7 +47,7 @@ export default class Card extends React.Component {
                 {title}
 				{link}
 				{contextMenu}
-                {this.props.text}
+                <p>{this.props.text}</p>
 			</article>
 		);
 	}
