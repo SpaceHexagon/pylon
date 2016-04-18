@@ -64,7 +64,7 @@ export default class Card extends React.Component {
         }
 
 		if (background.length > 1) {
-			cardStyle.backgroundImage = "url("+this.state.background+")";
+			cardStyle.backgroundImage = "url("+background+")";
             cardClass += " background";
 		}
 
