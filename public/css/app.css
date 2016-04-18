@@ -397,7 +397,7 @@ input#file-upload {
 	cursor: pointer;
 	position: relative;
     left: -58px;
-    top: -30px;
+    top: -54px;
     opacity: 0;
     max-width: 185px;
     background: #FFF;
@@ -556,8 +556,8 @@ form.search {
 
 @media screen and (min-width: 961px) {
 	main {
-		margin-top: 3.5em;
 		min-height: 480px;
+    	margin-top: 3em;
 	}
     .card h3 {
         max-width: auto;

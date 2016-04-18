@@ -6,12 +6,18 @@ export default class Card extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-			visible: true
+			visible: true,
+			background: "",
+			thumbnailState: 0
 		};
     }
 
     componentDidMount () {
-
+		if (!!this.props.thumbURL) {
+ 			if (this.state.thumbnailState == 0) {
+				this.loadThumbnail(this.props.thumbURL);
+			}
+		}
     }
 
     handleClick (component, event) {
@@ -22,6 +28,17 @@ export default class Card extends React.Component {
 		this.setState({
 			visible: false
 		});
+	}
+
+	loadThumbnail (url) {
+		var xhr = new XMLHttpRequest(),
+			comp = this;
+		xhr.onload = function () {
+			comp.setState({thumbnailState: 1,
+						   background: JSON.parse(xhr.responseText).dataURL});
+		}
+		xhr.open("GET", url, true);
+		xhr.send();
 	}
 
 	render() {
@@ -37,8 +54,11 @@ export default class Card extends React.Component {
         } else {
             contextMenu = <Icon src="/images/dark/x.png" title="close" open={()=>{this.close()}} />;
         }
-		if (!!this.props.background && this.props.background.length > 1) {
+		if (this.props.background.length > 1) {
 			cardStyle.backgroundImage = "url("+this.props.background+")";
+		}
+		if (this.state.background.length > 1) {
+			cardStyle.backgroundImage = "url("+this.state.background+")";
 		}
 
 		return (
@@ -56,5 +76,6 @@ export default class Card extends React.Component {
 
 Card.defaultProps = {
 	text: "",
-	link: ""
+	link: "",
+	background: ""
 };

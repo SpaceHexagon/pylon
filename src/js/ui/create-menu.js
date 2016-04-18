@@ -125,26 +125,18 @@ export default class CreateMenu extends React.Component {
                     canvas.height = 1024;
                     ctx.drawImage(img, padding[0], padding[1], shortest, shortest, 0, 0, 1024, 1024);
 
-                	var o = canvas.toDataURL("image/jpeg", 0.75);
-					var jpeg = o.split(',')[1];
-					var s = window.atob(jpeg);
-					var blob = new Blob([s],  {type: 'image/jpeg', encoding: 'utf-8'});
-
-					formData.append("blob", blob, file.name);
+                	var dataURL = canvas.toDataURL("image/jpeg", 0.75);
+					formData.append(files[thumbs-1].name, dataURL);
 
 					if (thumbs == 1) {
 						console.log("finished processing thumbnails");
 						xhr.send(formData);
-
 					}
-
 					thumbs --;
-
 				}
                 img.src = event.target.result;
             }
             reader.readAsDataURL(files[x]);
-
 		}
 
 		xhr.onload = function () {

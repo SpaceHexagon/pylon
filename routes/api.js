@@ -87,6 +87,7 @@ module.exports = function (app, db) {
 					online[token] = username;
 					console.log(online[token]);
                     db.createCollection(username + ".folders");
+					db.createCollection(username + ".thumbs");
                     userFolders = db.collection(username + ".folders");
                     userFolders.insert({name: "home", public: false});
 

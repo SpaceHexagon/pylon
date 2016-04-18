@@ -15,42 +15,34 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 	db.open(function (err) {
         if (err) return handleError(err);
-        gfs = Grid(db, mongo);
+        //gfs = Grid(db, mongo);
 	});
 
     router.post('/', function (req, res) {
 		var online = req.app.get('online'),
-            busboy = new Busboy({ headers : req.headers }),
-			username = online[req.headers['x-access-token']];
+			username = online[req.headers['x-access-token']],
+			userThumbs = db.collection(username+".thumbs"),
+			busboy = new Busboy({ headers: req.headers });
 
-		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-			console.log('got file', filename, mimetype, encoding);
-			var fileId = new mongo.ObjectId(),
-				writeStream = gfs.createWriteStream({
-				_id: fileId,
-				filename:filename,
-				root: username+".thumbs",
-				mode:'w',
-				content_type:mimetype,
-				metadata: {
-					public: false,
-					modified: Date.now(),
-					username: username
-				}
-			});
-
-			file.pipe(writeStream);
-		}).on('finish', function() {
-			//res.status(200).send(' ');
+		busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+			console.log("fieldname", fieldname);
+			userThumbs.insert({filename: fieldname, dataURL: val});
 		});
+
+		busboy.on('finish', function() {
+		  console.log('Done parsing form!');
+		  res.writeHead(303, { Connection: 'close', Location: '/' });
+		  res.end();
+		});
+
 		req.pipe(busboy);
+
 	});
 
 	router.get('/all', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
 			userThumbs = db.collection(username+".thumbs");
-
         userThumbs.find({}).toArray(function (err, thumbs) {
 			if (err) {
 				res.json(err);
@@ -62,7 +54,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
     router.get('/:thumb', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			userThumbs = db.collection(username+".thumbs.files");
+			userThumbs = db.collection(username+".thumbs");
 
         userThumbs.find({filename: req.params.thumb}).toArray(function (err, thumbs) {
 			if (err) {
@@ -70,12 +62,8 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 			}
 
 			if (thumbs.length > 0) {
-				res.set('Content-Type', thumbs[0].contentType);
-				var read_stream = gfs.createReadStream({
-					root: username+".thumbs",
-					filename: req.params.thumb
-				});
-				read_stream.pipe(res);
+				res.set('Content-Type', 'application/json');
+				res.json({dataURL: thumbs[0].dataURL});
 			} else {
 				return res.status(404).send(' ');
 			}
@@ -85,20 +73,14 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
     router.delete('/:thumb', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']],
-			userFiles = db.collection(username+".thumbs.files"),
-			userChunks = db.collection(username+".thumbs.chunks"),
+			userFiles = db.collection(username+".thumbs"),
             fileId = req.params.thumb;
 
         userFiles.remove({_id: ObjectID(fileId)}, function (err) {
 			if(err) {
 				return console.log('Error removing file: ', err);
 			}
-            userChunks.remove({files_id: ObjectID(fileId)}, function (err){
-                if(err) {
-				    return console.log('Error removing chunks: ', err);
-                }
-            });
-            res.json({success: true, message: "File Deleted"});
+            res.json({success: true, message: "Thumbnail Deleted"});
         });
 	});
 
