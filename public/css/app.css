@@ -208,6 +208,10 @@ article.card {
 	color: #7D7D7D;
 	text-decoration: none;
 }
+.card.background, .card.background h3 a {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
 .card h3 a:hover {
 	text-decoration: underline;
 }
@@ -217,12 +221,10 @@ article.card {
     left: 4px;
     top: 4px;
 }
-
 .card .icon {
 	margin-left: 0;
 	padding-left: 0;
 }
-
 .card .icon.close {
 	opacity: 0.8 !important;
     float: right;
@@ -241,13 +243,14 @@ article.card {
 .card .file-context-menu {
     float: right;
     max-width: 50px;
-    max-height: 400px;
+    max-height: 450px;
 }
 .search .card .file-context-menu {
 	padding-left: 0;
 }
 .file-context-menu .icon {
     margin-right:0;
+    padding-left: 45px;
 	opacity: 0.2;
 	-webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
@@ -260,10 +263,12 @@ article.card {
     overflow: hidden;
     position: relative;
     right: 258px;
-    top: -60px;
-    width: 60px;
+    top: 0px;
+    width: 200px;
 }
-
+.file-context-menu ul.context-options .icon {
+    margin-bottom: 0.5em;
+}
 .user-menu {
 	position: fixed;
     top: 0;

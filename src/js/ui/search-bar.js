@@ -135,8 +135,8 @@ SearchBar.defaultProps = {
 			console.log("Searching Groups"); } }
     ],
 	fileTypes: {
-		"image/png": "/images/files/dark/image.png",
-		"image/jpeg": "/images/files/dark/image.png",
+		"image/png": "/images/files/image.png",
+		"image/jpeg": "/images/files/image.png",
 		"text/plain": "/images/dark/file.png",
 		"text/json": "/images/dark/file.png"
 	}

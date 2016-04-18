@@ -99,11 +99,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
             if (err) {
                 return console.log("Error searching for files ", err);
             }
-			if (files.length > 0) {
-				res.json(files);
-			} else {
-				return res.status(404).send(' ');
-			}
+			res.json(files);
         });
 	});
 

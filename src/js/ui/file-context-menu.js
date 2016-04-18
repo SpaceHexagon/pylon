@@ -25,14 +25,13 @@ export default class FileContextMenu extends React.Component {
 				<Icon src="/images/dark/configure.png" title="Options" open={(evt)=>{comp.configure();}} />
                 <ul className="context-options" style={optionsStyle}>
 				{this.props.options.map(function(option, i) {
-                    return <li key={i}><Icon src={option.src} title={option.title} open={(evt)=>{option.open(evt, menu);}} /></li>;
+                    return <li key={i}><Icon src={option.src} text={option.text} title={option.title} open={(evt)=>{option.open(evt, comp);}} /></li>;
                 })}
                 </ul>
 			</div>
 		);
 	}
 }
-
 
 FileContextMenu.defaultProps = {
     name: 'main',
