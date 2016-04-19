@@ -8,7 +8,7 @@ module.exports = function (app, db, Users) {
     router.post('/', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.insert({name: req.body.name, type: req.body.type, data: req.body.data}, function(err){
             if (err) {
@@ -21,7 +21,7 @@ module.exports = function (app, db, Users) {
 	router.get('/all', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.find({}).toArray(function(err, found) {
             if (err) {
@@ -34,7 +34,7 @@ module.exports = function (app, db, Users) {
 	router.get('/:building', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.find({_id: ObjectID(req.params.building)}).toArray(function(err, found) {
             if (err) {
@@ -47,7 +47,7 @@ module.exports = function (app, db, Users) {
 	router.get('/search/:building', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.find({name: req.params.building}).toArray(function (err, found) {
             if (err) {
@@ -60,7 +60,7 @@ module.exports = function (app, db, Users) {
 	router.put('/:building', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.update({_id: ObjectID(req.params.building)}, {$set: {name: req.body.name, data: req.body.data}}, function(err) {
             if (err) {
@@ -73,7 +73,7 @@ module.exports = function (app, db, Users) {
 	router.delete('/:building', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			buildings = db.collection("buildings");
+			buildings = db.collection(username+".buildings");
 
 		buildings.remove({_id: ObjectID(req.params.building)}, function(err) {
             if(err) {
