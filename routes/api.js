@@ -25,7 +25,9 @@ module.exports = function (app, db) {
         fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
         thumbRouter = require("./api/thumbs.js")(app, db, mongo, fs, Users),
         folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
-		externalsRouter = require("./api/externals.js")(app, db, mongo, fs, Users),
+		externalRouter = require("./api/externals.js")(app, db, Users),
+		structureRouter = require("./api/structures.js")(app, db, Users),
+		buildingRouter = require("./api/buildings.js")(app, db, Users),
         shareRouter = require("./api/shares.js")(app, db, Users, Pages),
         messageRouter = require("./api/messages.js")(app, db, Users),
         geometryRouter = require("./api/geometries.js")(app, db, Users);
@@ -86,6 +88,7 @@ module.exports = function (app, db) {
                         userFolders = null;
 					online[token] = username;
 					console.log(online[token]);
+					db.createCollection(username + ".buildings");
                     db.createCollection(username + ".folders");
 					db.createCollection(username + ".thumbs");
                     userFolders = db.collection(username + ".folders");
@@ -147,6 +150,9 @@ module.exports = function (app, db) {
     router.use('/files', fileRouter);
     router.use('/thumbs', thumbRouter);
     router.use('/folders', folderRouter);
+	router.use('/externals', externalRouter);
+	router.use('/structures', structureRouter);
+	router.use('/buildings', buildingRouter);
     router.use('/shares', shareRouter);
     router.use('/messages', messageRouter);
     router.use('/geometries', geometryRouter);
