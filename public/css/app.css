@@ -2,19 +2,15 @@
     font-family: 'Open Sans';
     src: url(/fonts/OpenSans-Light.ttf);
 }
-
 body {
 	overflow-x: hidden;
     padding: 0;
     margin: 0;
     background: #fafafa;
     color: #303030;
-/*    font-family: verdana, sans-serif;*/
-/*    font-family: 'Ubuntu', sans-serif;*/
     font-family: 'Open Sans', sans-serif;
 	font-size: 20px;
 }
-
 main {
     background: rgba(255, 255, 255, 0.94);
     border-top: 2px #FFF solid;
@@ -31,33 +27,27 @@ main {
     left: 0;
     right: 0;
 }
-
 canvas {
 	position: fixed;
 	z-index: -1;
 }
-
 .root {
 	width: 100%;
 }
-
 h1 {
     background: black;
 }
-
 p.logo {
     vertical-align: top;
     display: inline-block;
     margin-left: 0.5em;
 }
-
 img.logo {
     width: 48px;
     height: 48px;
     display: none;
     margin-left: 0.5em;
 }
-
 input[type=button], input[type=submit] {
     padding: 0.5em;
     color: white;
@@ -72,11 +62,9 @@ input[type=button], input[type=submit] {
 	-moz-transition: all 0.25s ease-out;
 	transition: all 0.25s ease-out;
 }
-
 input[type=button]:hover, input[type=submit]:hover {
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
 }
-
 .lightbox {
 	position: fixed;
 	top: 0px;
@@ -86,22 +74,18 @@ input[type=button]:hover, input[type=submit]:hover {
 	overflow: hidden;
 	text-align: center;
 }
-
 .lightbox h3 {
 	font-size: 200%;
 	padding-top: 2em;
 }
-
 .lightbox.hover {
 	height: 100%;
 	background: rgba(255, 255, 255, 0.9);
 	color: #222;
 }
-
 .applet {
 
 }
-
 .icon {
     opacity: 0.9;
     background-size: contain;
@@ -113,36 +97,27 @@ input[type=button]:hover, input[type=submit]:hover {
     display: inline-block;
 	vertical-align: top;
 }
-
 .menu .icon {
 	opacity : 0.75;
 }
-
 .icon.Messaging {
 	display: none;
 }
-
 .icon.Messages {
 	display: none;
 }
-
-
 .icon.text {
 	font-size: 16px;
     width: 48px;
     color: rgba(0, 0, 0, 0);
 }
-
 .icon.text.showText {
 	color: #303030;
 	width: auto;
 }
-
 .icon.System-Settings {
 	display: none;
 }
-
-
 article.card {
 	background: #FFF;
     border: 2px solid #f1f1f1;
@@ -169,7 +144,6 @@ article.card {
     padding-right: 20px;
     border-radius: 3px;
 }
-
 .search article.card {
 	    background: #FFF;
     border: 2px solid #B7B7B7;
@@ -191,8 +165,6 @@ article.card {
     padding-bottom: 0.25em;
     pointer-events: all;
 }
-
-
 .card h3 {
     display: inline-block;
     vertical-align: top;
@@ -341,30 +313,12 @@ form.search ul li div span, .create-menu ul li div span {
     box-shadow: 0px 2px 3px rgba(0,0,0,.1);
     border-radius: 12px;
 }
-
 .search ul li {
 	margin-bottom: 1em;
 }
 .search ul.results li {
 	display: inline;
 }
-/*
-.search div.results {
-	float: none;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 36px;
-    width: 100%;
-	max-height: 100%;
-    max-width: 640px;
-    background: rgba(255, 255, 255, 0.64);
-    box-shadow: 0px 2px 3px rgba(0,0,0,.1);
-    border-radius: 12px;
-}
-*/
-
 .search label, .search input {
 	margin-right: 0em;
     float: left;
@@ -380,11 +334,9 @@ form.search ul li div span, .create-menu ul li div span {
     font-size: 20px;
     max-width: 230px;
 }
-
 ul li div.title {
 	cursor: pointer;
 }
-
 div.User-Preferences span {
 	position: relative;
     bottom: 8px;
@@ -392,12 +344,9 @@ div.User-Preferences span {
     font-size: 20px;
 	color: transparent;
 }
-
 .User-Preferences .icon {
 	opacity: 1;
 }
-
-
 input#file-upload {
 	cursor: pointer;
 	position: relative;
@@ -413,11 +362,9 @@ input#file-upload {
 	-moz-transition: all 0.25s ease-out;
 	transition: all 0.25s ease-out;
 }
-
 input#file-upload:hover {
 	opacity: 1;
 }
-
 .notifications-area {
 	max-width: 466px;
 	min-width: 120px;
@@ -429,43 +376,33 @@ input#file-upload:hover {
 	right: 0px;
     font-size: 16px;
 }
-
 .notifications-area.visible {
 	display: block;
 }
-
 .notifications-area .card h3 {
     margin-top: 14px;
 }
-
 .activities-view {
 	display: none;
 }
-
 .activities-view.visible {
 	display: block;
 }
-
 .editor {
 
 }
-
 .file-view {
 
 }
-
 .list-view {
 
 }
-
 .vr-view {
 
 }
-
 .signin {
 
 }
-
 form.search {
     position: fixed;
     top: 58px;
@@ -477,17 +414,14 @@ form.search {
     overflow-x: hidden;
 	pointer-events: none;
 }
-
 .signin div {
 
 }
-
 .signin div input {
 	margin-left: 0em;
     margin-bottom: 1em;
     max-width: 50%;
 }
-
 .signin div input[type=text], .signin div input[type=password] {
     margin-left: 1em;
     margin-bottom: 1em;
@@ -496,12 +430,10 @@ form.search {
     border: 2px solid #EBEBEB;
     box-shadow: 0px 2px 10px rgba(0,0,0,0.10);
 }
-
 .signin div label {
 	    min-width: 80px;
     display: inline-block;
 }
-
 .menu {
 	font-size: 16px;
 	position: fixed;
@@ -514,7 +446,6 @@ form.search {
 	box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
    	background: white;
 }
-
 .emojis {
 	font-size: 42px;
     overflow: hidden;
@@ -522,7 +453,6 @@ form.search {
     color: rgba(43, 44, 122, 0.76);
     line-height: 1.5em;
 }
-
 .file-browser {
 
 }
@@ -558,10 +488,9 @@ form.search {
 	font-size: 32px;
 }
 
-
 @media screen and (min-width: 961px) {
 	main {
-		min-height: 480px;
+		min-height: 384px;
     	margin-top: 3em;
 	}
     .card h3 {
@@ -586,7 +515,6 @@ form.search {
 		padding-bottom: 1em;
 		border-radius: 3px;
 	}
-
 	form.search ul li div span, .create-menu ul li div span {
 		padding-top: 0em;
 	}
@@ -648,7 +576,7 @@ form.search {
 		border-bottom-right-radius: 3px;
 	}
 	.create-menu ul {
-		 padding-left: 1em;
+        padding-left: 1em;
 		margin-top: 0.5em;
 		margin-bottom: 0.5em;
 		width: 200px;
@@ -679,11 +607,9 @@ form.search {
 		margin-right: 0em;
     	margin-left: 0em;
 	}
-
 	.user-menu .icon {
 		opacity: 1;
 	}
-
 	.icon.Messaging {
 		display: inline-block !important;
 	}

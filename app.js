@@ -120,6 +120,10 @@ app.get('/:username', function (req, res, next) {  // user homepage / portals
 								pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
 								pylon += "<style> html { font-family: sans-serif; } </style>";
 								pylon += "<link rel='stylesheet' href='/css/app.css'>";
+                                if (!! pageResult.twemoji) {
+                                    pylon += "<script src='//twemoji.maxcdn.com/2/twemoji.min.js'></script>";
+                                    pylon += "<script>" + 'document.addEventListener("DOMContentLoaded", function () { if (window.innerWidth > 640) { twemoji.parse(document.body); } }, true); ' + "</script>";
+                                }
 							pylon += "</head>";
 							pylon += "<body>";
 								pylon += "<main>"+pageResult.content+"</main>";
