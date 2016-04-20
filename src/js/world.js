@@ -21,7 +21,10 @@ export default class World {
 					color: 0xffffff
 			//		color: 0x333333
 				} ),
-				cube = new THREE.Mesh(geometry, material );
+				cube = new THREE.Mesh(geometry, material ),
+				light = new THREE.PointLight(0xffffff, 1.1, 300000 );
+			scene.add(light);
+			light.position.set(0, 60000, 0);
 
 			renderer.setClearColor(0x383838);
 			scene.add(cube);
@@ -53,6 +56,18 @@ export default class World {
 				skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
 				skyTexture.needsUpdate = true;
 			});
+
+			if (window.location.href.split(".net")[1].length > 1) {
+
+				var platformGeom = new THREE.BoxGeometry(900, 60, 600),
+					platformMat = new THREE.MeshLambertMaterial({
+                        color: 0xffffff
+				    }),
+					platform = new THREE.Mesh(platformGeom, platformMat);
+					scene.add(platform);
+					platform.position.set(0, -520, -1000);
+
+			}
 
 
 

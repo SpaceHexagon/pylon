@@ -3,13 +3,10 @@ console.log('Pylon Interface Loading...');
 import ReactDOM from 'react-dom';
 import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
-
 // World
 import World from './world.js';
 // User Input
 import UserInput from './user-input.js';
-
-
 // UI Components
 import Menu from './ui/menu.js';
 import UserMenu from './ui/user-menu.js';
@@ -41,7 +38,6 @@ import Settings from './applets/settings.js';
 import UserPreferences from './applets/user-preferences.js';
 import Sharing from './applets/sharing.js';
 import Terminal from './applets/terminal.js';
-
 
 class SystemEvents extends EventEmitter {}
 const systemEvents = new SystemEvents();
@@ -138,9 +134,7 @@ document.body.ondragover = function () {
 };
 
 document.body.ondragend = function () { app.lightbox.setAttribute("class", "lightbox"); return false; };
-	//        window.onblur = function () {
-	//            app.lightbox.setAttribute("class", "lightbox");
-	//        };
+
 document.body.ondrop = function (e) {
 	app.lightbox.setAttribute("class", "lightbox");
 	e.preventDefault();
