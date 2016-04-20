@@ -15,11 +15,14 @@ export default class SearchBar extends React.Component {
     }
 
     toggle (set) {
-		var input = null;
-		this.setState({
-			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
+		var input = null,
+            nowVisible = typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible;
+
+        this.setState({
+			visible: nowVisible
 		});
-		if (this.state.visible) {
+
+		if (!! nowVisible) {
 			input = document.querySelector("#terms");
 			input.focus();
 			input.select();
@@ -106,7 +109,7 @@ export default class SearchBar extends React.Component {
 					 		cardBG = /(\.jpg|\.png|.jpeg)$/.test(result.filename) ? thumbURL : "",
 							cardText = ""; /*" Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;*/
 						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ /*window.location.href = fileURL;*/ }} link={fileURL} title={result.filename} />}
-								   thumbURL={cardBG} title={result.filename} text={cardText} link={fileURL} contextMenu={<FileContextMenu file_id={result._id} />}/></li>;
+								   thumbURL={cardBG} title={result.filename} text={cardText} link={fileURL} contextMenu={<FileContextMenu link={fileURL} file_id={result._id} />}/></li>;
                 	})}
 				</ul>
 

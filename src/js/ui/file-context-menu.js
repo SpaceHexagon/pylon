@@ -20,6 +20,7 @@ export default class FileContextMenu extends React.Component {
             optionsStyle = {
                 height: this.state.expanded ? "auto" : 0+"px"
             };
+
 		return (
 			<div className="file-context-menu" style={menuStyle}>
 				<Icon src="/images/dark/configure.png" title="Options" open={(evt)=>{comp.configure();}} />
@@ -36,11 +37,20 @@ export default class FileContextMenu extends React.Component {
 FileContextMenu.defaultProps = {
     name: 'main',
     file_id: "",
+    link: "",
     images: /(\.jpg|\.jpeg|\.png|\.webp)$/i,
     documents: /(\.txt|\.text|\.tx|\.md|\.js|\.css|\.html|\.htm|\.jsx|\.sh)$/i,
     multimedia: /(\.gif|\.webm|\.mp4|\.ogg|\.wav|\.midi)$/i,
     options: [
-		{src: "/images/dark/download.png", title: "Save", text: "Download", open: function(){ console.log("downloading file.."); } },
+		{
+            src: "/images/dark/download.png", title: "Save", text: "Download",
+            open: function(evt, comp){
+                console.log("downloading file..");
+                if (comp.props.link.length > 0) {
+                    window.location.href = comp.props.link;
+                }
+            }
+        },
         {src: "/images/dark/folder.png", title: "Open", text: "Open", open: function(){ console.log("opening Files app.."); } },
 		{src: "/images/dark/edit.png", title: "Edit", text: "Edit", open: function(){ console.log("opening appropriate editing app.."); } },
         {src: "/images/dark/sharing.png", title: "Share", text: "Share", open: function(){ console.log("opening sharing app.."); } },

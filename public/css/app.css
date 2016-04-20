@@ -145,7 +145,7 @@ article.card {
     border-radius: 3px;
 }
 .search article.card {
-	    background: #FFF;
+    background: #FFF;
     border: 2px solid #B7B7B7;
     border-radius: 4px;
     border-top: 0;
@@ -153,7 +153,7 @@ article.card {
     border-right: 1px solid #B7B7B7;
     padding: 0.5em;
     margin: 1em;
-    margin-top: 1em;
+    margin-top: 0em;
     margin-left: 0em;
     margin-bottom: 0;
     min-width: 300px;
@@ -238,6 +238,16 @@ article.card {
     top: 0px;
     width: 200px;
 }
+
+.file-context-menu ul li {
+    width: 100%;
+    display: inline-block;
+}
+
+form.search .background ul li div span {
+    color: white;
+}
+
 .file-context-menu ul.context-options .icon {
     margin-bottom: 0.5em;
 }
@@ -305,7 +315,7 @@ form.search ul li div span, .create-menu ul li div span {
     position: absolute;
     left: 0;
     right: 0;
-    top: 36px;
+    top: 62px;
     width: 100%;
     padding-bottom: 1em;
     max-height: 100%;
@@ -317,7 +327,7 @@ form.search ul li div span, .create-menu ul li div span {
 	margin-bottom: 1em;
 }
 .search ul.results li {
-	display: inline;
+	display: inline-block;
 }
 .search label, .search input {
 	margin-right: 0em;
@@ -545,7 +555,9 @@ form.search {
 		width: 60%;
 	}
 	.search ul.results {
-		max-width: 50%;
+        max-width: 50%;
+        top: 42px;
+        padding-top: 2em;
 	}
 	.search ul li div {
 		float: left;
