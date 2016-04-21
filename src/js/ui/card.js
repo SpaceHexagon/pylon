@@ -51,17 +51,17 @@ export default class Card extends React.Component {
 			title = (this.props.link.length < 1 ? <h3>{this.props.title}</h3> : ""),
 			link = (this.props.link.length > 1 ? <h3><a href={this.props.link} target="_blank">{this.props.title}</a></h3> : "");
 
-        if (!!this.props.contextMenu) {
-            contextMenu = this.props.contextMenu;
-        } else {
-            contextMenu = <Icon src="/images/dark/x.png" title="close" open={()=>{this.close()}} />;
-        }
-
-        if (this.state.background.length > 1) {
+		if (this.state.background.length > 1) {
             background = this.state.background;
         } else if (this.props.background.length > 1) {
             background = this.props.background;
         }
+
+        if (!!this.props.contextMenu) {
+            contextMenu = this.props.contextMenu;
+        } else {
+            contextMenu = <Icon src={"/images/"+ (background == "" ? "dark" : "") +"/x.png"} title="close" open={()=>{this.close()}} />;
+		}
 
 		if (background.length > 1) {
 			cardStyle.backgroundImage = "url("+background+")";

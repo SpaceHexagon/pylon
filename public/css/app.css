@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Open Sans';
-    src: url(/fonts/OpenSans-Light.ttf);
+  font-family: robotoThin;
+  src: url(/lib/Roboto-Thin.ttf);
 }
 body {
 	overflow-x: hidden;
@@ -8,13 +8,12 @@ body {
     margin: 0;
     background: #fafafa;
     color: #303030;
-    font-family: 'Open Sans', sans-serif;
+    font-family: robotoThin, helvetica, sans-serif;
 	font-size: 20px;
 }
 main {
     background: rgba(255, 255, 255, 0.94);
     border-top: 2px #FFF solid;
-    max-width: 1920px;
     min-width: 264px;
     min-height: 320px;
     width: 50%;
@@ -145,7 +144,7 @@ article.card {
     border-radius: 3px;
 }
 .search article.card {
-    background: #FFF;
+        background: #FFF;
     border: 2px solid #B7B7B7;
     border-radius: 4px;
     border-top: 0;
@@ -155,10 +154,11 @@ article.card {
     margin: 1em;
     margin-top: 0em;
     margin-left: 0em;
-    margin-bottom: 0;
+    margin-bottom: 1em;
     min-width: 300px;
     min-height: 60px;
     max-width: 432px;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
 }
 .search .options {
 	background: #FFF;
@@ -324,7 +324,7 @@ form.search ul li div span, .create-menu ul li div span {
     border-radius: 12px;
 }
 .search ul li {
-	margin-bottom: 1em;
+	margin-bottom: 0em;
 }
 .search ul.results li {
 	display: inline-block;
@@ -376,7 +376,7 @@ input#file-upload:hover {
 	opacity: 1;
 }
 .notifications-area {
-	max-width: 466px;
+	max-width: 482px;
 	min-width: 120px;
 	display: none;
 	margin: auto;
@@ -555,9 +555,11 @@ form.search {
 		width: 60%;
 	}
 	.search ul.results {
-        max-width: 50%;
-        top: 42px;
-        padding-top: 2em;
+        max-width: 64%;
+		top: 42px;
+		padding-top: 1em;
+		margin-top: 1em;
+		max-width: 50%;
 	}
 	.search ul li div {
 		float: left;

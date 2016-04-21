@@ -26,7 +26,11 @@ export default class FileContextMenu extends React.Component {
 				<Icon src="/images/dark/configure.png" title="Options" open={(evt)=>{comp.configure();}} />
                 <ul className="context-options" style={optionsStyle}>
 				{this.props.options.map(function(option, i) {
-                    return <li key={i}><Icon src={option.src} text={option.text} title={option.title} open={(evt)=>{option.open(evt, comp);}} /></li>;
+				 	var src = option.src;
+				 	if (!! comp.props.theme && comp.props.theme == "light") {
+						src = src.replace("/dark", "");
+					}
+                    return <li key={i}><Icon src={src} text={option.text} title={option.title} open={(evt)=>{option.open(evt, comp);}} /></li>;
                 })}
                 </ul>
 			</div>
