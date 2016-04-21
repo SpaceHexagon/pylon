@@ -1,10 +1,21 @@
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 2, 100000 ),
-				renderer = new THREE.WebGLRenderer(),
-			self = this;
-			renderer.setSize( window.innerWidth, window.innerHeight );
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 2, 100000 ),
+            renderer = new THREE.WebGLRenderer(),
+			self = this,
+            sunGeom = new THREE.OctahedronGeometry( 3, 0),
+            material = new THREE.MeshBasicMaterial( {color: 0xffffff} ),
+            cube = new THREE.Mesh(sunGeom, material ),
+            light = new THREE.PointLight(0xffffff, 1.1, 300000 ),
+            panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
+            cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
+            cell = null,
+            x = 0,
+            y = 0,
+            r = 4000;
+
+            renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
 			this.three = {
@@ -14,24 +25,12 @@ export default class World {
 			};
 
 			window.three = this.three;
-
-			var geometry = new THREE.OctahedronGeometry( 3, 0),
-				material = new THREE.MeshBasicMaterial( {
-			//		wireframe: true,
-					color: 0xffffff
-			//		color: 0x333333
-				} ),
-				cube = new THREE.Mesh(geometry, material ),
-				light = new THREE.PointLight(0xffffff, 1.1, 300000 );
-			scene.add(light);
+            scene.add(light);
 			light.position.set(0, 60000, 0);
-
 			renderer.setClearColor(0x383838);
 			scene.add(cube);
 			camera.position.z = 15;
-
 			this.skybox = null;
-
 
 			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-c.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
@@ -58,25 +57,34 @@ export default class World {
 			});
 
 			if (window.location.href.split(".net")[1].length > 1) {
-
-				var platformGeom = new THREE.BoxGeometry(900, 60, 600),
-					platformMat = new THREE.MeshLambertMaterial({
-                        color: 0xffffff
-				    }),
-					platform = new THREE.Mesh(platformGeom, platformMat);
-					scene.add(platform);
-					platform.position.set(0, -520, -1000);
-
+//				var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
+//					platformMat = new THREE.MeshLambertMaterial({
+//                        color: 0xffffff
+//				    }),
+//					platform = new THREE.Mesh(platformGeom, platformMat);
+//					scene.add(platform);
+//					platform.position.set(0, -1500, -750);
+//                    platform.rotation.set(0, Math.PI / 6, 0);
 			}
 
-
+			while (x < 12) {
+				while (y < 12) {
+					if (Math.random() < 0.25) {
+						cell = new THREE.Mesh(cellGeometry, panelMat);
+						three.scene.add(cell);
+						cell.position.set(-24000 + (x*r), -1000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
+					}
+					y++;
+				}
+				y = 0;
+				x++;
+			}
 
 //			var groundGeom = new THREE.PlaneGeometry(100000, 100000, 12, 12);
 //			var groundMat = new THREE.MeshBasicMaterial({color: 0xf0f0f0});
 //			var ground = new THREE.Mesh(groundGeom, groundMat);
 //			ground.rotateX(Math.PI / 2);
 //			three.scene.add(ground);
-
 
 			function render () {
 				requestAnimationFrame( render );
