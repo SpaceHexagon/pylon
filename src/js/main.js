@@ -23,6 +23,7 @@ import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
 import SignIn from './ui/signin.js';
+import PageEditor from './ui/page-editor.js';
 
 // Applets
 import Applet from './applets/applet.js';
@@ -61,6 +62,7 @@ ReactDOM.render(
 	  	<NotificationsArea systemEvents={systemEvents}/>
 	  	<CreateMenu systemEvents={systemEvents}/>
 	  	<ActivityView systemEvents={systemEvents} />
+	  	<PageEditor systemEvents={systemEvents} />
         <div className="lightbox" style={{display: "none"}}></div>
       </div>
   ),
