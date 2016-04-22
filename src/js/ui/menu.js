@@ -73,17 +73,16 @@ Menu.defaultProps = {
 			console.log("opening Launcher / activity view..");
 			menu.toggleActivityView();
 		} },
-		{src: "/images/plus.png", title: "Create & Upload", text: "Create & Upload", open: function(evt, menu) {
-			menu.toggleCreateMenu();}
-		},
 		{src: "/images/search.png", title: "Search", text: "Search", open: function(evt, menu) {
 			console.log("opening Search app..");
 			menu.toggleSearchBar();
 		} },
-		{src: "/images/folder.png", title: "File Browser", text: "File Browser", open: function(){ console.log("opening Files app.."); } },
-		{src: "/images/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } }
+//		{src: "/images/folder.png", title: "File Browser", text: "File Browser", open: function(){ console.log("opening Files app.."); } },
+		{src: "/images/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
 		//		{src: "/images/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
-
+		{src: "/images/plus.png", title: "Create & Upload", text: "Create & Upload", open: function(evt, menu) {
+			menu.toggleCreateMenu();}
+		}
 //      {src: "/images/notification.png", title: "Notifications", open: function(){ console.log("opening Notification app.."); } },
 //		{src: "/images/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]

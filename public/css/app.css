@@ -161,7 +161,7 @@ article.card {
 	height: 38px;
     top: 0;
     right: 0;
-    float: right;
+    float: left;
     display: inline-block;
     background: #FFF;
     padding-right: 20px;
@@ -363,14 +363,14 @@ form.search ul li div span, .create-menu ul li div span {
 .search label, .search input {
 	margin-right: 0em;
     float: left;
-    margin-left: 1em;
+    margin-left: 11px;
     margin-top: 3px;
     position: relative;
     z-index: 999;
 }
 .search input[type=text] {
 	margin-top: 7px;
-    margin-left: 1em;
+    margin-left: 12px;
     margin-right: 0;
     font-size: 20px;
     max-width: 230px;
@@ -454,6 +454,7 @@ form.search {
     overflow-y: scroll;
     overflow-x: hidden;
 	pointer-events: none;
+	z-index: 1;
 }
 .signin div {
 
@@ -599,6 +600,9 @@ form.search {
 	.search input[type=text] {
 		margin-top: 5px;
     	max-width: 169px;
+	}
+	.searchInputs {
+		float: right;
 	}
     .menu {
         width: 60px;
