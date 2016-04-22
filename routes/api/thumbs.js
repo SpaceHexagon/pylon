@@ -70,13 +70,13 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 		});
 	});
 
-    router.delete('/:thumb', function(req, res) {
+    router.delete('/:filename', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']],
-			userFiles = db.collection(username+".thumbs"),
+			userThumbs = db.collection(username+".thumbs"),
             fileId = req.params.thumb;
 
-        userFiles.remove({_id: ObjectID(fileId)}, function (err) {
+        userThumbs.remove({filename: filename}, function (err) {
 			if(err) {
 				return console.log('Error removing file: ', err);
 			}
