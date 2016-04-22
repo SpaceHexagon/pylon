@@ -23,6 +23,21 @@ export default class PageEditor extends React.Component {
 		this.setState({enabled: !this.state.enabled});
 	}
 
+	saveChanges (evt, editor) {
+		var configure = {
+				  baseURL: 'https://vpylon.net',
+				  timeout: 1000,
+				  headers: {'x-access-token': localStorage.getItem("token")}
+				};
+				axios.post('/api/pages/'+comp.props.file_id, configure)
+				  .then(function (response) {
+					console.log(response);
+				  })
+				  .catch(function (response) {
+					console.log(response);
+				  });
+	}
+
     flagResized () {
         this.setState({resized: !this.state.resized});
     }
