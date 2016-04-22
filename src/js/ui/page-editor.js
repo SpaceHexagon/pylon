@@ -49,7 +49,7 @@ export default class PageEditor extends React.Component {
 			};
 		return (
 			<aside className="page-editor">
-                  <Icon src="images/dark/edit.png" title="Edit Page" open={(evt)=>{ return menu.toggleEditor(evt, editor);}} />
+                  <Icon src="images/dark/edit.png" title="Edit Page" open={(evt)=>{ return editor.toggleEditor(evt, editor);}} />
               	<textarea style={editorStyle} className="editor"></textarea>
 			</aside>
 		);
