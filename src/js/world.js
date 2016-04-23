@@ -72,7 +72,7 @@ export default class World {
 					if (Math.random() < 0.25) {
 						cell = new THREE.Mesh(cellGeometry, panelMat);
 						three.scene.add(cell);
-						cell.position.set(-24000 + (x*r), -1000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
+						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
 					}
 					y++;
 				}

@@ -145,6 +145,7 @@ input[type=button]:hover, input[type=submit]:hover {
 article.card {
 	background: #FFF;
     border: 2px solid #f1f1f1;
+	background-size: cover;
     border-radius: 4px;
     padding: 0.5em;
     margin: 1em;
@@ -169,7 +170,7 @@ article.card {
     border-radius: 3px;
 }
 .search article.card {
-        background: #FFF;
+    background-color: #FFF;
     border: 2px solid #B7B7B7;
     border-radius: 4px;
     border-top: 0;
@@ -279,7 +280,12 @@ article.card {
 form.search .background ul li div span {
     color: white;
 }
-
+img.emoji {
+  margin: 0px !important;
+  display: inline !important;
+  width: 36px;
+  height: 36px;
+}
 .file-context-menu ul.context-options .icon {
     margin-bottom: 0.5em;
 }
