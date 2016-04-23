@@ -20,7 +20,10 @@ export default class PageEditor extends React.Component {
 	}
 
 	toggleEditor (evt, editor) {
-		this.setState({enabled: !this.state.enabled});
+		editor.setState({enabled: !editor.state.enabled});
+		if (!editor.state.enabled) {
+			editor.saveChanges();
+		}
 	}
 
 	saveChanges (evt, editor) {
@@ -29,7 +32,7 @@ export default class PageEditor extends React.Component {
 				  timeout: 1000,
 				  headers: {'x-access-token': localStorage.getItem("token")}
 				};
-				axios.post('/api/pages/'+comp.props.file_id, configure)
+				axios.put('/api/pages/'+app.username, configure)
 				  .then(function (response) {
 					console.log(response);
 				  })

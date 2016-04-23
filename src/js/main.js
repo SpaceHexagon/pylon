@@ -89,7 +89,8 @@ app.world = world = new World();
 app.userInput = userInput = new UserInput();
 
 document.body.addEventListener("keydown", function (evt) {
-	var visible = true;
+	var visible = true,
+		elemType = "";
 	if (app.mode == "desktop") {
 		if (evt.which == 27) {
 			visible = false;
@@ -98,7 +99,8 @@ document.body.addEventListener("keydown", function (evt) {
 			app.typeToSearch = false;
 		}
 		if (app.typeToSearch) {
-			if (evt.target.tagName.toLowerCase() != "input") {
+			elemType = evt.target.tagName.toLowerCase();
+			if (elemType != "input" && elemType != "textarea") {
 				if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
 					systemEvents.emit("toggle-search-bar", {visible: visible});
 					systemEvents.emit("toggle-activity-view", {visible: false});

@@ -21,6 +21,7 @@ module.exports = function (app, db) {
         userRouter = require("./api/users.js")(app, db, Users),
         groupRouter = require("./api/groups.js")(app, db, Users),
         postsRouter = require("./api/posts.js")(app, db, Users),
+		pageRouter = require("./api/pages.js")(app, db, Users),
         commentsRouter = require("./api/comments.js")(app, db, Users),
         fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
         thumbRouter = require("./api/thumbs.js")(app, db, mongo, fs, Users),
@@ -146,6 +147,7 @@ module.exports = function (app, db) {
     router.use('/users', userRouter);
     router.use('/groups', groupRouter);
     router.use('/posts', postsRouter);
+	router.use('/pages', pageRouter);
     router.use('/comments', commentsRouter);
     router.use('/files', fileRouter);
     router.use('/thumbs', thumbRouter);
