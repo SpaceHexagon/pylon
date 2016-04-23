@@ -281,10 +281,11 @@ form.search .background ul li div span {
     color: white;
 }
 img.emoji {
-  margin: 0px !important;
+  margin: 0.25em !important;
   display: inline !important;
   width: 36px;
   height: 36px;
+
 }
 .file-context-menu ul.context-options .icon {
     margin-bottom: 0.5em;

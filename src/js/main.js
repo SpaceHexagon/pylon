@@ -93,6 +93,7 @@ document.body.addEventListener("keydown", function (evt) {
 	if (app.mode == "desktop") {
 		if (evt.which == 27) {
 			visible = false;
+			app.typeToSearch = true;
 		} else if (evt.which == 17) {
 			app.typeToSearch = false;
 		}
