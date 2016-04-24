@@ -17,6 +17,7 @@ export default class World {
 
             renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
+			renderer.domElement.setAttribute("id", "viewport");
 
 			this.three = {
 				scene: scene,
@@ -86,14 +87,31 @@ export default class World {
 //			ground.rotateX(Math.PI / 2);
 //			three.scene.add(ground);
 
-			function render () {
-				requestAnimationFrame( render );
+			function render (last) {
+				var sys = app,
+					camera = three.camera,
+					delta = ((Date.now() - last) / 10000),
+					time = (Date.now() / 4600);
+
+				if (!! sys.userInput) {
+					sys.userInput.update(delta);
+				//backgroundParticles(delta);
+				}
+
+				sys.sendUpdatePacket = !sys.sendUpdatePacket;
+				if (sys.sendUpdatePacket && sys.mode == 1) {
+					socket.emit('nexus update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
+						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
+				}
+
 				cube.rotation.x += 0.0025;
 				cube.rotation.y += 0.005;
 				renderer.render(scene, camera);
+				last = Date.now();
+				requestAnimationFrame( function () { render(last); } );
 			};
 
-			render();
+			render(0);
     }
 
 };

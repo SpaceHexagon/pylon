@@ -72,6 +72,19 @@ ReactDOM.render(
 window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
 
 window.app = {
+	user: {
+		data: {
+            name: "",
+            account: "",
+            user_id: 0
+        },
+		arms: [ ],
+		password: "",
+        velocity: new THREE.Vector3(0, 0, 0),
+        userInput: null,
+		gravity: 1,
+        falling: false
+	},
     username: localStorage.getItem("username"),
 	mobile: (window.innerWidth <= 640),
 	mode: "desktop",
@@ -79,14 +92,32 @@ window.app = {
 	world: null,
 	activity: "none",
 	userInput: null,
+	sendUpdatePacket: false,
 	lightboxTimeout: 0,
 	typeToSearch: true,
     uploading: false,
-    lightbox: document.querySelector(".lightbox")
+    lightbox: document.querySelector(".lightbox"),
+	showChat: function () {},
+	vibrate: function (data) {
+		if (!! navigator.vibrate ) {
+			if (!data) {
+				data = 100;
+			}
+			navigator.vibrate(data);
+		}
+	}
 }
 
 app.world = world = new World();
 app.userInput = userInput = new UserInput();
+
+app.userInput.init(three.camera, app.user);
+UserInput.rotationVector = {x: 0, y: Math.PI / 4, z: 0};
+
+	if (false) {
+		camera.position.set( -65614.78294284792, 300.1792, 32811.47470128861);
+		UserInput.rotationVector = {x: 12.563333333333308, y: 36.74666666666676, z: 0};
+	}
 
 document.body.addEventListener("keydown", function (evt) {
 	var visible = true,

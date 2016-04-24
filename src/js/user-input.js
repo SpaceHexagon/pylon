@@ -4,6 +4,7 @@ export default class UserInput {
 			camera: null,
 			device: null,
 			focus: false,
+			fullscreen: false,
 			rotationVector: {
 				x: 0,
 				y: 0,
@@ -16,15 +17,17 @@ export default class UserInput {
 			},
 			lastTouch: [[0,0], [0,0]],
 			leapMotion: false,
+			leapMode: "hybrid",
 			init: function (camera, device) {
+				var uInput = this;
 				this.connect(camera, device);
-				var canvas = document.querySelector("canvas");
+				var canvas = document.querySelector("canvas#viewport");
 				canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
 				canvas.onclick = function (event) {
 					var elem = event.target;
 					elem.requestPointerLock();
-					if (!Settings.fullscreen) {
-						Settings.toggleFullscreen();
+					if (!uInput.fullscreen) {
+						uInput.toggleFullscreen();
 					}
 				};
 				if ("onpointerlockchange" in document) {
@@ -35,41 +38,41 @@ export default class UserInput {
 					document.addEventListener('webkitpointerlockchange', lockChangeAlert, false);
 				}
 				function lockChangeAlert() {
-					UserInput.focus =(document.pointerLockElement===canvas||document.mozPointerLockElement===canvas||document.webkitPointerLockElement===canvas);
-					Settings.fullscreen = UserInput.focus;
-					if (!Settings.fullscreen && app.user.data.name != "") {
-						Settings.showChat();
-						app.mode = 0;
+					uInput.focus =(document.pointerLockElement===canvas||document.mozPointerLockElement===canvas||document.webkitPointerLockElement===canvas);
+					uInput.fullscreen = uInput.focus;
+					if (!uInput.fullscreen && app.username != "") {
+						app.showChat();
+						app.mode = "desktop";
 						//document.querySelector("#chatMode").click();
 					} else {
-						if (app.user.data.name != "") {
-							app.mode = 1;
+						if (app.username != "") {
+							app.mode = "vr"
 						}
 					}
 				}
 				if (!app.mobile) {
 					document.addEventListener("mousemove", function (e) {
-						if (UserInput.focus) {
-						  UserInput.rotationVector.y  -=(e.movementX || e.mozMovementX || e.webkitMovementX || 0) / 300.0;
-						  UserInput.rotationVector.x  -=(e.movementY || e.mozMovementY || e.webkitMovementY || 0) / 300.0;
+						if (uInput.focus) {
+						  uInput.rotationVector.y  -=(e.movementX || e.mozMovementX || e.webkitMovementX || 0) / 300.0;
+						  uInput.rotationVector.x  -=(e.movementY || e.mozMovementY || e.webkitMovementY || 0) / 300.0;
 						}
 					});
 				}
 				document.addEventListener("keydown", function (event) {
 					if (app.mode) { // 0 = chat, 1 = vr
 						switch (event.keyCode) {
-							case 87: UserInput.keys.w = true; break;
-							case 65: UserInput.keys.a = true; break;
-							case 83: UserInput.keys.s = true; break;
-							case 68: UserInput.keys.d = true; break;
-							case 82: UserInput.keys.r = true; break;
-							case 70: UserInput.keys.f = true; break;
-							case 16: UserInput.keys.shift = true; break;
-							case 32: UserInput.keys.space = true; break;
+							case 87: uInput.keys.w = true; break;
+							case 65: uInput.keys.a = true; break;
+							case 83: uInput.keys.s = true; break;
+							case 68: uInput.keys.d = true; break;
+							case 82: uInput.keys.r = true; break;
+							case 70: uInput.keys.f = true; break;
+							case 16: uInput.keys.shift = true; break;
+							case 32: uInput.keys.space = true; break;
 							case 27: // escape key
-								if (app.user.data.name != "") {
-									Settings.showChat();
-									app.mode = 0;
+								if (app.username != "") {
+									app.showChat();
+									app.mode = "desktop";
 									//document.querySelector("#chatMode").click();
 								}
 							break;
@@ -78,14 +81,14 @@ export default class UserInput {
 				});
 				document.addEventListener("keyup", function (event) {
 					switch (event.keyCode) {
-						case 87: UserInput.keys.w = false; break;
-						case 65: UserInput.keys.a = false; break;
-						case 83: UserInput.keys.s = false; break;
-						case 68: UserInput.keys.d = false; break;
-						case 82: UserInput.keys.r = false; break;
-						case 70: UserInput.keys.f = false; break;
-						case 16: UserInput.keys.shift = false; break;
-						case 32: UserInput.keys.space = false; break;
+						case 87: uInput.keys.w = false; break;
+						case 65: uInput.keys.a = false; break;
+						case 83: uInput.keys.s = false; break;
+						case 68: uInput.keys.d = false; break;
+						case 82: uInput.keys.r = false; break;
+						case 70: uInput.keys.f = false; break;
+						case 16: uInput.keys.shift = false; break;
+						case 32: uInput.keys.space = false; break;
 					}
 				});
 				document.body.addEventListener("touchmove", function(event) {
@@ -93,25 +96,25 @@ export default class UserInput {
 					if (app.mode == 1) {
 						event.preventDefault();
 						if (touch < 2) {
-							UserInput.rotationVector.y += (data[0].pageX - UserInput.lastTouch[0][0]) / 10000.0;
-							UserInput.rotationVector.x += (data[0].pageY - UserInput.lastTouch[0][1]) / 10000.0;
-							UserInput.lastTouch = [ [data[touch].pageX, data[touch].pageY], [data[touch].pageX, data[touch].pageY]];
+							uInput.rotationVector.y += (data[0].pageX - uInput.lastTouch[0][0]) / 10000.0;
+							uInput.rotationVector.x += (data[0].pageY - uInput.lastTouch[0][1]) / 10000.0;
+							uInput.lastTouch = [ [data[touch].pageX, data[touch].pageY], [data[touch].pageX, data[touch].pageY]];
 						} else {
 							while (touch-- > 0) {
-								UserInput.moveVector.x -= (data[touch].pageX - UserInput.lastTouch[touch][0])*120;
-								UserInput.moveVector.z -= (data[touch].pageY - UserInput.lastTouch[touch][1])*120;
-								UserInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
+								uInput.moveVector.x -= (data[touch].pageX - uInput.lastTouch[touch][0])*120;
+								uInput.moveVector.z -= (data[touch].pageY - uInput.lastTouch[touch][1])*120;
+								uInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
 							}
 						}
 					}
 				});
 				document.body.addEventListener("touchstart", function(event) {
 					var data = event.touches, touch = data.length ;
-					UserInput.lastTouch = [[0,0],[0,0]];
+					uInput.lastTouch = [[0,0],[0,0]];
 					if (app.mode == 1) {
 						event.preventDefault();
 						while (touch-- > 0) {
-							UserInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
+							uInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
 						}
 					}
 				});
@@ -120,9 +123,9 @@ export default class UserInput {
 				// leap code here
 				Leap.loop(function (frame) {
 				  var mode = app.mode,
-					  input = UserInput;
-					UserInput.leapMotion = true;
-					if (Settings.leapMode == "movement") {
+					  input = uInput;
+					uInput.leapMotion = true;
+					if (input.leapMode == "movement") {
 						frame.hands.forEach(function (hand, index) {
 							var position = hand.screenPosition();
 							if (mode == 1) { // if its VR mode and not chat mode
@@ -133,7 +136,7 @@ export default class UserInput {
 							}
 						});
 					} else {
-						if (Settings.leapMode == "avatar") {
+						if (input.leapMode == "avatar") {
 							frame.hands.forEach(function (hand, index) {
 								var position = hand.screenPosition();
 								if (mode == 1) { // if its VR mode and not chat mode
@@ -194,18 +197,18 @@ export default class UserInput {
 					}
 				}
 				this.moveVector.set(0, 0, 0);
-				if (this.camera.position.y < elevation + 500) {
-					if (this.keys.shift) {
-						this.device.velocity.y *= -0.70;
-					} else {
-						this.device.velocity.y *= -0.20;
-					}
-					this.device.falling = false;
-					this.camera.position.y = elevation + 500;
-					if (this.device.velocity.y > 1000) {
-						app.vibrate(50);
-					}
-				}
+//				if (this.camera.position.y < elevation + 500) {
+//					if (this.keys.shift) {
+//						this.device.velocity.y *= -0.70;
+//					} else {
+//						this.device.velocity.y *= -0.20;
+//					}
+//					this.device.falling = false;
+//					this.camera.position.y = elevation + 500;
+//					if (this.device.velocity.y > 1000) {
+//						app.vibrate(50);
+//					}
+//				}
 				this.camera.matrix.setPosition(this.camera.position.add(new THREE.Vector3(this.device.velocity.x*delta,
 																						 this.device.velocity.y*delta,
 																						 this.device.velocity.z*delta)) );
@@ -244,7 +247,33 @@ export default class UserInput {
 					this.device.falling = true;
 					this.device.velocity.y = 16000;
 				}
-			}
+			},
+			toggleFullscreen: function (elem) {
+				if (!document.fullscreenElement &&
+					  !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {
+					this.fullscreen = true;
+					if (document.documentElement.requestFullscreen) {
+						document.documentElement.requestFullscreen();
+					} else if (document.documentElement.msRequestFullscreen) {
+						document.documentElement.msRequestFullscreen();
+					} else if (document.documentElement.mozRequestFullScreen) {
+						document.documentElement.mozRequestFullScreen();
+					} else if (document.documentElement.webkitRequestFullscreen) {
+						document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+					}
+				} else {
+					 this.fullscreen = false;
+					if (document.exitFullscreen) {
+						document.exitFullscreen();
+					} else if (document.msExitFullscreen) {
+						document.msExitFullscreen();
+					} else if (document.mozCancelFullScreen) {
+						document.mozCancelFullScreen();
+					} else if (document.webkitExitFullscreen) {
+						document.webkitExitFullscreen();
+					}
+				}
+    },
 		};
 	}
 };
