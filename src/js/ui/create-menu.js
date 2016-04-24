@@ -63,6 +63,11 @@ export default class CreateMenu extends React.Component {
 				app.lightbox.setAttribute("style", "display: none;");
 				app.lightbox.innerHTML = "";
 				console.log("finished uploading");
+				comp.props.systemEvents.emit("add-notification", {
+					icon: "/images/dark/upload.png",
+					title: "Upload Complete",
+					text:"File Upload Complete.",
+				});
 				socket.emit("pylon event", {type: "refresh", user: app.username, dir: app.cwd});
 			}
 		};

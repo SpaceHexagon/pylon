@@ -5,7 +5,7 @@ export default class World {
             renderer = new THREE.WebGLRenderer(),
 			self = this,
             sunGeom = new THREE.OctahedronGeometry( 3, 0),
-            material = new THREE.MeshBasicMaterial( {color: 0xffffff} ),
+            material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
             cube = new THREE.Mesh(sunGeom, material ),
             light = new THREE.PointLight(0xffffff, 1.1, 300000 ),
             panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
@@ -69,11 +69,11 @@ export default class World {
 
 			while (x < 12) {
 				while (y < 12) {
-					if (Math.random() < 0.25) {
-						cell = new THREE.Mesh(cellGeometry, panelMat);
-						three.scene.add(cell);
-						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
-					}
+//					if (Math.random() < 0.25) {
+//						cell = new THREE.Mesh(cellGeometry, panelMat);
+//						three.scene.add(cell);
+//						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
+//					}
 					y++;
 				}
 				y = 0;

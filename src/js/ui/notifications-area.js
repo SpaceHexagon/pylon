@@ -21,11 +21,27 @@ export default class NotificationsArea extends React.Component {
 		});
 	}
 
+	addNotification (event) {
+		this.props.options.push(
+			{
+				src: event.icon, // "/images/dark/star.png",
+				title: event.title, //"Pylon Desktop",
+				text: event.text, //"Welcome to your newly created V-Pylon. You now have access to file storage, documents, messaging and basic web hosting through the web or virtual reality.",
+				open: function (){
+					console.log("opening notifications..");
+				}
+			}
+		);
+	}
+
 	componentDidMount () {
 		var comp = this;
 		console.log(this.props);
 		this.props.systemEvents.on("toggle-notifications", function (evt) {
 			comp.toggle(evt);
+		});
+		this.props.systemEvents.on("add-notification", function (evt) {
+			comp.addNotification(evt);
 		});
 	}
 
@@ -52,7 +68,7 @@ NotificationsArea.defaultProps = {
         {
 			src: "/images/dark/star.png",
 			title: "Pylon Desktop",
-			text:"Welcome to your newly created V-Pylon. You now have access to file storage, documents, messaging and basic web hosting through the web or virtual reality.",
+			text:"Welcome to your newly created Pylon. You now have access to file storage, documents, messaging and basic web hosting through the web or virtual reality.",
 			open: function (){
 				console.log("opening notifications..");
 			}
@@ -61,14 +77,6 @@ NotificationsArea.defaultProps = {
 			src: "/images/dark/messaging.png",
 			title: "Test Message",
 			text:"Hello world. Testing message notifications.",
-			open: function () {
-				console.log("opening user message notification..");
-			}
-		},
-		{
-			src: "/images/dark/upload.png",
-			title: "Upload Complete",
-			text:"Hello World.txt was uploaded successfully",
 			open: function () {
 				console.log("opening user message notification..");
 			}
