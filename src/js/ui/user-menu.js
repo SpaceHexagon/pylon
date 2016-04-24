@@ -31,6 +31,15 @@ export default class UserMenu extends React.Component {
 		this.props.systemEvents.emit("toggle-create-menu", {visible: false});
 	}
 
+	toggleVRMode () {
+		app.mode = app.mode == "desktop" ? "vr" : "desktop";
+		document.body.setAttribute("class", app.mode);
+		this.props.systemEvents.emit("toggle-notifications", {visible: false});
+		this.props.systemEvents.emit("toggle-activity-view", {visible: false});
+		this.props.systemEvents.emit("toggle-search-bar", {visible: false});
+		this.props.systemEvents.emit("toggle-create-menu", {visible: false});
+	}
+
 	render() {
 		var menu = this;
 		return (
@@ -54,6 +63,7 @@ UserMenu.defaultProps = {
     name: 'user-menu',
 	username: localStorage.getItem("username") || "Guest",
     options: [
+				{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
 		{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
 		{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }},
 		{src:"/images/configure.png", title:"System Settings" , text: "", open: (evt, menu)=>{} }

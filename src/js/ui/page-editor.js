@@ -30,7 +30,9 @@ export default class PageEditor extends React.Component {
 		var configure = {
 				  baseURL: 'https://vpylon.net',
 				  timeout: 1000,
-				  content: document.querySelector(".editor").innerHTML,
+				  data: {
+					  content: document.querySelector(".editor").value
+				  },
 				  headers: {'x-access-token': localStorage.getItem("token")}
 				};
 				axios.put('/api/pages/'+app.username, configure)

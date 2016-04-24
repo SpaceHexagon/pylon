@@ -109,6 +109,11 @@ document.body.addEventListener("keydown", function (evt) {
 				}
 			}
 		}
+	} else {
+		if (evt.which == 27) {
+			app.mode = "desktop";
+			document.body.setAttribute("class", "desktop");
+		}
 	}
 }, true);
 
