@@ -188,9 +188,13 @@ export default class UserInput {
 				this.camera.rotation.set(this.rotationVector.x, this.rotationVector.y, 0, "YXZ");
 				this.handleKeys();
 				this.device.velocity.add(this.moveVector.applyQuaternion(this.camera.quaternion));
-				if (this.device.gravity > 0.25 ) {
-					this.device.velocity.y -= 280 * this.device.gravity;
+
+				if (app.mode == "vr") {
+					if (this.device.gravity > 0.25 ) {
+						this.device.velocity.y -= 28 * this.device.gravity;
+					}
 				}
+
 				if (this.leapMotion && this.moveVector.length() > 0) {
 					if (this.device.velocity.y < 0) {
 						this.device.velocity.y *= 0.88;

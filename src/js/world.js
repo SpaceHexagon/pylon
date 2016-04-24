@@ -28,7 +28,7 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x383838);
+			renderer.setClearColor(0x071321);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
@@ -99,8 +99,8 @@ export default class World {
 				}
 
 				sys.sendUpdatePacket = !sys.sendUpdatePacket;
-				if (sys.sendUpdatePacket && sys.mode == 1) {
-					socket.emit('nexus update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
+				if (sys.sendUpdatePacket && sys.mode == "vr") {
+					socket.emit('pylon update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
 						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
 				}
 
