@@ -129,6 +129,8 @@ app.get('/:username', function (req, res, next) {  // user homepage / portals
 								pylon += "<main>"+pageResult.content+"</main>";
 									pylon += "<script src='lib/axios.min.js'></script>";
 									pylon += "<script src='lib/socket.io.js'></script>";
+									pylon += "<script src='lib/leapmotion/leap.js'></script>";
+									pylon += "<script src='lib/leapmotion/leap-plugins.js'></script>";
 									pylon += "<script src='lib/three.min.js'></script>";
 									pylon += "<script src='lib/csg.js'></script>";
 									pylon += "<script src='lib/ThreeCSG.js'></script>";
