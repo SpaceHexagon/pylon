@@ -25,8 +25,8 @@ export default class UserInput {
 				canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
 				canvas.onclick = function (event) {
 					var elem = event.target;
-					elem.requestPointerLock();
-					if (!uInput.fullscreen) {
+					if (app.mode == "vr") {
+						elem.requestPointerLock();
 						uInput.toggleFullscreen();
 					}
 				};
@@ -43,10 +43,11 @@ export default class UserInput {
 					if (!uInput.fullscreen && app.username != "") {
 						app.showChat();
 						app.mode = "desktop";
-						//document.querySelector("#chatMode").click();
+						document.body.setAttribute("class", "desktop");
 					} else {
 						if (app.username != "") {
-							app.mode = "vr"
+							app.mode = "vr";
+							document.body.setAttribute("class", "vr");
 						}
 					}
 				}
