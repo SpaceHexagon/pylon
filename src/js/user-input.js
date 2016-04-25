@@ -186,10 +186,10 @@ export default class UserInput {
 			update: function (delta) {
 				var elevation = 0; //world.getElevation(this.camera.position);
 				this.camera.rotation.set(this.rotationVector.x, this.rotationVector.y, 0, "YXZ");
-				this.handleKeys();
 				this.device.velocity.add(this.moveVector.applyQuaternion(this.camera.quaternion));
 
 				if (app.mode == "vr") {
+					this.handleKeys();
 					if (this.device.gravity > 0.25 ) {
 						this.device.velocity.y -= 28 * this.device.gravity;
 					}

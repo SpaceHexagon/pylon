@@ -28,12 +28,39 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x071321);
+			renderer.setClearColor(0x858585);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-c.jpg", null, function () {
+			function render (last) {
+				var sys = app,
+					camera = three.camera,
+					delta = ((Date.now() - last) / 10000),
+					time = (Date.now() / 4600);
+
+				if (!! sys.userInput) {
+					sys.userInput.update(delta);
+				//backgroundParticles(delta);
+				}
+
+				sys.sendUpdatePacket = !sys.sendUpdatePacket;
+				if (sys.sendUpdatePacket && sys.mode == "vr") {
+					socket.emit('pylon update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
+						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
+				}
+
+				cube.rotation.x += 0.0025;
+				cube.rotation.y += 0.005;
+
+				sys.world.skybox.position.set(camera.position.x, camera.position.y, camera.position.z);
+
+				renderer.render(scene, camera);
+				last = Date.now();
+				requestAnimationFrame( function () { render(last); } );
+			};
+
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-3.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -51,11 +78,19 @@ export default class World {
 					skybox.add(skyboxFace);
 					x++;
 				}
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x797979}));
+				skyboxFace.position.set(0, 30000, 0);
+				skyboxFace.rotation.x = (Math.PI / 2);
+				skybox.add(skyboxFace);
+
 				self.skybox = skybox;
 				three.scene.add(skybox);
 				skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
 				skyTexture.needsUpdate = true;
+
+				render(0);
 			});
+
 
 			if (window.location.href.split(".net")[1].length > 1) {
 //				var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
@@ -87,31 +122,9 @@ export default class World {
 //			ground.rotateX(Math.PI / 2);
 //			three.scene.add(ground);
 
-			function render (last) {
-				var sys = app,
-					camera = three.camera,
-					delta = ((Date.now() - last) / 10000),
-					time = (Date.now() / 4600);
 
-				if (!! sys.userInput) {
-					sys.userInput.update(delta);
-				//backgroundParticles(delta);
-				}
 
-				sys.sendUpdatePacket = !sys.sendUpdatePacket;
-				if (sys.sendUpdatePacket && sys.mode == "vr") {
-					socket.emit('pylon update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
-						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
-				}
 
-				cube.rotation.x += 0.0025;
-				cube.rotation.y += 0.005;
-				renderer.render(scene, camera);
-				last = Date.now();
-				requestAnimationFrame( function () { render(last); } );
-			};
-
-			render(0);
     }
 
 };
