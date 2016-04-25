@@ -28,7 +28,7 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x858585);
+			renderer.setClearColor(0x071616);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
@@ -40,7 +40,8 @@ export default class World {
 					time = (Date.now() / 4600);
 
 				if (!! sys.userInput) {
-					sys.userInput.update(delta);
+					sys.userInput.update(delta);					sys.userInput.update(delta);
+
 				//backgroundParticles(delta);
 				}
 
@@ -60,7 +61,7 @@ export default class World {
 				requestAnimationFrame( function () { render(last); } );
 			};
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-3.jpg", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -78,7 +79,7 @@ export default class World {
 					skybox.add(skyboxFace);
 					x++;
 				}
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x797979}));
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x071616}));
 				skyboxFace.position.set(0, 30000, 0);
 				skyboxFace.rotation.x = (Math.PI / 2);
 				skybox.add(skyboxFace);
