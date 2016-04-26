@@ -87,14 +87,14 @@ export default class World {
 					skybox.add(skyboxFace);
 					x++;
 				}
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
-				skyboxFace.position.set(0, 30000, 0);
-				skyboxFace.rotation.x = (Math.PI / 2);
-				skybox.add(skyboxFace);
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
-				skyboxFace.position.set(0, -30000, 0);
-				skyboxFace.rotation.x = (-Math.PI / 2);
-				skybox.add(skyboxFace);
+//				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
+//				skyboxFace.position.set(0, 30000, 0);
+//				skyboxFace.rotation.x = (Math.PI / 2);
+//				skybox.add(skyboxFace);
+//				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
+//				skyboxFace.position.set(0, -30000, 0);
+//				skyboxFace.rotation.x = (-Math.PI / 2);
+//				skybox.add(skyboxFace);
 
 				self.skybox = skybox;
 				three.scene.add(skybox);
