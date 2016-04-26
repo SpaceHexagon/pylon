@@ -95,11 +95,7 @@ export default class SearchBar extends React.Component {
 					<div className="searchInputs">
 						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
 					</div>
-					<ul className="modes">
-						{this.props.options.map(function(option, i){
-							return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
-						})}
-					</ul>
+
 				</div>
 					<ul className="results">
 					{this.state.results.map(function(result, i){
@@ -123,20 +119,29 @@ SearchBar.defaultProps = {
     name: 'main',
 	results: [],
     options: [
-        {src: "/images/dark/circle.png", title: "People", open: function() {
-			console.log("searching for people"); } },
-		{src: "/images/dark/file.png", title: "Files", open: function() {
-			console.log("searching for files"); } },
-		{src: "/images/dark/folder.png", title: "Folders", open: function() {
-			console.log("searching for folders"); } },
-		{src: "/images/dark/star.png", title: "Pages", open: function() {
-			console.log("searching for pages"); } },
-		{src: "/images/dark/messaging.png", title: "Messages", open: function() {
-			console.log("searching for messages"); } },
-		{src: "/images/dark/sharing.png", title: "Shares", open: function() {
-			console.log("searching for shares"); } },
-		{src: "/images/dark/groups.png", title: "Groups", open: function(){
-			console.log("Searching Groups"); } }
+
+		/*
+		<ul className="modes">
+						{this.props.options.map(function(option, i){
+							return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
+						})}
+					</ul>
+		*/
+
+//        {src: "/images/dark/circle.png", title: "People", open: function() {
+//			console.log("searching for people"); } },
+//		{src: "/images/dark/file.png", title: "Files", open: function() {
+//			console.log("searching for files"); } },
+//		{src: "/images/dark/folder.png", title: "Folders", open: function() {
+//			console.log("searching for folders"); } },
+//		{src: "/images/dark/star.png", title: "Pages", open: function() {
+//			console.log("searching for pages"); } },
+//		{src: "/images/dark/messaging.png", title: "Messages", open: function() {
+//			console.log("searching for messages"); } },
+//		{src: "/images/dark/sharing.png", title: "Shares", open: function() {
+//			console.log("searching for shares"); } },
+//		{src: "/images/dark/groups.png", title: "Groups", open: function(){
+//			console.log("Searching Groups"); } }
     ],
 	fileTypes: {
 		"image/png": "/images/files/image.png",

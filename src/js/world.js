@@ -1,7 +1,7 @@
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 2, 100000 ),
+            camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 2, 100000 ),
             renderer = new THREE.WebGLRenderer(),
 			self = this,
             sunGeom = new THREE.OctahedronGeometry( 3, 0),
@@ -28,7 +28,7 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x858585);
+			renderer.setClearColor(0x43c0c0);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
@@ -61,7 +61,7 @@ export default class World {
 				requestAnimationFrame( function () { render(last); } );
 			};
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-3.jpg", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-6.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -70,18 +70,30 @@ export default class World {
 						fog: false,
                         color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 				    }),
+					skyboxFrontMat = new THREE.MeshBasicMaterial({
+						color: 0x43c0c0,
+						fog: false
+					}),
 					skyboxTopMat = new THREE.MeshBasicMaterial(),
 					x = 0;
 				while (x < 4) {
-					skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxSideMat);
+					if (x % 2 == 1) {
+						skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxFrontMat);
+					} else {
+						skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxSideMat);
+					}
 					skyboxFace.position.set(Math.sin(x*(Math.PI / 2))*30000, 0, Math.cos(x*(Math.PI / 2))*30000 );
 					skyboxFace.rotation.y = x*(Math.PI / 2);
 					skybox.add(skyboxFace);
 					x++;
 				}
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x797979}));
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
 				skyboxFace.position.set(0, 30000, 0);
 				skyboxFace.rotation.x = (Math.PI / 2);
+				skybox.add(skyboxFace);
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
+				skyboxFace.position.set(0, -30000, 0);
+				skyboxFace.rotation.x = (-Math.PI / 2);
 				skybox.add(skyboxFace);
 
 				self.skybox = skybox;
