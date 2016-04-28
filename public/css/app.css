@@ -197,6 +197,10 @@ article.card {
 	background: #FFF;
     padding-bottom: 0.25em;
     pointer-events: all;
+    position: fixed;
+    top: 58px;
+    left: 0;
+    z-index: 3;
 }
 .page-editor {
     position: absolute;
@@ -304,6 +308,7 @@ img.emoji {
     padding-top: 0.4em;
     padding-right: 0.33em;
     font-size: 16px;
+    z-index: 4;
 }
 .user-menu .icon {
 	opacity: 0.75;
@@ -360,17 +365,18 @@ form.search ul li div span, .create-menu ul li div span {
 	float: none;
     margin: auto;
     position: absolute;
-    left: 0;
+    left: -1em;
     right: 0;
-    top: 62px;
+    top: 19px;
     width: 100%;
     padding-bottom: 1em;
-    max-height: 100%;
-    background: #ffffff;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: #FFF;
     box-shadow: 0px 2px 3px rgba(0,0,0,.1);
-    border-radius: 12px;
-	overflow-y: auto;
-	overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    z-index: 0;
 }
 .search ul li {
 	margin-bottom: 0em;
@@ -442,13 +448,26 @@ input#file-upload:hover {
 .notifications-area .card h3 {
     margin-top: 14px;
 }
-
 .activity-view {
     position: absolute;
-    top: 0;
+    top: 18px;
+    left: 10px;
     width: 100%;
-    height: 100%;
+    min-height: 312px;
     z-index: 2;
+    background: rgba(251, 0, 255, 0.58);
+}
+
+.activity-view .grid {
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #FFF;
+    margin: -1em;
+}
+
+.activity-view .grid .icon {
+
 }
 
 .editor {
@@ -471,16 +490,16 @@ input#file-upload:hover {
 
 }
 form.search {
-    position: fixed;
+    position: static;
     top: 58px;
     left: 0px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0);
     width: 100%;
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-	pointer-events: none;
-	z-index: 3;
+    pointer-events: none;
+    z-index: 3;
 }
 .signin div {
 
@@ -513,6 +532,7 @@ form.search {
     width: 100%;
 	box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
    	background: white;
+	z-index: 4;
 }
 .emojis {
 	font-size: 42px;
@@ -655,6 +675,13 @@ form.search {
 		margin-top: 0.5em;
 		margin-bottom: 0.5em;
 		width: 200px;
+	}
+	.activity-view {
+		top: -2px;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		min-height: 932px;
 	}
 	.icon.text {
 		color: #303030;

@@ -33,9 +33,11 @@ export default class ActivityView extends React.Component {
 
 		return (
 			<section className="activity-view" style={activityViewStyle}>
-				{this.props.activities.map(function(option, i){
+				<div className="grid">
+				{this.props.cells.map(function(option, i){
                     return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
                 })}
+				</div>
 			</section>
 		);
 	}
@@ -43,10 +45,7 @@ export default class ActivityView extends React.Component {
 
 ActivityView.defaultProps = {
     name: 'activity-view',
-    activities: [
-//        {src: "/images/dark/pylon-w-a.png", title: "Apps", open: function(){ console.log("opening Launcher.."); } },
-//		{src: "/images/dark/search.png", title: "Search", open: function(){ console.log("opening Search app.."); } }
-
-    ]
+    cells: [],
+	activities: []
 };
 

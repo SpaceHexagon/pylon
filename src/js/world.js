@@ -28,7 +28,7 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x0080bc);
+			renderer.setClearColor(0x004759);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
@@ -40,14 +40,13 @@ export default class World {
 					time = (Date.now() / 4600);
 
 				if (!! sys.userInput) {
-					sys.userInput.update(delta);					sys.userInput.update(delta);
-
+					sys.userInput.update(delta);
 				//backgroundParticles(delta);
 				}
 
 				sys.sendUpdatePacket = !sys.sendUpdatePacket;
 				if (sys.sendUpdatePacket && sys.mode == "vr") {
-					socket.emit('pylon update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
+					socket.emit('user update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
 						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
 				}
 
@@ -89,7 +88,7 @@ export default class World {
 //				skyboxFace.position.set(0, 30000, 0);
 //				skyboxFace.rotation.x = (Math.PI / 2);
 //				skybox.add(skyboxFace);
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x226464}));
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x02807D}));
 				skyboxFace.position.set(0, -30000, 0);
 				skyboxFace.rotation.x = (-Math.PI / 2);
 				skybox.add(skyboxFace);
@@ -102,8 +101,6 @@ export default class World {
 				render(0);
 			});
 
-
-			if (window.location.href.split(".net")[1].length > 1) {
 //				var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
 //					platformMat = new THREE.MeshLambertMaterial({
 //                        color: 0xffffff
@@ -112,7 +109,7 @@ export default class World {
 //					scene.add(platform);
 //					platform.position.set(0, -1500, -750);
 //                    platform.rotation.set(0, Math.PI / 6, 0);
-			}
+
 
 			while (x < 12) {
 				while (y < 12) {

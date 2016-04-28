@@ -21,6 +21,10 @@ export default class UserInput {
 			init: function (camera, device) {
 				var uInput = this;
 				this.connect(camera, device);
+				if (window.location.href.split(".net")[1].length <= 1) {
+					uInput.rotationVector = {x: 0.5699999999999995, y: 6.283333333333311, z: 0};
+				}
+
 				var canvas = document.querySelector("canvas#viewport");
 				canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
 				canvas.onclick = function (event) {

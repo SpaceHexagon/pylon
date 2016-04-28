@@ -63,10 +63,9 @@ UserMenu.defaultProps = {
     name: 'user-menu',
 	username: localStorage.getItem("username") || "Guest",
     options: [
-				{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
-		{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
-		{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }},
-		{src:"/images/configure.png", title:"System Settings" , text: "", open: (evt, menu)=>{} }
+			{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
+			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
+			{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }}
     ]
 };
 
