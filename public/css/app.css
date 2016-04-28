@@ -442,13 +442,15 @@ input#file-upload:hover {
 .notifications-area .card h3 {
     margin-top: 14px;
 }
-.activities-view {
-	display: none;
-    z-index: 3;
+
+.activity-view {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
-.activities-view.visible {
-	display: block;
-}
+
 .editor {
     width: 97.5%;
     left: 1%;
