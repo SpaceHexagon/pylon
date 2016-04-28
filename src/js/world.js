@@ -28,7 +28,7 @@ export default class World {
 			window.three = this.three;
             scene.add(light);
 			light.position.set(0, 60000, 0);
-			renderer.setClearColor(0x43c0c0);
+			renderer.setClearColor(0x0080bc);
 			scene.add(cube);
 			camera.position.z = 15;
 			this.skybox = null;
@@ -61,7 +61,7 @@ export default class World {
 				requestAnimationFrame( function () { render(last); } );
 			};
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-6.jpg", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/aero-sky.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -77,11 +77,9 @@ export default class World {
 					skyboxTopMat = new THREE.MeshBasicMaterial(),
 					x = 0;
 				while (x < 4) {
-					if (x % 2 == 1) {
-						skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxFrontMat);
-					} else {
+
 						skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxSideMat);
-					}
+
 					skyboxFace.position.set(Math.sin(x*(Math.PI / 2))*30000, 0, Math.cos(x*(Math.PI / 2))*30000 );
 					skyboxFace.rotation.y = x*(Math.PI / 2);
 					skybox.add(skyboxFace);
@@ -91,10 +89,10 @@ export default class World {
 //				skyboxFace.position.set(0, 30000, 0);
 //				skyboxFace.rotation.x = (Math.PI / 2);
 //				skybox.add(skyboxFace);
-//				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
-//				skyboxFace.position.set(0, -30000, 0);
-//				skyboxFace.rotation.x = (-Math.PI / 2);
-//				skybox.add(skyboxFace);
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x226464}));
+				skyboxFace.position.set(0, -30000, 0);
+				skyboxFace.rotation.x = (-Math.PI / 2);
+				skybox.add(skyboxFace);
 
 				self.skybox = skybox;
 				three.scene.add(skybox);

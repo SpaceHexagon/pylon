@@ -10,7 +10,7 @@ var User = require('../app/user.js'),
 	Doc = require('../app/doc.js'),
 	Group = require('../app/group.js'),
 	Share = require('../app/share.js'),
-	Message = require('../app/message.js');
+	Message = require('../app/message.js'),
 	Geometry = require('../app/geometry.js');
 
 module.exports = function (app, db) {
@@ -29,6 +29,7 @@ module.exports = function (app, db) {
 		externalRouter = require("./api/externals.js")(app, db, Users),
 		structureRouter = require("./api/structures.js")(app, db, Users),
 		buildingRouter = require("./api/buildings.js")(app, db, Users),
+		cellRouter = require("./api/cells.js")(app, db, Users),
         shareRouter = require("./api/shares.js")(app, db, Users, Pages),
         messageRouter = require("./api/messages.js")(app, db, Users),
         geometryRouter = require("./api/geometries.js")(app, db, Users);
@@ -89,6 +90,7 @@ module.exports = function (app, db) {
                         userFolders = null;
 					online[token] = username;
 					console.log(online[token]);
+					db.createCollection(username + ".cells");
 					db.createCollection(username + ".buildings");
                     db.createCollection(username + ".folders");
 					db.createCollection(username + ".thumbs");
@@ -155,6 +157,7 @@ module.exports = function (app, db) {
 	router.use('/externals', externalRouter);
 	router.use('/structures', structureRouter);
 	router.use('/buildings', buildingRouter);
+	router.use('/cells', cellRouter);
     router.use('/shares', shareRouter);
     router.use('/messages', messageRouter);
     router.use('/geometries', geometryRouter);

@@ -57,7 +57,7 @@ module.exports = function (app, db, Users) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']];
 
-		Pages.remove({_id: ObjectID(req.body.id)}, function(err) {
+		Pages.remove({_id: ObjectID(req.params.page)}, function(err) {
             if(err) {
                 return console.log('Error removing page: ', err);
             }
