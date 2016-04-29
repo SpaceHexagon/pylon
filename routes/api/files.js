@@ -111,11 +111,17 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 		});
 	});
 
-	router.put('/', function (req, res) {
-		res.json({
-			success: true,
-			message: "Put / Update method has been disabled for now."
-		});
+	router.put('/:file', function (req, res) {
+		var online = req.app.get('online'),
+			username = online[req.headers['x-access-token'] || req.query.token],
+			userFiles = db.collection(username + ".files");
+
+        userFiles.update({_id: req.params.file}, {$set: {metadata: req.body.metadata}}, function(err) {
+            if (err) {
+                return console.log("Error updating file", err);
+            }
+            res.json({success: true, message: "File Updated"});
+        });
 	});
 
 	router.delete('/:file', function (req, res) {

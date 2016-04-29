@@ -18,6 +18,7 @@ import CreateMenu from './ui/create-menu.js';
 import NotificationsArea from './ui/notifications-area.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
+import AppletView from './ui/applet-view.js';
 import ActivityView from './ui/activity-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
@@ -60,7 +61,8 @@ ReactDOM.render(
 	  	<UserMenu systemEvents={systemEvents} />
 	  	<SearchBar systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
-	  	<CreateMenu systemEvents={systemEvents}/>
+	  	<CreateMenu systemEvents={systemEvents} />
+        <AppletView systemEvents={systemEvents} />
 	  	<ActivityView systemEvents={systemEvents} />
 	  	<PageEditor systemEvents={systemEvents} />
         <div className="lightbox" style={{display: "none"}}></div>
@@ -85,6 +87,7 @@ window.app = {
 		gravity: 1,
         falling: false
 	},
+    systemEvents: systemEvents,
     username: localStorage.getItem("username"),
 	mobile: (window.innerWidth <= 640),
 	mode: "desktop",
@@ -113,11 +116,6 @@ app.userInput = userInput = new UserInput();
 
 app.userInput.init(three.camera, app.user);
 UserInput.rotationVector = {x: 0, y: Math.PI / 4, z: 0};
-
-	if (false) {
-		camera.position.set( -65614.78294284792, 300.1792, 32811.47470128861);
-		UserInput.rotationVector = {x: 12.563333333333308, y: 36.74666666666676, z: 0};
-	}
 
 document.body.addEventListener("keydown", function (evt) {
 	var visible = true,
@@ -167,10 +165,10 @@ document.body.ondragover = function () {
        app.lightbox.setAttribute("class", "lightbox hover");
        clearTimeout(app.lightboxTimeout);
        app.lightboxTimeout = setTimeout(function () {
-                    if (!app.uploading) {
-                        app.lightbox.setAttribute("class", "lightbox");
-                        app.lightbox.setAttribute("style", "display: none;");
-                    }
+            if (!app.uploading) {
+                app.lightbox.setAttribute("class", "lightbox");
+                app.lightbox.setAttribute("style", "display: none;");
+            }
        }, 1000);
        return false;
 };

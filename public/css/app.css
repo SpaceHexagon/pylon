@@ -448,6 +448,13 @@ input#file-upload:hover {
 .notifications-area .card h3 {
     margin-top: 14px;
 }
+.applet-view {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .activity-view {
     position: absolute;
     top: 18px;
@@ -457,7 +464,6 @@ input#file-upload:hover {
     z-index: 2;
     background: rgba(251, 0, 255, 0.58);
 }
-
 .activity-view .grid {
 	width: 100%;
     height: 100%;
@@ -465,7 +471,6 @@ input#file-upload:hover {
     background: #FFF;
     margin: -1em;
 }
-
 .activity-view .grid .icon {
 	margin: -0.5em;
     position: relative;

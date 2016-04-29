@@ -78,7 +78,10 @@ FileContextMenu.defaultProps = {
 				  });
 			}
 		},
-        {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(){ alert("not implemented"); console.log("opening sharing app.."); } }
+        {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(){
+            app.systemEvents.emit("open-applet", "file-properties");
+            console.log("Open File Properties Applet");
+        } }
 	]
 };
 //        { src: "/images/dark/x.png", title: "Delete", text: "", open: function(evt, menu) {
