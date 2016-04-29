@@ -19,11 +19,25 @@ export default class ActivityView extends React.Component {
 	}
 
 	componentDidMount () {
-		var comp = this;
-		console.log(this.props);
+		var comp = this,
+			configure = {
+				 baseURL: 'https://vpylon.net',
+				 timeout: 1000,
+				 headers: {'x-access-token': localStorage.getItem("token")}
+			};
+
 		this.props.systemEvents.on("toggle-activity-view", function (evt) {
 			comp.toggle(evt);
 		});
+
+		//load cells
+		axios.get('/api/cells/all', configure)
+			.then(function (response) {
+				//comp.setState({cells: response.data});
+			})
+			.catch(function (response) {
+				console.log(response);
+			});
 	}
 
 	render() {
@@ -35,7 +49,8 @@ export default class ActivityView extends React.Component {
 			<section className="activity-view" style={activityViewStyle}>
 				<div className="grid">
 				{this.props.cells.map(function(option, i){
-                    return <Icon key={i} src={option.src} title={option.title} open={option.open} />;
+					var iconSrc = "/images/dark/triangle-"+(i % 2 == 0 ? "round" : "down")+".png";
+                    return <Icon key={i} src={iconSrc} title={""} open={()=>{}} />;
                 })}
 				</div>
 			</section>
@@ -45,7 +60,7 @@ export default class ActivityView extends React.Component {
 
 ActivityView.defaultProps = {
     name: 'activity-view',
-    cells: [],
+    cells: [{},{},{},{},{},{},{},{}],
 	activities: []
 };
 

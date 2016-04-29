@@ -98,7 +98,7 @@ export default class SearchBar extends React.Component {
 					</div>
 
 				</div>
-					{atLeastOne ? "<ul className='results'>" : ""}
+					<ul className='results'>
 					{this.state.results.map(function(result, i){
 					 	var cardSrc = fileTypes[result.contentType] || "",
 					 		fileURL = "/api/files/"+result.filename+"?token="+localStorage.getItem("token"),
@@ -109,7 +109,7 @@ export default class SearchBar extends React.Component {
 						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ /*window.location.href = fileURL;*/ }} link={fileURL} title={result.filename} />}
 								   thumbURL={cardBG} background={(gif ? fileURL : "")} title={result.filename} text={cardText} link={fileURL} contextMenu={<FileContextMenu theme={(cardBG != "" ? "light" : "dark")} link={fileURL} file_id={result._id} />}/></li>;
                 	})}
-					{atLeastOne ? "</ul>" : ""}
+					</ul>
 			</form>
 		);
 	}

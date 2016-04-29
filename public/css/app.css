@@ -467,7 +467,13 @@ input#file-upload:hover {
 }
 
 .activity-view .grid .icon {
-
+	margin: -0.5em;
+    position: relative;
+    left: 1em;
+    top: 1em;
+    height: 72px;
+    width: 72px;
+    opacity: 0.75;
 }
 
 .editor {
