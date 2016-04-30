@@ -6,25 +6,43 @@ export default class FileProperties extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'File Properties'}
+        this.state = {
+			name: 'File Properties',
+			visible: true
+		}
     }
-    setName(name) {
-    	// When there's a change in the state, the component and all its sub-components get updated.
-        this.setState({name: name});
-    }
+
+	toggle (set) {
+		this.setState({
+			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
+		});
+	}
+
+	componentDidMount () {
+		var comp = this;
+		console.log(this.props);
+		app.systemEvents.on("toggle-applet-views", function (evt) {
+			comp.toggle(evt);
+		});
+
+	}
 
     save (comp) {
 
     }
 
 	render(){
-        var comp = this;
+        var comp = this,
+			appletStyle = {
+            display: this.state.visible ? "inline-block" : "none"
+        };
+
 		return (
-			<section className="applet file-properties">
+			<section style={appletStyle} className="applet file-properties">
                 <nav className="panel">
 				    <h2>File Properties</h2>
-                    <Icon title="Save" src="/images/dark/edit.png" text="Save" open={(evt)=>{ comp.save(comp); }} />
-                    <Icon title="Close" src="/images/dark/x.png" open={(evt)=>{ comp.close(); }} />
+                    <Icon title="Save" src="/images/edit.png" text="Save" open={(evt)=>{ comp.save(comp); }} />
+                    <Icon title="Close" src="/images/x.png" open={(evt)=>{ comp.close(); }} />
                 </nav>
 				<table>
 					{this.props.metadata.map(function(option, i){

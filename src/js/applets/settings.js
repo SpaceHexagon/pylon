@@ -6,15 +6,34 @@ export default class Settings extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Settings'}
+        this.state = {name: 'Settings',
+			visible: true
+		}
     }
-    setName(name) {
-    	// When there's a change in the state, the component and all its sub-components get updated.
-        this.setState({name: name});
-    }
-	render(){
+
+	toggle (set) {
+		this.setState({
+			visible: typeof(set.visible) != 'undefined' ? set.visible : !this.state.visible
+		});
+	}
+
+	componentDidMount () {
+		var comp = this;
+		console.log(this.props);
+		app.systemEvents.on("toggle-applet-views", function (evt) {
+			comp.toggle(evt);
+		});
+
+	}
+
+
+	render() {
+		var appletStyle = {
+            display: this.state.visible ? "inline-block" : "none"
+        };
+
 		return (
-			<section className="applet settings">
+			<section style={appletStyle} className="applet settings">
 
 			</section>
 		);

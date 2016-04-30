@@ -108,7 +108,30 @@ input[type=button]:hover, input[type=submit]:hover {
 	color: #222;
 }
 .applet {
-
+    background: #FFF;
+    border-radius: 2px;
+    padding: 0;
+    max-width: 415px;
+    min-width: 320px;
+    text-align: center;
+    margin: auto;
+    display: block !important;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+.applet .panel {
+	background: #333;
+    border-top: #666 1px solid;
+    border-radius: 2px;
+}
+.applet .panel h2 {
+	width: 200px;
+    margin: 0;
+    display: inline;
+    color: #FFF;
+}
+.applet table {
+	 padding: 1em;
+	 text-align: left;
 }
 .icon {
     opacity: 0.9;
@@ -450,9 +473,10 @@ input#file-upload:hover {
 }
 .applet-view {
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+    padding-top: 3.5em;
 }
 
 .activity-view {
@@ -589,7 +613,7 @@ form.search {
 
 @media screen and (min-width: 961px) {
 	main {
-		min-height: 384px;
+		min-height: 192px;
     	margin-top: 3em;
 	}
     .card h3 {
@@ -631,6 +655,10 @@ form.search {
 		margin-bottom: 0;
 		margin-top: 0;
 		position: inherit !important;
+	}
+	.search .card.background {
+		min-width: 360px;
+    	min-height: 192px;
 	}
 	.search div.options {
 		background: transparent;
@@ -695,6 +723,9 @@ form.search {
 		width: 100%;
 		height: 100%;
 		min-height: 932px;
+	}
+	.applet-view {
+		padding-top: 1.5em;
 	}
 	.icon.text {
 		color: #303030;

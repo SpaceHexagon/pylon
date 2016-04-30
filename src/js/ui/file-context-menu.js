@@ -79,7 +79,8 @@ FileContextMenu.defaultProps = {
 			}
 		},
         {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(){
-            app.systemEvents.emit("open-applet", "file-properties");
+            app.systemEvents.emit("toggle-applet-view", {visible: true});
+			app.systemEvents.emit("open-applet", "file-properties");
             console.log("Open File Properties Applet");
         } }
 	]

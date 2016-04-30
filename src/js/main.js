@@ -18,8 +18,8 @@ import CreateMenu from './ui/create-menu.js';
 import NotificationsArea from './ui/notifications-area.js';
 import FileView from './ui/file-view.js';
 import ListView from './ui/list-view.js';
-import AppletView from './ui/applet-view.js';
 import ActivityView from './ui/activity-view.js';
+import AppletView from './ui/applet-view.js';
 import VrView from './ui/vr-view.js';
 import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
@@ -62,9 +62,10 @@ ReactDOM.render(
 	  	<SearchBar systemEvents={systemEvents} />
 	  	<NotificationsArea systemEvents={systemEvents}/>
 	  	<CreateMenu systemEvents={systemEvents} />
-        <AppletView systemEvents={systemEvents} />
 	  	<ActivityView systemEvents={systemEvents} />
+	  	<AppletView systemEvents={systemEvents} />
 	  	<PageEditor systemEvents={systemEvents} />
+
         <div className="lightbox" style={{display: "none"}}></div>
       </div>
   ),
@@ -135,6 +136,7 @@ document.body.addEventListener("keydown", function (evt) {
 					systemEvents.emit("toggle-activity-view", {visible: false});
 					systemEvents.emit("toggle-create-menu", {visible: false});
 					systemEvents.emit("toggle-notifications", {visible: false});
+					systemEvents.emit("toggle-applet-views", {visible: false});
 				}
 			}
 		}
