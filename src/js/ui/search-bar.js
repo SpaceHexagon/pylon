@@ -94,7 +94,7 @@ export default class SearchBar extends React.Component {
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div className="options">
 					<div className="searchInputs">
-						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="Search" />
+						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="" />
 					</div>
 
 				</div>

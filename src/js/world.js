@@ -1,3 +1,6 @@
+import Cell from './vr/cell.js';
+import Avatar from './vr/avatar.js';
+
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
@@ -41,9 +44,7 @@ export default class World {
 
 				if (!! sys.userInput) {
 					sys.userInput.update(delta);
-				//backgroundParticles(delta);
 				}
-
 				sys.sendUpdatePacket = !sys.sendUpdatePacket;
 				if (sys.sendUpdatePacket && sys.mode == "vr") {
 					socket.emit('user update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
@@ -52,7 +53,6 @@ export default class World {
 
 				cube.rotation.x += 0.0025;
 				cube.rotation.y += 0.005;
-
 				sys.world.skybox.position.set(camera.position.x, camera.position.y, camera.position.z);
 
 				renderer.render(scene, camera);
@@ -84,10 +84,7 @@ export default class World {
 					skybox.add(skyboxFace);
 					x++;
 				}
-//				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, map: skyTexture}));
-//				skyboxFace.position.set(0, 30000, 0);
-//				skyboxFace.rotation.x = (Math.PI / 2);
-//				skybox.add(skyboxFace);
+
 				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x3A143B}));
 				skyboxFace.position.set(0, -30000, 0);
 				skyboxFace.rotation.x = (-Math.PI / 2);
@@ -101,14 +98,14 @@ export default class World {
 				render(0);
 			});
 
-//				var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
-//					platformMat = new THREE.MeshLambertMaterial({
-//                        color: 0xffffff
-//				    }),
-//					platform = new THREE.Mesh(platformGeom, platformMat);
-//					scene.add(platform);
-//					platform.position.set(0, -1500, -750);
-//                    platform.rotation.set(0, Math.PI / 6, 0);
+//			var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
+//				platformMat = new THREE.MeshLambertMaterial({
+//              	color: 0xffffff
+//				}),
+//				platform = new THREE.Mesh(platformGeom, platformMat);
+//			scene.add(platform);
+//			platform.position.set(0, -1500, -750);
+//          platform.rotation.set(0, Math.PI / 6, 0);
 
 
 			while (x < 12) {
@@ -129,10 +126,6 @@ export default class World {
 //			var ground = new THREE.Mesh(groundGeom, groundMat);
 //			ground.rotateX(Math.PI / 2);
 //			three.scene.add(ground);
-
-
-
-
     }
 
 };
