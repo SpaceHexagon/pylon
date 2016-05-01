@@ -23,6 +23,8 @@ export default class UserInput {
 				this.connect(camera, device);
 				if (window.location.href.split(".net")[1].length <= 1) {
 					uInput.rotationVector = {x: 0.5699999999999995, y: 6.283333333333311, z: 0};
+				} else {
+					uInput.rotationVector = {x: 0.18666666666666465, y: -6.786666666666673, z: 0}
 				}
 
 				var canvas = document.querySelector("canvas#viewport");
