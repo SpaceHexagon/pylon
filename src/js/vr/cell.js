@@ -1,13 +1,22 @@
 export default class Cell {
-	constructor() {
-		var cell = "X0Y0Z0",
-			data = {},
-			mesh = null;
+	constructor(coords) {
+		var data = {},
+			geometry = new THREE.CylinderGeometry(3000, 3000, 300, 3),
+			material = new THREE.MeshLambertMaterial({
+             			color: 0xffffff
+					}),
+			mesh = new THREE.Mesh(geometry, material);
+
+		three.scene.add(mesh);
+		mesh.position.set(0, -1500, -750);
+        mesh.rotation.set(0, Math.PI / 6, 0);
 
 		 return {
-			cell: cell,
+			cell: coords,
 			data: data,
 			mesh: mesh
 		 }
 	}
 }
+
+

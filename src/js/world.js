@@ -40,21 +40,27 @@ export default class World {
 				var sys = app,
 					camera = three.camera,
 					delta = ((Date.now() - last) / 10000),
-					time = (Date.now() / 4600);
+					time = (Date.now() / 4600),
+					image = "";
 
 				if (!! sys.userInput) {
 					sys.userInput.update(delta);
 				}
-				sys.sendUpdatePacket = !sys.sendUpdatePacket;
-				if (sys.sendUpdatePacket && sys.mode == "vr") {
+				if (sys.sendUpdatePacket == 30) { // send image
+					image = "image uri";
+					sys.sendUpdatePacket = 0;
+				}
+
+				sys.sendUpdatePacket += 1;
+				if (sys.sendUpdatePacket %2 == 0 && sys.mode == "vr") {
 					socket.emit('user update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
 						+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
+
 				}
 
 				cube.rotation.x += 0.0025;
 				cube.rotation.y += 0.005;
 				sys.world.skybox.position.set(camera.position.x, camera.position.y, camera.position.z);
-
 				renderer.render(scene, camera);
 				last = Date.now();
 				requestAnimationFrame( function () { render(last); } );
@@ -97,16 +103,6 @@ export default class World {
 
 				render(0);
 			});
-
-//			var platformGeom = new THREE.CylinderGeometry(3000, 3000, 300, 6),
-//				platformMat = new THREE.MeshLambertMaterial({
-//              	color: 0xffffff
-//				}),
-//				platform = new THREE.Mesh(platformGeom, platformMat);
-//			scene.add(platform);
-//			platform.position.set(0, -1500, -750);
-//          platform.rotation.set(0, Math.PI / 6, 0);
-
 
 			while (x < 12) {
 				while (y < 12) {

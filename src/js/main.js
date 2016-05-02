@@ -96,7 +96,7 @@ window.app = {
 	world: null,
 	activity: "none",
 	userInput: null,
-	sendUpdatePacket: false,
+	sendUpdatePacket: 0,
 	lightboxTimeout: 0,
 	typeToSearch: true,
     uploading: false,
