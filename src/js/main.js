@@ -65,7 +65,7 @@ ReactDOM.render(
 	  	<ActivityView systemEvents={systemEvents} />
 	  	<AppletView systemEvents={systemEvents} />
 	  	<PageEditor systemEvents={systemEvents} />
-
+	  	<video id="webcam" ></video>
         <div className="lightbox" style={{display: "none"}}></div>
       </div>
   ),
@@ -109,6 +109,31 @@ window.app = {
 			}
 			navigator.vibrate(data);
 		}
+	},
+	captureMode: function () {
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+		var constraints = {
+		  audio: false,
+		  video: true
+		};
+
+		var video = document.querySelector('#webcam');
+
+		function successCallback(stream) {
+		  window.stream = stream; // stream available to console
+		  if (window.URL) {
+			video.src = window.URL.createObjectURL(stream);
+		  } else {
+			video.src = stream;
+		  }
+		}
+
+		function errorCallback(error) {
+		  console.log('navigator.getUserMedia error: ', error);
+		}
+
+		navigator.getUserMedia(constraints, successCallback, errorCallback);
 	}
 }
 
@@ -183,4 +208,6 @@ document.body.ondrop = function (e) {
 	document.querySelector("#file-upload").files = e.dataTransfer.files;
 	//systemEvents.emit("start-upload", {files: e.dataTransfer.files});
 };
+
+
 

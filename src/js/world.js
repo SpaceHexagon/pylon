@@ -91,7 +91,7 @@ export default class World {
 					x++;
 				}
 
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x3A143B}));
+				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x3A4771}));
 				skyboxFace.position.set(0, -30000, 0);
 				skyboxFace.rotation.x = (-Math.PI / 2);
 				skybox.add(skyboxFace);

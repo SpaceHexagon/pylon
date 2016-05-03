@@ -27,6 +27,9 @@ main {
     right: 0;
 	box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
+#webcam {
+	display: none;
+}
 .vr main {
 	display: none;
 }
@@ -709,7 +712,7 @@ form.search {
         width: 60px;
 		left: 0;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.75) !important;
+		background-color: rgba(0, 0, 0, 0.9) !important;
 		background: white;
 		margin-top: 0 !important;
 		border-right: 2px rgba(0, 0, 0, 0.26) solid;
