@@ -6,7 +6,7 @@ export default class Messaging extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Messaging',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class Messaging extends Applet {
 		);
 	}
 }
+
+Messaging.defaultProps = {
+	appletData: {},
+	name: 'Messaging',
+	icon: "/images/dark/star.png"
+};

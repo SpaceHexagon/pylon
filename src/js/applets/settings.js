@@ -6,7 +6,7 @@ export default class Settings extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Settings',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class Settings extends Applet {
 		);
 	}
 }
+
+Settings.defaultProps = {
+	appletData: {},
+	name: 'Settings',
+	icon: "/images/dark/star.png"
+};

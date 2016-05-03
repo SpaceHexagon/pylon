@@ -40,3 +40,9 @@ export default class FileBrowser extends Applet {
 		);
 	}
 }
+
+FileBrowser.defaultProps = {
+	appletData: {},
+	name: 'File Browser',
+	icon: "/images/dark/star.png"
+};

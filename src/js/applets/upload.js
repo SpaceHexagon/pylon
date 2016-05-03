@@ -6,7 +6,7 @@ export default class Upload extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Upload',
+        this.state = {
 			visible: true
 		}
     }
@@ -38,3 +38,9 @@ export default class Upload extends Applet {
 		);
 	}
 }
+
+Upload.defaultProps = {
+	appletData: {},
+	name: 'Upload',
+	icon: "/images/dark/upload.png"
+};

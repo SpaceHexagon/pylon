@@ -20,3 +20,9 @@ export default class UserPreferences extends Applet {
 		);
 	}
 }
+
+UserPreferences.defaultProps = {
+	appletData: {},
+	name: 'User Preferences',
+	icon: "/images/dark/circle.png"
+};

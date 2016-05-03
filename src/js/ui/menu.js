@@ -78,7 +78,7 @@ Menu.defaultProps = {
 			menu.toggleSearchBar();
 		} },
 //		{src: "/images/folder.png", title: "File Browser", text: "File Browser", open: function(){ console.log("opening Files app.."); } },
-		{src: "/images/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
+//		{src: "/images/messaging.png", title: "Messaging", text: "Messaging", open: function(){ console.log("opening Messaging app.."); } },
 		//		{src: "/images/sharing.png", title: "Sharing", open: function(){ console.log("opening Sharing app.."); } },
 		{src: "/images/plus.png", title: "Create & Upload", text: "Create & Upload", open: function(evt, menu) {
 			menu.toggleCreateMenu();}
@@ -87,4 +87,5 @@ Menu.defaultProps = {
 //		{src: "/images/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
+
 

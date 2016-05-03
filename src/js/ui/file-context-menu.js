@@ -44,6 +44,7 @@ export default class FileContextMenu extends React.Component {
 FileContextMenu.defaultProps = {
     name: 'main',
     file_id: "",
+	filename: "",
     link: "",
     images: /(\.jpg|\.jpeg|\.png|\.webp)$/i,
     documents: /(\.txt|\.text|\.tx|\.md|\.js|\.css|\.html|\.htm|\.jsx|\.sh)$/i,
@@ -78,9 +79,9 @@ FileContextMenu.defaultProps = {
 				  });
 			}
 		},
-        {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(){
+        {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(evt, menu){
             app.systemEvents.emit("toggle-applet-view", {visible: true});
-			app.systemEvents.emit("open-applet", "file-properties");
+			app.systemEvents.emit("open-applet", {name:"file-properties", data:{filename: menu.props.filename}});
             console.log("Open File Properties Applet");
         } }
 	]

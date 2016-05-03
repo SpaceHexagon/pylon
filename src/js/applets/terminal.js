@@ -6,7 +6,7 @@ export default class Terminal extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Terminal',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class Terminal extends Applet {
 		);
 	}
 }
+
+Terminal.defaultProps = {
+	appletData: {},
+	name: 'Terminal',
+	icon: "/images/dark/terminal.png"
+};

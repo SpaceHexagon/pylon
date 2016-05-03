@@ -59,19 +59,20 @@ export default class AppletView extends React.Component {
 			<section className="applet-view" style={appletViewStyle}>
 				<div className="grid">
 				{this.props.applets.map(function(option, i){
-					switch (option) {
-						case "upload": return <Upload />; break;
-						case "file-properties": return <FileProperties />; break;
-						case "file-browser": return <FileBrowser />; break;
-						case "text-editor": return <TextEditor />; break;
-						case "image-editor": return <ImageEditor />; break;
-						case "model-editor": return <ModelEditor />; break;
-						case "messenger": return <Messenger />; break;
-						case "clock": return <Clock />; break;
-						case "settings": return <Settings />; break;
-						case "user-preferences": return <UserPreferences />; break;
-						case "sharing": return <Sharing />; break;
-						case "terminal": return <Terminal />; break;
+					var data = option.data;
+					switch (option.name) {
+						case "upload": return <Upload appletData={data} />; break;
+						case "file-properties": return <FileProperties appletData={data} />; break;
+						case "file-browser": return <FileBrowser appletData={data} />; break;
+						case "text-editor": return <TextEditor appletData={data} />; break;
+						case "image-editor": return <ImageEditor appletData={data} />; break;
+						case "model-editor": return <ModelEditor appletData={data} />; break;
+						case "messenger": return <Messenger  appletData={data}/>; break;
+						case "clock": return <Clock appletData={data} />; break;
+						case "settings": return <Settings appletData={data} />; break;
+						case "user-preferences": return <UserPreferences appletData={data} />; break;
+						case "sharing": return <Sharing appletData={data} />; break;
+						case "terminal": return <Terminal appletData={data} />; break;
 					}
                 })}
 				</div>

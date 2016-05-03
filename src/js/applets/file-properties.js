@@ -7,7 +7,6 @@ export default class FileProperties extends Applet {
 		super();
 		// Initial state of the component
         this.state = {
-			name: 'File Properties',
 			visible: true
 		}
     }
@@ -61,6 +60,9 @@ export default class FileProperties extends Applet {
 
 
 FileProperties.defaultProps = {
+	appletData: { },
+	name: "File Properties",
+	icon: "/images/dark/file.png",
 	metadata: [
 		{key: "public", value: false},
 		{key: "opensWith",  value: ""}

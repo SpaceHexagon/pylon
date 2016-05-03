@@ -6,7 +6,7 @@ export default class ImageEditor extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Image Editor',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class ImageEditor extends Applet {
 		);
 	}
 }
+
+ImageEditor.defaultProps = {
+	appletData: {},
+	name: 'Image Editor',
+	icon: "/images/dark/star.png"
+};

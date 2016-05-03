@@ -6,7 +6,7 @@ export default class ModelEditor extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'ModelEditor',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class ModelEditor extends Applet {
 		);
 	}
 }
+
+ModelEditor.defaultProps = {
+	appletData: {},
+	name: 'Model Editor',
+	icon: "/images/dark/star.png"
+};

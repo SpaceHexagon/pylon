@@ -6,7 +6,7 @@ export default class Sharing extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Sharing',
+        this.state = {
 			visible: true
 		}
     }
@@ -39,3 +39,9 @@ export default class Sharing extends Applet {
 		);
 	}
 }
+
+Sharing.defaultProps = {
+	appletData: {},
+	icon: "/images/dark/star.png",
+	name: "Sharing"
+};

@@ -39,3 +39,9 @@ export default class TextEditor extends Applet {
 		);
 	}
 }
+
+TextEditor.defaultProps = {
+	appletData: {},
+	name: 'Text Editor',
+	icon: "/images/dark/file.png"
+};

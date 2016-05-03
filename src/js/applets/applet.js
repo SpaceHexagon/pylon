@@ -26,3 +26,8 @@ export default class Applet extends React.Component {
 		);
 	}
 }
+
+
+Applet.defaultProps = {
+	appletData: {}
+};

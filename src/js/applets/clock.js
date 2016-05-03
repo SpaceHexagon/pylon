@@ -6,8 +6,9 @@ export default class Clock extends Applet {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {name: 'Clock',
-					 visible: true}
+        this.state = {
+			visible: true
+		}
     }
 
 	toggle (set) {
@@ -38,3 +39,9 @@ export default class Clock extends Applet {
 		);
 	}
 }
+
+Clock.defaultProps = {
+	appletData: {},
+	name: 'Clock',
+	icon: "/images/dark/circle.png"
+};
