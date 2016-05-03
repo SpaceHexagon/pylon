@@ -3,7 +3,9 @@ export default class TitleBar {
 		var name = "New Panel",
 			user_id = "user_id",
 			data = {},
-			mesh = null;
+			mesh = new THREE.Object3D();
+
+		three.scene.add(mesh);
 
 		 return {
 			name: name,

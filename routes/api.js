@@ -92,6 +92,7 @@ module.exports = function (app, db) {
 					console.log(online[token]);
 					db.createCollection(username + ".cells");
 					db.createCollection(username + ".buildings");
+					db.createCollection(username + ".captures");
                     db.createCollection(username + ".folders");
 					db.createCollection(username + ".thumbs");
                     userFolders = db.collection(username + ".folders");

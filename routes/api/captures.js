@@ -2,12 +2,11 @@ var express = require('express'),
 	mongo = require('mongodb'),
     ObjectID = require('mongodb').ObjectID,
 	Busboy = require('busboy'),
-    Grid = require('gridfs-stream'),
     shortId = require('shortid'),
     path = require('path'),
 	gfs = null;
 
-// Thumbnail Routes
+// Media-Capture Routes
 module.exports = function (app, extDB, mongo2, fs, Users) {
 	var router = express.Router(),
 		upload = null,
@@ -21,12 +20,17 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
     router.post('/', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']],
-			userThumbs = db.collection(username+".thumbs"),
+			userCaptures = db.collection(username+".captures"),
 			busboy = new Busboy({ headers: req.headers });
 
 		busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
 			console.log("fieldname", fieldname);
-			userThumbs.insert({filename: fieldname, dataURL: val});
+			if (true) { //fieldname == "files") {
+				userCaptures.insert({filename: fieldname,
+								 sequence_name: fieldname,
+								 frame: 1,
+								 dataURL: val});
+			}
 		});
 
 		busboy.on('finish', function() {
@@ -42,45 +46,63 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 	router.get('/all', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			userThumbs = db.collection(username+".thumbs");
-        userThumbs.find({}).toArray(function (err, thumbs) {
+			userCaptures = db.collection(username+".captures");
+        userCaptures.find({}).toArray(function (err, captures) {
 			if (err) {
 				res.json(err);
 			}
-			res.json(thumbs);
+			res.json(captures);
 		});
 	});
 
-    router.get('/:thumb', function (req, res) {
+    router.get('/:cap', function (req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token'] || req.query.token],
-			userThumbs = db.collection(username+".thumbs");
+			userCaptures = db.collection(username+".captures");
 
-        userThumbs.find({filename: req.params.thumb}).toArray(function (err, thumbs) {
+        userCaptures.find({filename: req.params.cap}).toArray(function (err, captures) {
 			if (err) {
 				res.json(err);
 			}
 
-			if (thumbs.length > 0) {
+			if (captures.length > 0) {
 				res.set('Content-Type', 'application/json');
-				res.json({dataURL: thumbs[0].dataURL});
+				res.json({dataURL: captures[0].dataURL});
 			} else {
 				return res.status(404).send(' ');
 			}
 		});
 	});
 
-    router.delete('/:thumb', function(req, res) {
+	router.get('/frames/:cap/:frame', function (req, res) {
+		var online = req.app.get('online'),
+			username = online[req.headers['x-access-token'] || req.query.token],
+			userCaptures = db.collection(username+".captures");
+
+        userCaptures.find({sequence_name: req.params.cap, frame: {$gt: req.params.frame}}).toArray(function (err, captures) {
+			if (err) {
+				res.json(err);
+			}
+			if (captures.length > 0) {
+				res.set('Content-Type', 'application/json');
+				res.json(captures);
+			} else {
+				return res.status(404).send(' ');
+			}
+		});
+	});
+
+    router.delete('/:cap', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']],
-			userThumbs = db.collection(username+".thumbs"),
-            fileId = req.params.thumb;
+			userCaptures = db.collection(username+".captures"),
+            fileId = req.params.cap;
 
-        userThumbs.remove({filename: req.params.thumb}, function (err) {
+        userCaptures.remove({filename: req.params.cap}, function (err) {
 			if(err) {
 				return console.log('Error removing file: ', err);
 			}
-            res.json({success: true, message: "Thumbnail Deleted"});
+            res.json({success: true, message: "Media-Capture Deleted"});
         });
 	});
 
