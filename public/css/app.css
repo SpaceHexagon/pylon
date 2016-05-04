@@ -229,6 +229,7 @@ article.card {
     top: 58px;
     left: 0;
     z-index: 3;
+	width: 103%;
 }
 .page-editor {
     position: absolute;
@@ -425,13 +426,14 @@ form.search ul li div span, .create-menu ul li div span {
     margin-left: 12px;
     margin-right: 0;
     font-size: 20px;
-    max-width: 230px;
+    max-width: 260px;
 }
 .search input[type=submit], .search input[type=button] {
 	    background-size: cover;
     width: 36px;
     cursor: pointer;
     background-image: url(/images/search.png);
+	background-color: #FFA500;
 }
 
 ul li div.title {
