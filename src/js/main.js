@@ -93,6 +93,7 @@ window.app = {
 	mobile: (window.innerWidth <= 640),
 	mode: "desktop",
     cwd: "/home",
+	cells: [],
 	world: null,
 	activity: "none",
 	userInput: null,

@@ -1,7 +1,7 @@
-export default class Cell {
+export default class Tile {
 	constructor(coords) {
 		var data = {},
-			geometry = new THREE.CylinderGeometry(3000, 3000, 1854, 6),
+			geometry = new THREE.CylinderGeometry(3000, 3000, 180, 6),
 			material = new THREE.MeshLambertMaterial({
              			color: 0xffffff
 					}),

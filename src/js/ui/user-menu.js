@@ -57,14 +57,14 @@ export default class UserMenu extends React.Component {
 	}
 }
 
-
+/**/
 /* <Icon key={2} src="/images/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 UserMenu.defaultProps = {
     name: 'user-menu',
 	username: localStorage.getItem("username") || "Guest",
     options: [
 			{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
-			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
+//			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
 			{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }}
     ]
 };

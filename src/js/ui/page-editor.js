@@ -17,6 +17,7 @@ export default class PageEditor extends React.Component {
 		this.props.systemEvents.on("window-resized", function (evt) {
 			comp.flagResized();
 		});
+		document.querySelector(".editor").value = document.querySelector("main div span").innerHTML;
 	}
 
 	toggleEditor (evt, editor) {
@@ -33,9 +34,11 @@ export default class PageEditor extends React.Component {
 				  headers: {'x-access-token': localStorage.getItem("token")}
 				};
 
-		axios.put('/api/pages/'+app.username, {"content": document.querySelector(".editor").value}, configure)
+		axios.put('/api/pages/'+document.title, {"content": document.querySelector(".editor").value}, configure)
 			.then(function (response) {
 				console.log(response);
+				document.querySelector("main div span").innerHTML = document.querySelector(".editor").value;
+
 			})
 			.catch(function (response) {
 				console.log(response);

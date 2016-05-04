@@ -45,7 +45,7 @@ module.exports = function (app, db, Users) {
 	router.put('/:page', function(req, res) {
 		var online = req.app.get('online'),
 			username = online[req.headers['x-access-token']];
-		Pages.update({title: req.params.page}, {$set: {content: req.body.content}}, function(err) {
+		Pages.update({title: req.params.page}, {$set: {"content": req.body.content}}, function(err) {
             if (err) {
                 return console.log("Error updating page ", err);
             }

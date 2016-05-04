@@ -111,7 +111,7 @@ app.get('/:username', function (req, res, next) {  // user homepage / portals
 					});
 				} else {
 					username = req.params.username
-					Pages.findOne({user_id: ObjectID(result._id)}, function (err, pageResult) {
+					Pages.findOne({user_id: ObjectID(result._id), home: true}, function (err, pageResult) {
 						var pylon = "<!DOCTYPE html><html>";
 						if (!err && pageResult != null) {
 							pylon += "<head> <title>" + pageResult.title + "</title>";

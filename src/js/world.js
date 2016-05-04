@@ -1,4 +1,5 @@
 import Cell from './vr/cell.js';
+import Tile from './vr/tile.js';
 import Avatar from './vr/avatar.js';
 
 export default class World {
@@ -75,27 +76,10 @@ export default class World {
 						fog: false,
                         color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 				    }),
-					skyboxFrontMat = new THREE.MeshBasicMaterial({
-						color: 0x43c0c0,
-						fog: false
-					}),
-					skyboxTopMat = new THREE.MeshBasicMaterial(),
 					x = 0;
-				while (x < 4) {
 
-						skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), skyboxSideMat);
 
-					skyboxFace.position.set(Math.sin(x*(Math.PI / 2))*30000, 0, Math.cos(x*(Math.PI / 2))*30000 );
-					skyboxFace.rotation.y = x*(Math.PI / 2);
-					skybox.add(skyboxFace);
-					x++;
-				}
-
-				skyboxFace = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000, 1, 1), new THREE.MeshBasicMaterial({fog: false, color: 0x3A4771}));
-				skyboxFace.position.set(0, -30000, 0);
-				skyboxFace.rotation.x = (-Math.PI / 2);
-				skybox.add(skyboxFace);
-
+				skybox = new THREE.Mesh(new THREE.OctahedronGeometry(80000, 4), skyboxSideMat);
 				self.skybox = skybox;
 				three.scene.add(skybox);
 				skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
@@ -104,13 +88,29 @@ export default class World {
 				render(0);
 			});
 
-			while (x < 12) {
-				while (y < 12) {
-//					if (Math.random() < 0.25) {
-//						cell = new THREE.Mesh(cellGeometry, panelMat);
+			var configure = {
+				 baseURL: 'https://vpylon.net',
+				 timeout: 1000,
+				 headers: {'x-access-token': localStorage.getItem("token")}
+			};
+
+			//load cells
+			axios.get('/api/cells/all', configure)
+				.then(function (response) {
+					app.cells = response.data;
+					app.cells.forEach(function (userCell){
+						var cell = new Cell(userCell.cell);
+					});
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+
+			while (x < 10) {
+				while (y < 10) {
+					cell = new Cell([x, Math.floor(Math.sin(x)*Math.cos(y)*1.5), y]);
 //						three.scene.add(cell);
 //						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
-//					}
 					y++;
 				}
 				y = 0;

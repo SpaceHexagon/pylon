@@ -101,7 +101,7 @@ module.exports = function (app, db) {
 					Users.findOne({username: username}, function(err, foundNewUser) { // work around to get ObjectId of newly created user
 						if (err) throw err;
 						if (foundNewUser != null) {
-							Pages.insert({user_id: ObjectId(foundNewUser._id), title: username, content: username+"'s Pylon"});
+							Pages.insert({user_id: ObjectId(foundNewUser._id), title: username, username: username, home: true, content: username+"'s Pylon"});
 
 							res.json({ // return the information including token as JSON
 							  success: true,
