@@ -93,7 +93,6 @@ window.app = {
 	mobile: (window.innerWidth <= 640),
 	mode: "desktop",
     cwd: "/home",
-	cells: [],
 	world: null,
 	activity: "none",
 	userInput: null,
@@ -209,6 +208,3 @@ document.body.ondrop = function (e) {
 	document.querySelector("#file-upload").files = e.dataTransfer.files;
 	//systemEvents.emit("start-upload", {files: e.dataTransfer.files});
 };
-
-
-
