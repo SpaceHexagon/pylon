@@ -108,7 +108,7 @@ export default class World {
 
 			while (x < 10) {
 				while (y < 10) {
-					cell = new Cell([x, Math.floor(Math.sin(x)*Math.cos(y)*1.5), y]);
+					cell = new Cell([x, Math.floor(Math.sin((x/5)*Math.PI)*Math.cos((y/5)*Math.PI)*1.5), y]);
 //						three.scene.add(cell);
 //						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
 					y++;

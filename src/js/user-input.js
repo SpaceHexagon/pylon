@@ -66,7 +66,7 @@ export default class UserInput {
 					});
 				}
 				document.addEventListener("keydown", function (event) {
-					if (app.mode) { // 0 = chat, 1 = vr
+					if (app.mode == "vr") { // 0 = chat, 1 = vr
 						switch (event.keyCode) {
 							case 87: uInput.keys.w = true; break;
 							case 65: uInput.keys.a = true; break;
@@ -85,7 +85,7 @@ export default class UserInput {
 							break;
 						}
 					}
-				});
+				}, true);
 				document.addEventListener("keyup", function (event) {
 					switch (event.keyCode) {
 						case 87: uInput.keys.w = false; break;
@@ -97,10 +97,10 @@ export default class UserInput {
 						case 16: uInput.keys.shift = false; break;
 						case 32: uInput.keys.space = false; break;
 					}
-				});
+				}, true);
 				document.body.addEventListener("touchmove", function(event) {
 					var data = event.touches, touch = data.length;
-					if (app.mode == 1) {
+					if (app.mode == "vr") {
 						event.preventDefault();
 						if (touch < 2) {
 							uInput.rotationVector.y += (data[0].pageX - uInput.lastTouch[0][0]) / 10000.0;
@@ -118,7 +118,7 @@ export default class UserInput {
 				document.body.addEventListener("touchstart", function(event) {
 					var data = event.touches, touch = data.length ;
 					uInput.lastTouch = [[0,0],[0,0]];
-					if (app.mode == 1) {
+					if (app.mode == "vr") {
 						event.preventDefault();
 						while (touch-- > 0) {
 							uInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
@@ -135,7 +135,7 @@ export default class UserInput {
 					if (input.leapMode == "movement") {
 						frame.hands.forEach(function (hand, index) {
 							var position = hand.screenPosition();
-							if (mode == 1) { // if its VR mode and not chat mode
+							if (mode == "vr") { // if its VR mode and not chat mode
 								input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
 								input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
 								input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
@@ -146,7 +146,7 @@ export default class UserInput {
 						if (input.leapMode == "avatar") {
 							frame.hands.forEach(function (hand, index) {
 								var position = hand.screenPosition();
-								if (mode == 1) { // if its VR mode and not chat mode
+								if (mode == "vr") { // if its VR mode and not chat mode
 									app.user.arms[index].visible = true;
 									app.user.arms[index].rotation.set(hand.pitch(), -hand.yaw(), 0);
 									app.user.arms[index].position.set(-50+((-window.innerWidth / 2) + position[0]), 0, -350 + position[2]);
@@ -157,7 +157,7 @@ export default class UserInput {
 							frame.hands.forEach(function (hand, index) {
 								var position = hand.screenPosition(),
 									handIndex = 0;
-								if (mode == 1) { // if its VR mode and not chat mode
+								if (mode == "vr") { // if its VR mode and not chat mode
 									app.user.gravity = 0.66;
 									if (index == 0) { // if its the first hand, control the camera
 										input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
@@ -191,7 +191,7 @@ export default class UserInput {
 				device.userInput = this;
 			},
 			update: function (delta) {
-				var elevation = 0; //world.getElevation(this.camera.position);
+				var bottom = -5000; //world.getElevation(this.camera.position);
 				this.camera.rotation.set(this.rotationVector.x, this.rotationVector.y, 0, "YXZ");
 				this.device.velocity.add(this.moveVector.applyQuaternion(this.camera.quaternion));
 
@@ -208,18 +208,18 @@ export default class UserInput {
 					}
 				}
 				this.moveVector.set(0, 0, 0);
-//				if (this.camera.position.y < elevation + 500) {
-//					if (this.keys.shift) {
-//						this.device.velocity.y *= -0.70;
-//					} else {
-//						this.device.velocity.y *= -0.20;
-//					}
-//					this.device.falling = false;
-//					this.camera.position.y = elevation + 500;
-//					if (this.device.velocity.y > 1000) {
-//						app.vibrate(50);
-//					}
-//				}
+				if (this.camera.position.y < bottom + 500) {
+					if (this.keys.shift) {
+						this.device.velocity.y *= -0.70;
+					} else {
+						this.device.velocity.y *= -0.20;
+					}
+					this.device.falling = false;
+					this.camera.position.y = bottom + 500;
+					if (this.device.velocity.y > 1000) {
+						app.vibrate(50);
+					}
+				}
 				this.camera.matrix.setPosition(this.camera.position.add(new THREE.Vector3(this.device.velocity.x*delta,
 																						 this.device.velocity.y*delta,
 																						 this.device.velocity.z*delta)) );
@@ -229,26 +229,24 @@ export default class UserInput {
 				this.device.velocity.z *= 0.98;
 				if (!! app.user.mesh) {
 					 app.user.mesh.position.set(this.camera.position.x, this.camera.position.y, this.camera.position.z);
-				}
-				if (!! app.user.mesh) {
-					app.user.mesh.rotation.y = (this.camera.rotation.y); //rotation.set(this.camera.rotation.x, this.camera.rotation.y, this.camera.rotation.z);
+					app.user.mesh.rotation.y = (this.camera.rotation.y);
 				}
 			},
 			handleKeys: function () {
 				if (this.keys.a) {  // maybe insert more options here...
-					this.moveVector.x = -120;
+					this.moveVector.x = -1200;
 				} else if (this.keys.d) {
-					this.moveVector.x = 120;
+					this.moveVector.x = 1200;
 				}
 				if (this.keys.w) {
-					this.moveVector.z = -120;
+					this.moveVector.z = -1200;
 				} else if (this.keys.s) {
-					this.moveVector.z = 120;
+					this.moveVector.z = 1200;
 				}
 				if (this.keys.r) {
-					this.moveVector.y = 120;
+					this.moveVector.y = 1200;
 				} else if (this.keys.f) {
-					this.moveVector.y = -120;
+					this.moveVector.y = -1200;
 				}
 				if (this.keys.shift) {
 					this.device.velocity.x *= 1.02;
