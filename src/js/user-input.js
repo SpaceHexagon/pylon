@@ -103,13 +103,13 @@ export default class UserInput {
 					if (app.mode == "vr") {
 						event.preventDefault();
 						if (touch < 2) {
-							uInput.rotationVector.y += (data[0].pageX - uInput.lastTouch[0][0]) / 10000.0;
-							uInput.rotationVector.x += (data[0].pageY - uInput.lastTouch[0][1]) / 10000.0;
-							uInput.lastTouch = [ [data[touch].pageX, data[touch].pageY], [data[touch].pageX, data[touch].pageY]];
+							uInput.rotationVector.y += (data[0].pageX - uInput.lastTouch[0][0]) / 500.0;
+							uInput.rotationVector.x += (data[0].pageY - uInput.lastTouch[0][1]) / 500.0;
+							uInput.lastTouch = [ [data[0].pageX, data[0].pageY], [data[0].pageX, data[0].pageY]];
 						} else {
 							while (touch-- > 0) {
-								uInput.moveVector.x -= (data[touch].pageX - uInput.lastTouch[touch][0])*120;
-								uInput.moveVector.z -= (data[touch].pageY - uInput.lastTouch[touch][1])*120;
+								uInput.moveVector.x -= (data[touch].pageX - uInput.lastTouch[touch][0])*180;
+								uInput.moveVector.z -= (data[touch].pageY - uInput.lastTouch[touch][1])*180;
 								uInput.lastTouch[touch] = [data[touch].pageX, data[touch].pageY];
 							}
 						}
@@ -117,7 +117,7 @@ export default class UserInput {
 				});
 				document.body.addEventListener("touchstart", function(event) {
 					var data = event.touches, touch = data.length ;
-					uInput.lastTouch = [[0,0],[0,0]];
+					//uInput.lastTouch = [[0,0],[0,0]];
 					if (app.mode == "vr") {
 						event.preventDefault();
 						while (touch-- > 0) {
@@ -130,57 +130,52 @@ export default class UserInput {
 				// leap code here
 				Leap.loop(function (frame) {
 				  var mode = app.mode,
-					  input = uInput;
+					  input = uInput,
+                      user = app.user;
 					uInput.leapMotion = true;
-					if (input.leapMode == "movement") {
-						frame.hands.forEach(function (hand, index) {
-							var position = hand.screenPosition();
-							if (mode == "vr") { // if its VR mode and not chat mode
-								input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
-								input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
-								input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
-								input.rotationVector.x += 0.015 * hand.pitch();
-							}
-						});
-					} else {
-						if (input.leapMode == "avatar") {
-							frame.hands.forEach(function (hand, index) {
-								var position = hand.screenPosition();
-								if (mode == "vr") { // if its VR mode and not chat mode
-									app.user.arms[index].visible = true;
-									app.user.arms[index].rotation.set(hand.pitch(), -hand.yaw(), 0);
-									app.user.arms[index].position.set(-50+((-window.innerWidth / 2) + position[0]), 0, -350 + position[2]);
-									app.user.arms[index].updateMatrix();
-								}
-							});
-						} else {
-							frame.hands.forEach(function (hand, index) {
-								var position = hand.screenPosition(),
-									handIndex = 0;
-								if (mode == "vr") { // if its VR mode and not chat mode
-									app.user.gravity = 0.66;
-									if (index == 0) { // if its the first hand, control the camera
-										input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
-										input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
-										input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
-										input.rotationVector.x += 0.015 * hand.pitch();
-									} else { // if its the second hand, control the arms/hands
-										while (handIndex < 2) {
-											app.user.arms[handIndex].visible = true;
-											app.user.arms[handIndex].rotation.set(hand.pitch(), -hand.yaw(), 0);
-											app.user.arms[handIndex].position.set(-50+((300*handIndex)+((-window.innerWidth / 2) + position[0])), 0, -350 + position[2]);
-											app.user.arms[handIndex].updateMatrix();
-											handIndex ++;
-										}
-									}
-								}
-							});
-						}
+                    if (mode == "vr") { // if its VR mode and not chat mode
+                        if (input.leapMode == "movement") {
+                            frame.hands.forEach(function (hand, index) {
+                                var position = hand.screenPosition();
+                                input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
+                                input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
+                                input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
+                                input.rotationVector.x += 0.015 * hand.pitch();
+                            });
+                        } else {
+                            if (input.leapMode == "avatar") {
+                                frame.hands.forEach(function (hand, index) {
+                                    var position = hand.screenPosition();
+                                    user.arms[index].visible = true;
+                                    user.arms[index].rotation.set(hand.pitch(), -hand.yaw(), 0);
+                                    user.arms[index].position.set(-50+((-window.innerWidth / 2) + position[0]), 0, -350 + position[2]);
+                                    user.arms[index].updateMatrix();
+                                });
+                            } else {
+                                frame.hands.forEach(function (hand, index) {
+                                    var position = hand.screenPosition(),
+                                        handIndex = 0;
+                                        app.user.gravity = 0.66;
+                                        if (index == 0) { // if its the first hand, control the camera
+                                            input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
+                                            input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
+                                            input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
+                                            input.rotationVector.x += 0.015 * hand.pitch();
+                                        } else { // if its the second hand, control the arms/hands
+                                            while (handIndex < 2) {
+                                                user.arms[handIndex].visible = true;
+                                                user.arms[handIndex].rotation.set(hand.pitch(), -hand.yaw(), 0);
+                                                user.arms[handIndex].position.set(-50+((300*handIndex)+((-window.innerWidth / 2) + position[0])), 0, -350 + position[2]);
+                                                user.arms[handIndex].updateMatrix();
+                                                handIndex ++;
+                                            }
+                                        }
+                                });
+                            }
+                        }
 					}
 					// define more leapModes here...
-
 				}).use('screenPosition', {scale: 0.15});
-
 
 				this.tmpQuaternion = new THREE.Quaternion();
 				this.moveVector = new THREE.Vector3(0, 0, 0);
@@ -191,48 +186,49 @@ export default class UserInput {
 				device.userInput = this;
 			},
 			update: function (delta) {
-				var bottom = -5000; //world.getElevation(this.camera.position);
-				this.camera.rotation.set(this.rotationVector.x, this.rotationVector.y, 0, "YXZ");
-				this.device.velocity.add(this.moveVector.applyQuaternion(this.camera.quaternion));
+				var bottom = -5000,
+                    velocity = this.device.velocity; //world.getElevation(this.camera.position);
 
-				if (app.mode == "vr") {
+                if (app.mode == "vr") {
 					this.handleKeys();
 					if (this.device.gravity > 0.25 ) {
-						this.device.velocity.y -= 28 * this.device.gravity;
+						velocity.y -= 28 * this.device.gravity;
 					}
 				}
 
+				this.camera.rotation.set(this.rotationVector.x, this.rotationVector.y, 0, "YXZ");
+				velocity.add(this.moveVector.applyQuaternion(this.camera.quaternion));
+
 				if (this.leapMotion && this.moveVector.length() > 0) {
-					if (this.device.velocity.y < 0) {
-						this.device.velocity.y *= 0.88;
+					if (velocity.y < 0) {
+						velocity.y *= 0.88;
 					}
 				}
 				this.moveVector.set(0, 0, 0);
 				if (this.camera.position.y < bottom + 500) {
 					if (this.keys.shift) {
-						this.device.velocity.y *= -0.70;
+						velocity.y *= -0.70;
 					} else {
-						this.device.velocity.y *= -0.20;
+						velocity.y *= -0.20;
 					}
 					this.device.falling = false;
 					this.camera.position.y = bottom + 500;
-					if (this.device.velocity.y > 1000) {
+					if (velocity.y > 1000) {
 						app.vibrate(50);
 					}
 				}
-				this.camera.matrix.setPosition(this.camera.position.add(new THREE.Vector3(this.device.velocity.x*delta,
-																						 this.device.velocity.y*delta,
-																						 this.device.velocity.z*delta)) );
-				this.camera.matrix.makeRotationFromQuaternion( this.camera.quaternion );
+				this.camera.matrix.setPosition(this.camera.position.add(new THREE.Vector3(velocity.x*delta, velocity.y*delta, velocity.z*delta)) );
+				this.camera.matrix.makeRotationFromQuaternion(this.camera.quaternion );
 				this.camera.matrixWorldNeedsUpdate = true;
-				this.device.velocity.x *= 0.98;
-				this.device.velocity.z *= 0.98;
+				velocity.x *= 0.98;
+				velocity.z *= 0.98;
 				if (!! app.user.mesh) {
 					 app.user.mesh.position.set(this.camera.position.x, this.camera.position.y, this.camera.position.z);
 					app.user.mesh.rotation.y = (this.camera.rotation.y);
 				}
 			},
 			handleKeys: function () {
+                var velocity = this.device.velocity;
 				if (this.keys.a) {  // maybe insert more options here...
 					this.moveVector.x = -1200;
 				} else if (this.keys.d) {
@@ -249,12 +245,12 @@ export default class UserInput {
 					this.moveVector.y = -1200;
 				}
 				if (this.keys.shift) {
-					this.device.velocity.x *= 1.02;
-					this.device.velocity.z *= 1.02;
+					velocity.x *= 1.02;
+					velocity.z *= 1.02;
 				}
 				if (this.keys.space && !this.device.falling) {
 					this.device.falling = true;
-					this.device.velocity.y = 16000;
+					velocity.y = 16000;
 				}
 			},
 			toggleFullscreen: function (elem) {

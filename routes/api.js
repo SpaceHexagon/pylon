@@ -51,7 +51,7 @@ module.exports = function (app, db) {
 			  } else {
 				// if user is found and password is right
 				var token = jwt.sign({ name: result.name, username: result.username }, app.get('superSecret'), {  // create a token
-				  expiresInMinutes: 1440 // expires in 24 hours
+				  expiresIn: '24h' // expires in 24 hours
 				});
 
 				var online = app.get('online');
@@ -79,7 +79,7 @@ module.exports = function (app, db) {
 				newUser.name = newUser.username = req.body.username;
 				newUser.password = passwordHash.generate(req.body.password);
 				token = jwt.sign({ name: newUser.name, username: newUser.username }, app.get('superSecret'), {  // create a token
-				  expiresInMinutes: 1440 // expires in 24 hours
+				  expiresIn: '24h' // expires in 24 hours
 				});
 
 				Users.insert(newUser, function(err, insertResult) {
