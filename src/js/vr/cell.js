@@ -1,10 +1,12 @@
 export default class Cell {
-	constructor(coords) {
+	constructor(coords, mobile) {
 		var data = {},
 			geometry = new THREE.CylinderGeometry(3000, 3000, 1854, 6),
-			material = new THREE.MeshLambertMaterial({
+			material = (mobile ? new THREE.MeshLambertMaterial({
              			color: 0xffffff
-					}),
+					}) : new THREE.MeshPhongMaterial({
+             			color: 0xffffff
+					})),
 			size = 5000,
 			mesh = new THREE.Mesh(geometry, material);
 

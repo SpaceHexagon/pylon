@@ -80,6 +80,7 @@ export default class UserInput {
 								if (app.username != "") {
 									app.showChat();
 									app.mode = "desktop";
+									document.body.setAttribute("class", "desktop");
 									//document.querySelector("#chatMode").click();
 								}
 							break;

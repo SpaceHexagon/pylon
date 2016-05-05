@@ -179,7 +179,6 @@ input[type=button]:hover, input[type=submit]:hover {
 }
 article.card {
 	background: #FFF;
-    border: 2px solid #f1f1f1;
 	background-size: cover;
     border-radius: 4px;
     padding: 0.5em;
@@ -206,11 +205,9 @@ article.card {
 }
 .search article.card {
     background-color: #FFF;
-    border: 2px solid #B7B7B7;
     border-radius: 4px;
     border-top: 0;
     border-left: 0;
-    border-right: 1px solid #B7B7B7;
     padding: 0.5em;
     margin: 1em;
     margin-top: 0em;
@@ -487,7 +484,7 @@ input#file-upload:hover {
 }
 .applet-view {
     width: 100%;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     padding-top: 3.5em;
@@ -591,7 +588,8 @@ form.search {
     line-height: 1.5em;
 }
 .file-browser {
-
+    background: #fafafa;
+    z-index: 99999;
 }
 .file-properties {
 
@@ -629,6 +627,7 @@ form.search {
 	main {
 		min-height: 192px;
     	margin-top: 3em;
+		width: 66.6% !important;
 	}
     .card h3 {
         max-width: auto;
@@ -746,7 +745,13 @@ form.search {
 		min-height: 932px;
 	}
 	.applet-view {
-		padding-top: 1.5em;
+		padding-top: 0;
+	}
+	.file-browser {
+		max-width: 1900px;
+		height: 66.6%;
+		min-height: 800px;
+		width: 100%;
 	}
 	.icon.text {
 		color: #303030;
