@@ -23,6 +23,6 @@ export default class UserPreferences extends Applet {
 
 UserPreferences.defaultProps = {
 	appletData: {},
-	name: 'User Preferences',
+	key: 'User Preferences',
 	icon: "/images/dark/circle.png"
 };

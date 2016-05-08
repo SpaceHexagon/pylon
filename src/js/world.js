@@ -31,7 +31,7 @@ export default class World {
 			};
 
 			window.three = this.three;
-            scene.add(light);
+    	scene.add(light);
 			light.position.set(0, 60000, 0);
 			renderer.setClearColor(0x2B7CA1);
 			scene.add(cube);

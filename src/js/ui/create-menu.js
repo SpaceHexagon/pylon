@@ -203,7 +203,7 @@ CreateMenu.defaultProps = {
 		{src: "/images/dark/folder.png", title: "New Folder", open: function(evt, menu) {
 			app.systemEvents.emit("toggle-create-menu", {visible: false});
             app.systemEvents.emit("toggle-applet-view", {visible: true});
-			app.systemEvents.emit("open-applet", {name:"file-browser", data:{newFolder: true}});
+			app.systemEvents.emit("open-applet", {name:"file-browser", key: "New Folder | File Browser", data:{newFolder: true}});
             console.log("Open File Browser Applet");
         } },
 		{src: "/images/dark/star.png", title: "New Page", open: function(){ console.log("New Page"); } },
@@ -212,4 +212,3 @@ CreateMenu.defaultProps = {
 
     ]
 };
-

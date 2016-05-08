@@ -42,6 +42,6 @@ export default class ModelEditor extends Applet {
 
 ModelEditor.defaultProps = {
 	appletData: {},
-	name: 'Model Editor',
+	key: 'Model Editor',
 	icon: "/images/dark/star.png"
 };

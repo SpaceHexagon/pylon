@@ -97,12 +97,12 @@ app.get('/:username/:file', function (req, res) {
 		});
 	});
 
-app.get('/:username', function (req, res, next) {  // user homepage / portals
+	app.get('/:username', function (req, res, next) {  // user homepage / portals
 
-		 if (req.url.substr(-1) == '/' && req.url.length > 1) {
-			 res.redirect(301, req.url.slice(0, -1));
-		 } else {
-			 Users.findOne({username: req.params.username}, function(err, result) {
+		if (req.url.substr(-1) == '/' && req.url.length > 1) {
+			res.redirect(301, req.url.slice(0, -1));
+		} else {
+			Users.findOne({username: req.params.username}, function(err, result) {
 				var username = "";
 				if (err || result == null) {
 					res.json({
@@ -114,29 +114,31 @@ app.get('/:username', function (req, res, next) {  // user homepage / portals
 					Pages.findOne({user_id: ObjectID(result._id), home: true}, function (err, pageResult) {
 						var pylon = "<!DOCTYPE html><html>";
 						if (!err && pageResult != null) {
-							pylon += "<head> <title>" + pageResult.title + "</title>";
-								pylon += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
-								pylon += "<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>";
-								pylon += "<meta name='theme-color' content='rgb(255, 255, 255)'>";
-								pylon += "<style> html { font-family: sans-serif; } </style>";
-								pylon += "<link rel='stylesheet' href='/css/app.css'>";
-                                if (!! pageResult.twemoji) {
-                                    pylon += "<script src='//twemoji.maxcdn.com/2/twemoji.min.js'></script>";
-                                    pylon += "<script>" + 'document.addEventListener("DOMContentLoaded", function () { if (window.innerWidth > 640) { twemoji.parse(document.body); } }, true); ' + "</script>";
-                                }
-							pylon += "</head>";
-							pylon += "<body>";
-								pylon += "<main>"+pageResult.content+"</main>";
-									pylon += "<script src='lib/axios.min.js'></script>";
-									pylon += "<script src='lib/socket.io.js'></script>";
-									pylon += "<script src='lib/leapmotion/leap.js'></script>";
-									pylon += "<script src='lib/leapmotion/leap-plugins.js'></script>";
-									pylon += "<script src='lib/three.min.js'></script>";
-									pylon += "<script src='lib/csg.js'></script>";
-									pylon += "<script src='lib/ThreeCSG.js'></script>";
-									pylon += "<script src='js/main.js'></script>";
-							pylon += "</body>";
-							pylon += "</html>";
+							pylon += `
+							<head>
+							 <title>${pageResult.title}</title>
+								<meta name='viewport' content='width=device-width, initial-scale=1'>
+								<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-c-a.png'>
+								<meta name='theme-color' content='rgb(255, 255, 255)'>
+								<style> html { font-family: sans-serif; } </style>
+								<link rel='stylesheet' href='/css/app.css'>
+							${!! pageResult.twemoji ? "<script src='//twemoji.maxcdn.com/2/twemoji.min.js'></script>" +
+								'<script>document.addEventListener("DOMContentLoaded", function () { if (window.innerWidth > 640) { twemoji.parse(document.body); } }, true); </script>'
+								: ""}
+							</head>
+							<body>
+							<main>${pageResult.content}</main>
+							<script src='lib/axios.min.js'></script>
+							<script src='lib/socket.io.js'></script>
+							<script src='lib/leapmotion/leap.js'></script>
+							<script src='lib/leapmotion/leap-plugins.js'></script>
+							<script src='lib/three.min.js'></script>
+							<script src='lib/csg.js'></script>
+							<script src='lib/ThreeCSG.js'></script>
+							<script src='js/main.js'></script>
+							</body>
+							</html>
+							`;
 							res.send(pylon);
 						} else {
 							res.json({
@@ -149,8 +151,8 @@ app.get('/:username', function (req, res, next) {  // user homepage / portals
 					});
 				}
 			});
-		 }
-});
+		}
+	});
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

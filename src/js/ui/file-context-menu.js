@@ -80,8 +80,9 @@ FileContextMenu.defaultProps = {
 			}
 		},
         {src: "/images/dark/configure.png", title: "Options", text: "Options", open: function(evt, menu){
+					console.log(menu.props.file_id);
             app.systemEvents.emit("toggle-applet-view", {visible: true});
-			app.systemEvents.emit("open-applet", {name:"file-properties", data:{filename: menu.props.filename}});
+			app.systemEvents.emit("open-applet", {name: "file-properties", key:"File Properties | "+menu.props.file_id, file_id: menu.props.file_id, data:{filename: menu.props.filename}});
             console.log("Open File Properties Applet");
         } }
 	]

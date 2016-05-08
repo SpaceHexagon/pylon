@@ -1,13 +1,13 @@
 /*  Pylon Desktop | physics.js
-    Jeremy Evans Openspacehexagon@gmail.com
+Jeremy Evans Openspacehexagon@gmail.com
 */
 var observer = {
-		position: [0, 0, 0],
-		velocity: [0, 0, 0]
-	},
-	objects = [],
-	buildings = [],
-	actors = [];
+	position: [0, 0, 0],
+	velocity: [0, 0, 0]
+},
+objects = [],
+buildings = [],
+actors = [];
 
 function CollisionObject (data) {
 	this.data = data;
@@ -32,18 +32,18 @@ function distance2d (a, b) {
 
 self.update = function () {
 	var objectCollision = false,
-		entities = [],
-		distance = 0,
-		position = observer.position,
-		i = 0,
-		size = 2600,
-		obstacle = null,
-		delta = [0, 0],
-		innerBox = [false, false],
-		oPos = [],
-		speed = 0,
-		velocity = observer.velocity,
-		closeToVenue =  false;
+	entities = [],
+	distance = 0,
+	position = observer.position,
+	i = 0,
+	size = 2600,
+	obstacle = null,
+	delta = [0, 0],
+	innerBox = [false, false],
+	oPos = [],
+	speed = 0,
+	velocity = observer.velocity,
+	closeToVenue =  false;
 	entities = objects; // do collisions on misc objects / structures etc..
 	i = entities.length -1;
 	while (i > -1) {
@@ -77,22 +77,22 @@ self.update = function () {
 					delta[1] = Math.abs(position[2] - oPos[2]);
 
 
-						if ((position[0] > oPos[0])) {
-							position[0] = oPos[0] + size;
-						} else {
-							position[0] = oPos[0] - size;
-						}
-						if (position[2] > oPos[2]) {
-							position[2] = oPos[2] + size;
-						} else {
-							position[2] = oPos[2] - size;
-						}
+					if ((position[0] > oPos[0])) {
+						position[0] = oPos[0] + size;
+					} else {
+						position[0] = oPos[0] - size;
+					}
+					if (position[2] > oPos[2]) {
+						position[2] = oPos[2] + size;
+					} else {
+						position[2] = oPos[2] - size;
+					}
 
 					if (distance > size * 1.18) {
 
 						self.postMessage('{"command": "buildingCollision", "data":{"inner": '+((innerBox[0] == true && innerBox[1] == true) ? 1 : 0)+
-									 ', "delta":[' + delta[0] + ',' + delta[1] + '], "position":[' + position[0] + ',' + position[1] + ',' + position[2] + '] }}');
-					// "velocity": ['+velocity[0]+','+velocity[1]+','+velocity[2]+']
+						', "delta":[' + delta[0] + ',' + delta[1] + '], "position":[' + position[0] + ',' + position[1] + ',' + position[2] + '] }}');
+						// "velocity": ['+velocity[0]+','+velocity[1]+','+velocity[2]+']
 
 					}
 				}
@@ -120,8 +120,8 @@ self.onmessage = function (event) {
 	} else if (data.command == "addBuilding") {
 		var building = new CollisionBuilding(data.data);
 		buildings.push(building);
-//		app.physicsWorker.postMessage('{"command":"addBuilding","data":{"name": "'+this.data.name+'", "structureType": "'+this.data.structureType+'", "size": "'+this.data.size+
-//								  '", "floors": '+this.data.floors+', "position":['+this.data.position[0]+','+this.data.position[1]+','+this.data.position[2]+']}}');
+		//		app.physicsWorker.postMessage('{"command":"addBuilding","data":{"name": "'+this.data.name+'", "structureType": "'+this.data.structureType+'", "size": "'+this.data.size+
+		//								  '", "floors": '+this.data.floors+', "position":['+this.data.position[0]+','+this.data.position[1]+','+this.data.position[2]+']}}');
 	} else if (data.command == "updateObject") {
 		// implement
 		self.unidentifiedObjects[0].id = data.data.id;

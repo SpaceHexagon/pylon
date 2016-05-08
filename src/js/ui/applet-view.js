@@ -22,7 +22,8 @@ export default class AppletView extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-			visible: false
+					visible: false,
+					appletClosed: false
         };
     }
 
@@ -33,9 +34,24 @@ export default class AppletView extends React.Component {
 	}
 
     openApplet (data) {
-		this.props.applets.push(data);
-		app.systemEvents.emit("toggle-search-bar", {visible: false});
-		app.systemEvents.emit("toggle-activity-view", {visible: false});
+			this.props.applets.push(data);
+			app.systemEvents.emit("toggle-search-bar", {visible: false});
+			app.systemEvents.emit("toggle-activity-view", {visible: false});
+    }
+
+		closeApplet (data) {
+			var applets = this.props.applets,
+					applet = applets.length -1;
+
+					console.log("closing applet "+data);
+					while (--applet >= 0) {
+						console.log(applet, applets[applet], data);
+						if (applets[applet].key == data) {
+							applets.splice(1, applet);
+							this.setState({appletClosed: true});
+							this.setState({appletClosed: false});
+						}
+					}
     }
 
 	componentDidMount () {
@@ -45,8 +61,12 @@ export default class AppletView extends React.Component {
 			comp.toggle(evt);
 		});
 
-        this.props.systemEvents.on("open-applet", function (evt) {
+    this.props.systemEvents.on("open-applet", function (evt) {
 			comp.openApplet(evt);
+		});
+
+		this.props.systemEvents.on("close-applet", function (evt) {
+			comp.closeApplet(evt);
 		});
 	}
 
@@ -59,22 +79,24 @@ export default class AppletView extends React.Component {
 			<section className="applet-view" style={appletViewStyle}>
 				<div className="grid">
 				{this.props.applets.map(function(option, i){
-					var data = option.data;
+					var data = option.data,
+							fileId = !!option.file_id ? option.file_id : "",
+							appletName = option.key;
 					switch (option.name) {
-						case "upload": return <Upload appletData={data} />; break;
-						case "file-properties": return <FileProperties appletData={data} />; break;
-						case "file-browser": return <FileBrowser appletData={data} />; break;
-						case "text-editor": return <TextEditor appletData={data} />; break;
-						case "image-editor": return <ImageEditor appletData={data} />; break;
-						case "model-editor": return <ModelEditor appletData={data} />; break;
-						case "messenger": return <Messenger  appletData={data}/>; break;
-						case "clock": return <Clock appletData={data} />; break;
-						case "settings": return <Settings appletData={data} />; break;
-						case "user-preferences": return <UserPreferences appletData={data} />; break;
-						case "sharing": return <Sharing appletData={data} />; break;
-						case "terminal": return <Terminal appletData={data} />; break;
+						case "upload": return <Upload key={appletName} appletData={data} />; break;
+						case "file-properties": return <FileProperties key={appletName} appletData={data} file_id={fileId} />; break;
+						case "file-browser": return <FileBrowser key={appletName} appletData={data} />; break;
+						case "text-editor": return <TextEditor key={appletName} appletData={data} />; break;
+						case "image-editor": return <ImageEditor key={appletName} appletData={data} />; break;
+						case "model-editor": return <ModelEditor key={appletName} appletData={data} />; break;
+						case "messenger": return <Messenger  key={appletName} appletData={data}/>; break;
+						case "clock": return <Clock key={appletName} appletData={data} />; break;
+						case "settings": return <Settings key={appletName} appletData={data} />; break;
+						case "user-preferences": return <UserPreferences key={appletName} appletData={data} />; break;
+						case "sharing": return <Sharing key={appletName} appletData={data} />; break;
+						case "terminal": return <Terminal key={appletName} appletData={data} />; break;
 					}
-                })}
+        })}
 				</div>
 			</section>
 		);

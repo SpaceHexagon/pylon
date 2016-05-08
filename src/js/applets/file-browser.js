@@ -43,6 +43,6 @@ export default class FileBrowser extends Applet {
 
 FileBrowser.defaultProps = {
 	appletData: {},
-	name: 'File Browser',
+	key: 'File Browser',
 	icon: "/images/dark/star.png"
 };

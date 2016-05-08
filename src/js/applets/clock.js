@@ -42,6 +42,6 @@ export default class Clock extends Applet {
 
 Clock.defaultProps = {
 	appletData: {},
-	name: 'Clock',
+	key: 'Clock',
 	icon: "/images/dark/circle.png"
 };
