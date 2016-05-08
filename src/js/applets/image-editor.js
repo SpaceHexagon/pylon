@@ -43,5 +43,6 @@ export default class ImageEditor extends Applet {
 ImageEditor.defaultProps = {
 	appletData: {},
 	key: 'Image Editor',
+	name: 'Image Editor',
 	icon: "/images/dark/star.png"
 };

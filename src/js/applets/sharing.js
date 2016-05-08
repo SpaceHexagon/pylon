@@ -43,5 +43,6 @@ export default class Sharing extends Applet {
 Sharing.defaultProps = {
 	appletData: {},
 	icon: "/images/dark/star.png",
-	key: "Sharing"
+	key: "Sharing",
+	name: "Sharing"
 };

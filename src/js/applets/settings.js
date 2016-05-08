@@ -43,5 +43,6 @@ export default class Settings extends Applet {
 Settings.defaultProps = {
 	appletData: {},
 	key: 'Settings',
+	name: 'Settings',
 	icon: "/images/dark/star.png"
 };

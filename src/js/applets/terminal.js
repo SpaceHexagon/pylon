@@ -43,5 +43,6 @@ export default class Terminal extends Applet {
 Terminal.defaultProps = {
 	appletData: {},
 	key: 'Terminal',
+	name: 'Terminal',
 	icon: "/images/dark/terminal.png"
 };

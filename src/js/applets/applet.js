@@ -30,5 +30,6 @@ export default class Applet extends React.Component {
 
 Applet.defaultProps = {
 	appletData: {},
-	key: ""
+	key: "Applet Name",
+	name: "Applet Name"
 };

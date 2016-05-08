@@ -43,5 +43,6 @@ export default class TextEditor extends Applet {
 TextEditor.defaultProps = {
 	appletData: {},
 	key: 'Text Editor',
+	name: 'Text Editor',
 	icon: "/images/dark/file.png"
 };

@@ -44,13 +44,14 @@ export default class AppletView extends React.Component {
 					applet = applets.length -1;
 
 					console.log("closing applet "+data);
-					while (--applet >= 0) {
+					while (applet >= 0) {
 						console.log(applet, applets[applet], data);
 						if (applets[applet].key == data) {
-							applets.splice(1, applet);
+							applets.splice(applet, 1);
 							this.setState({appletClosed: true});
 							this.setState({appletClosed: false});
 						}
+						applet --;
 					}
     }
 
@@ -83,18 +84,18 @@ export default class AppletView extends React.Component {
 							fileId = !!option.file_id ? option.file_id : "",
 							appletName = option.key;
 					switch (option.name) {
-						case "upload": return <Upload key={appletName} appletData={data} />; break;
-						case "file-properties": return <FileProperties key={appletName} appletData={data} file_id={fileId} />; break;
-						case "file-browser": return <FileBrowser key={appletName} appletData={data} />; break;
-						case "text-editor": return <TextEditor key={appletName} appletData={data} />; break;
-						case "image-editor": return <ImageEditor key={appletName} appletData={data} />; break;
-						case "model-editor": return <ModelEditor key={appletName} appletData={data} />; break;
-						case "messenger": return <Messenger  key={appletName} appletData={data}/>; break;
-						case "clock": return <Clock key={appletName} appletData={data} />; break;
-						case "settings": return <Settings key={appletName} appletData={data} />; break;
-						case "user-preferences": return <UserPreferences key={appletName} appletData={data} />; break;
-						case "sharing": return <Sharing key={appletName} appletData={data} />; break;
-						case "terminal": return <Terminal key={appletName} appletData={data} />; break;
+						case "upload": return <Upload name={appletName} key={appletName} appletData={data} />; break;
+						case "file-properties": return <FileProperties name={appletName} key={appletName} appletData={data} file_id={fileId} />; break;
+						case "file-browser": return <FileBrowser name={appletName} key={appletName} appletData={data} />; break;
+						case "text-editor": return <TextEditor name={appletName} key={appletName} appletData={data} />; break;
+						case "image-editor": return <ImageEditor name={appletName} key={appletName} appletData={data} />; break;
+						case "model-editor": return <ModelEditor name={appletName} key={appletName} appletData={data} />; break;
+						case "messenger": return <Messenger  name={appletName} key={appletName} appletData={data}/>; break;
+						case "clock": return <Clock name={appletName} key={appletName} appletData={data} />; break;
+						case "settings": return <Settings name={appletName} key={appletName} appletData={data} />; break;
+						case "user-preferences": return <UserPreferences name={appletName} key={appletName} appletData={data} />; break;
+						case "sharing": return <Sharing name={appletName} key={appletName} appletData={data} />; break;
+						case "terminal": return <Terminal name={appletName} key={appletName} appletData={data} />; break;
 					}
         })}
 				</div>

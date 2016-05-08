@@ -42,5 +42,6 @@ export default class Upload extends Applet {
 Upload.defaultProps = {
 	appletData: {},
 	key: 'Upload',
+	name: 'Upload',
 	icon: "/images/dark/upload.png"
 };

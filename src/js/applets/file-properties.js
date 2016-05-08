@@ -41,11 +41,13 @@ export default class FileProperties extends Applet {
 								headers: {'x-access-token': localStorage.getItem("token")}
 					};
 
-					while (-- item > -1) {
+					console.log("update values");
+					while (item > -1) {
 						if (meta[item].key == key) {
 							meta[item].value = value;
 							item = -1;
 						}
+						item  --;
 					}
 
 					axios.put('/api/files/'+comp.props.file_id, {"metadata": comp.props.metadata}, configure)
@@ -70,7 +72,7 @@ export default class FileProperties extends Applet {
 			<section style={appletStyle} className="applet file-properties">
           <nav className="panel">
 				    <h2>{comp.props.key}</h2>
-            <Icon title="Close" src="/images/x.png" open={(evt)=>{ app.systemEvents.emit("close-applet", comp.props.key)}} />
+            <Icon title="Close" src="/images/x.png" open={(evt)=>{ app.systemEvents.emit("close-applet", comp.props.name)}} />
           </nav>
 				<table>
 					<tbody>
@@ -93,6 +95,7 @@ FileProperties.defaultProps = {
 	appletData: { },
 	file_id: "",
 	key: "File Properties",
+	name: "File Properties",
 	icon: "/images/dark/file.png",
 	metadata: [
 		{key: "public", value: false},

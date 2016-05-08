@@ -43,5 +43,6 @@ export default class Messaging extends Applet {
 Messaging.defaultProps = {
 	appletData: {},
 	key: 'Messaging',
+	name: 'Messaging',
 	icon: "/images/dark/star.png"
 };
