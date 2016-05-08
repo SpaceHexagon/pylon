@@ -1,17 +1,18 @@
 import Cell from './vr/cell.js';
+import Chunk from './vr/chunk.js';
 import Tile from './vr/tile.js';
 import Avatar from './vr/avatar.js';
 
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
-            camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 2, 100000 ),
+            camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 30, 340000 ),
             renderer = new THREE.WebGLRenderer(),
 			mobile = app.mobile,
 			self = this,
-            sunGeom = new THREE.OctahedronGeometry( 3, 0),
+            sunGeom = new THREE.OctahedronGeometry( 3000, 0),
             material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
-            cube = new THREE.Mesh(sunGeom, material ),
+            sun = new THREE.Mesh(sunGeom, material ),
             light = new THREE.PointLight(0xffffff, 1.1, 400000 ),
             panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
             cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
@@ -25,16 +26,20 @@ export default class World {
 			renderer.domElement.setAttribute("id", "viewport");
 
 			this.three = {
+				sun: sun,
 				scene: scene,
+				chunks: [],
 				camera: camera,
 				renderer: renderer
 			};
 
 			window.three = this.three;
     	scene.add(light);
-			light.position.set(0, 60000, 0);
+			scene.fog = new THREE.FogExp2(0xffffff, 0.00001);
+			light.position.set(0, 60000, -32000);
 			renderer.setClearColor(0x2B7CA1);
-			scene.add(cube);
+
+
 			camera.position.z = 15;
 			this.skybox = null;
 
@@ -60,8 +65,8 @@ export default class World {
 
 				}
 
-				cube.rotation.x += 0.0025;
-				cube.rotation.y += 0.005;
+				sun.rotation.x += 0.0025;
+				sun.rotation.y += 0.005;
 				sys.world.skybox.position.set(camera.position.x, camera.position.y, camera.position.z);
 				renderer.render(scene, camera);
 				last = Date.now();
@@ -78,10 +83,10 @@ export default class World {
                 color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 				    }),
 					x = 0;
-
-
-				skybox = new THREE.Mesh(new THREE.OctahedronGeometry(80000, 4), skyboxSideMat);
+				skybox = new THREE.Mesh(new THREE.OctahedronGeometry(300000, 4), skyboxSideMat);
 				self.skybox = skybox;
+				skybox.add(three.sun);
+				three.sun.position.set(0, 18000, -24000);
 				three.scene.add(skybox);
 				skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
 				skyTexture.needsUpdate = true;
@@ -107,17 +112,42 @@ export default class World {
 					console.log(response);
 				});
 
-			while (x < 10) {
-				while (y < 10) {
-					cell = new Cell([x, Math.floor(Math.sin((x/5)*Math.PI)*Math.cos((y/5)*Math.PI)*1.5), y], mobile);
-//						three.scene.add(cell);
-//						cell.position.set(-24000 + (x*r), -2000 + Math.floor(Math.random()*4)*256, -24000 + ((y*r)+((x%2)*0.5*r)));
-					y++;
-				}
-				y = 0;
-				x++;
-			}
 
+				function loadChunks (coords, phase) {
+					var max = app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 4);
+					var cellWidth = 3 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
+					    chunk = null,
+					 x = coords[0] - phase,
+					 y = coords[1] - phase;
+
+					while (x <= phase) {
+					  while (y <= phase) {
+							if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[1]+phase) {
+						    chunk = new Chunk([x, Math.floor(Math.sin((x/(cellWidth/2))*Math.PI)*Math.cos((y/(cellWidth/2))*Math.PI)), y], mobile);
+						    chunk.mesh.updateMatrix();
+						    app.chunks.push(chunk);
+								three.scene.add(chunk.mesh);
+							}
+
+					    y++;
+					  }
+						y = coords[1]-phase;
+						x++;
+					}
+
+					phase ++;
+					if (phase < max) {
+						setTimeout(function () {loadChunks(coords, phase); }, 1000)
+					}
+
+				}
+
+
+				loadChunks ([0,0,0], 0);
+
+
+			//baseMesh = new THREE.Mesh(base, baseMaterial);
+			//scene.add(baseMesh);
 //			var groundGeom = new THREE.PlaneGeometry(100000, 100000, 12, 12);
 //			var groundMat = new THREE.MeshBasicMaterial({color: 0xf0f0f0});
 //			var ground = new THREE.Mesh(groundGeom, groundMat);

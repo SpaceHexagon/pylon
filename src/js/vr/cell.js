@@ -1,21 +1,18 @@
 export default class Cell {
 	constructor(coords, mobile, data) {
-			var geometry = new THREE.CylinderGeometry(3000, 3000, 1854, 6),
-			material = (mobile ? new THREE.MeshLambertMaterial({
-             			color: 0xffffff
-					}) : new THREE.MeshPhongMaterial({
-             			color: 0xffffff
-					})),
-			size = 5000,
+			var golden = 1.61803398875,
+					geometry = new THREE.CylinderGeometry(1600, 1600, 1600, 6),
+					material = new THREE.MeshBasicMaterial(),
+			size = 2666.667,
 			mesh = new THREE.Mesh(geometry, material);
 
-		three.scene.add(mesh);
-		mesh.position.set((coords[0]*size*1.1)+ (coords[2] % 2==0 ? 0 : size / 1.68), coords[1]*size, coords[2]*size);
-  
+			mesh.position.set((coords[0]*size*1.1)+ (coords[2] % 2==0 ? 0 : size / 1.618), (coords[1]*size) / golden, coords[2]*size);
+
 		 return {
 			cell: coords,
 			data: data,
-			mesh: mesh
+			mesh: mesh,
+			geometry: geometry
 		 }
 	}
 }

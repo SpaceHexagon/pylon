@@ -1,3 +1,7 @@
+* {
+  transition: all 0.5 ease-out;
+}
+
 @font-face {
   font-family: robotoThin;
   src: url(/fonts/Roboto-Thin.ttf);

@@ -46,8 +46,8 @@ const systemEvents = new SystemEvents();
 
 var content = document.getElementsByTagName('main')[0].innerHTML;
 var token = localStorage.getItem("token"),
-	world = null,
-	userInput = null;
+		world = null,
+		userInput = null;
 
 if (window.location.href.split(".net/")[1] == "") {
 	content = <SignIn />;
@@ -83,10 +83,10 @@ window.app = {
         },
 		arms: [ ],
 		password: "",
-        velocity: new THREE.Vector3(0, 0, 0),
-        userInput: null,
+    velocity: new THREE.Vector3(0, 0, 0),
+    userInput: null,
 		gravity: 1,
-        falling: false
+    falling: false
 	},
     systemEvents: systemEvents,
     username: localStorage.getItem("username"),
@@ -94,6 +94,7 @@ window.app = {
 	mode: "desktop",
     cwd: "/home",
 	cells: [],
+	chunks: [],
 	world: null,
 	activity: "none",
 	userInput: null,
@@ -209,6 +210,3 @@ document.body.ondrop = function (e) {
 	document.querySelector("#file-upload").files = e.dataTransfer.files;
 	//systemEvents.emit("start-upload", {files: e.dataTransfer.files});
 };
-
-
-
