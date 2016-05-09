@@ -6,14 +6,14 @@
 	export default class World {
 		constructor() {
 			var scene = new THREE.Scene(),
-	            camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 30, 340000 ),
+	            camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 40, 380000 ),
 	            renderer = new THREE.WebGLRenderer(),
 				mobile = app.mobile,
 				self = this,
 	            sunGeom = new THREE.OctahedronGeometry( 3000, 0),
 	            material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
 	            sun = new THREE.Mesh(sunGeom, material ),
-	            light = new THREE.PointLight(0xffffff, 1.1, 400000 ),
+	            light = new THREE.PointLight(0xffffff, 1.0, 400000),
 	            panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
 	            cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
 	            cell = null,
@@ -83,7 +83,7 @@
 	                color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 					    }),
 						x = 0;
-					skybox = new THREE.Mesh(new THREE.OctahedronGeometry(300000, 4), skyboxSideMat);
+					skybox = new THREE.Mesh(new THREE.OctahedronGeometry(360000, 4), skyboxSideMat);
 					self.skybox = skybox;
 					skybox.add(three.sun);
 					three.sun.position.set(0, 18000, -24000);
@@ -183,7 +183,7 @@
 						while (x <= phase) {
 						  while (y <= phase) {
 								if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[1]+phase) {
-							    chunk = new Chunk([x, 0, y], mobile);
+									chunk = new Chunk([x, 0, y], mobile);
 							    chunk.mesh.updateMatrix();
 							    app.chunks.push(chunk);
 									three.scene.add(chunk.mesh);

@@ -1,7 +1,7 @@
 export default class Cell {
-	constructor(coords, mobile, data) {
+	constructor(coords, mobile, height, data) {
 			var golden = 1.61803398875,
-					geometry = new THREE.CylinderGeometry(1600, 1600, 1600, 6),
+					geometry = new THREE.CylinderGeometry(1600, 1600, !!height ? height : 1600, 6),
 					material = new THREE.MeshBasicMaterial(),
 			size = 2666.667,
 			mesh = new THREE.Mesh(geometry, material);
