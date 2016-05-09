@@ -113,6 +113,66 @@ export default class World {
 				});
 
 
+				function bufferChunks () {
+						var chunks = app.chunks,
+								chunk = null,
+								c = 0,
+								coords = app.chunkCoords,
+								lastCoords = app.lastChunkCoords,
+								moveDir = [coords[0]-lastCoords[0], coords[1] - lastCoords[1]];
+								viewDistance = app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4),
+								endCoords = [coords[0]+viewDistance, coords[1]+viewDistance],
+								x = coords[0]-viewDistance,
+								y = coords[1]-viewDistance;
+
+						if (coords[0] != lastCoords[0] || coords[1] != lastCoords[1] || coords[2] != lastCoords[2]) {
+								// remove old chunks
+								for (c in chunks) {
+									chunk = chunks[c];
+									if (chunk.coords[0] < coords[0] - viewDistance || chunk.coords[0] > coords[0] + viewDistance ||
+											chunk.coords[1] < coords[1] - viewDistance || chunk.coords[1] > coords[1] + viewDistance) {
+											// remove this chunk
+											three.scene.remove(chunk.mesh);
+											chunks.splice(c, 1);
+									}
+								}
+								// load new chunks
+
+											if (moveDir[0] > 1 ) {
+													if (moveDir[1] > 1) {
+
+													} else if (moveDir[1] == 0) {
+
+													} else {
+
+													}
+											} else if (moveDir[0] == 0) {
+													if (moveDir[1] > 1) {
+
+													} else if (moveDir[1] == 0) {
+
+													} else {
+
+													}
+											} else {
+													if (moveDir[1] > 1) {
+
+													} else if (moveDir[1] == 0) {
+
+													} else {
+
+													}
+											}
+						}
+
+
+						lastCoords[0] = coords[0];
+						lastCoords[1] = coords[1];
+						lastCoords[2] = coords[2];
+						setTimeout(function () { bufferChunks(); }, 1000);
+				}
+
+
 				function loadChunks (coords, phase) {
 					var max = app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4);
 					var cellWidth = 3 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
@@ -137,13 +197,17 @@ export default class World {
 
 					phase ++;
 					if (phase < max) {
-						setTimeout(function () {loadChunks(coords, phase); }, 1000)
+						setTimeout(function () { loadChunks(coords, phase); }, 1000)
+					} else {
+						setTimeout(function () { bufferChunks() })
 					}
 
 				}
 
 
 				loadChunks ([0,0,0], 0);
+
+
 
 
 			//baseMesh = new THREE.Mesh(base, baseMaterial);
