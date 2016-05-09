@@ -7,6 +7,7 @@ export default class Chunk {
 			var golden = 1.61803398875,
 					material = new THREE.MeshBasicMaterial(),
 			    size = 2666.667 * 12,
+          cellSize = 2666.667,
 			    mesh = null,
           cellWidth = 12,
           base = new THREE.Geometry(),
@@ -23,9 +24,9 @@ export default class Chunk {
 
       while (x < cellWidth) {
         while (y < cellWidth) {
-          localTurbulence = Math.sin((x/(cellWidth)/2)*Math.PI) * Math.cos((y/(cellWidth)/2)*Math.PI)*2;
-          globalTurbulence = Math.sin((x/(cellWidth)/6)*Math.PI) * Math.cos((y/(cellWidth)/6)*Math.PI)*6;
-          cell = new Cell([-(cellWidth/2)+x, Math.floor(localTurbulence + globalTurbulence), -(cellWidth/2)+y], mobile);
+          localTurbulence = Math.sin((x/cellWidth)) * Math.cos((y/cellWidth))*2;
+          globalTurbulence = Math.sin(0.05*((x+coords[0])/cellWidth)*Math.PI*2) * Math.cos(0.05*((y+coords[2])/cellWidth)*Math.PI*2)*6;
+          cell = new Cell([x, Math.floor(localTurbulence+globalTurbulence), y], mobile);
           cell.mesh.updateMatrix();
           base.merge(cell.geometry, cell.mesh.matrix);
           y++;

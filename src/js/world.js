@@ -73,7 +73,7 @@ export default class World {
 				requestAnimationFrame( function () { render(last); } );
 			};
 
-			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-neon-2.jpg", null, function () {
+			var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-neon-3.jpg", null, function () {
 				var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 				    skyboxFace = null,
 				    skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -114,7 +114,7 @@ export default class World {
 
 
 				function loadChunks (coords, phase) {
-					var max = app.mobile ? 3 : (window.innerWidth > 2000 ?  6  : 4);
+					var max = app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4);
 					var cellWidth = 3 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
 					    chunk = null,
 					 x = coords[0] - phase,
