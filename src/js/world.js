@@ -114,7 +114,7 @@ export default class World {
 
 
 				function loadChunks (coords, phase) {
-					var max = app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 4);
+					var max = app.mobile ? 3 : (window.innerWidth > 2000 ?  6  : 4);
 					var cellWidth = 3 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
 					    chunk = null,
 					 x = coords[0] - phase,
@@ -123,7 +123,7 @@ export default class World {
 					while (x <= phase) {
 					  while (y <= phase) {
 							if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[1]+phase) {
-						    chunk = new Chunk([x, Math.floor(Math.sin((x/(cellWidth/2))*Math.PI)*Math.cos((y/(cellWidth/2))*Math.PI)), y], mobile);
+						    chunk = new Chunk([x, 0, y], mobile);
 						    chunk.mesh.updateMatrix();
 						    app.chunks.push(chunk);
 								three.scene.add(chunk.mesh);
