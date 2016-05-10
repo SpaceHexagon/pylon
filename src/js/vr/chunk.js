@@ -35,7 +35,7 @@ export default class Chunk {
         x++;
       }
       mesh = new THREE.Mesh(base, baseMaterial);
-      mesh.position.set((coords[0]*size*1.1)+ (coords[2] % 2==0 ? 0 : size / 1.618), (coords[1]*size) / golden, coords[2]*size);
+      mesh.position.set((coords[0]*size*1.1)+ (coords[2] % 2==0 ? 0 : size / golden), (coords[1]*size) / golden, coords[2]*size);
 
      return {
 			cell: coords,

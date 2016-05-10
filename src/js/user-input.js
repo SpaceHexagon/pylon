@@ -22,9 +22,9 @@ export default class UserInput {
 				var uInput = this;
 				this.connect(camera, device);
 				if (window.location.href.split(".net")[1].length <= 1) {
-					uInput.rotationVector = {x: 7, y: 6.283333333333311, z: 0};
+					//uInput.rotationVector = {x: 7, y: 6.283333333333311, z: 0};
 				} else {
-					uInput.rotationVector = {x: -0.39666666666666567, y: -14.773333333333277, z: 0};
+					//uInput.rotationVector = {x: -0.39666666666666567, y: -14.773333333333277, z: 0};
 				}
 
 				var canvas = document.querySelector("canvas#viewport");

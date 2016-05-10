@@ -38,9 +38,7 @@
 				scene.fog = new THREE.FogExp2(0xffffff, 0.00001);
 				light.position.set(0, 60000, -32000);
 				renderer.setClearColor(0x2B7CA1);
-
-
-				camera.position.z = 15;
+				camera.position.set(0, 3500, 15);
 				this.skybox = null;
 
 				function render (last) {
