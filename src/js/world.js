@@ -120,6 +120,7 @@
 									lastCoords = app.lastChunkCoords,
 									moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
 									viewDistance = (window.innerWidth > 2100 ?  4  : 3),
+									removeDistance = Math.floor(viewDistance*1.5),
 									endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
 									x = coords[0]-viewDistance,
 									y = coords[2]-viewDistance;
@@ -131,8 +132,8 @@
 									// remove old chunks
 									for (c in chunks) {
 										chunk = chunks[c];
-										if (chunk.cell[0] < coords[0] - viewDistance*2 || chunk.cell[0] > coords[0] + viewDistance*2 ||
-												chunk.cell[2] < coords[2] - viewDistance*2 || chunk.cell[2] > coords[2] + viewDistance*2) {
+										if (chunk.cell[0] < coords[0] - removeDistance || chunk.cell[0] > coords[0] + removeDistance ||
+												chunk.cell[2] < coords[2] - removeDistance || chunk.cell[2] > coords[2] + removeDistance) {
 												// remove this chunk
 												three.scene.remove(chunk.mesh);
 												cMap[chunk.cell[0]+"0"+chunk.cell[2]] = null;
@@ -161,22 +162,21 @@
 							lastCoords[0] = coords[0];
 							lastCoords[1] = coords[1];
 							lastCoords[2] = coords[2];
-							setTimeout(function () { bufferChunks(); }, 3000);
+							setTimeout(function () { bufferChunks(); }, 2000);
 					}
 
 
 					function loadChunks (coords, phase) {
 						var max = (window.innerWidth > 2100 ?  4  : 3);
-						var cellWidth = 2 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
-						    chunk = null,
+						var chunk = null,
 								chunks = app.chunks,
 								cMap = app.chunkMap,
 						 		x = coords[0] - phase,
-						 		y = coords[1] - phase;
+						 		y = coords[2] - phase;
 
-						while (x <= phase) {
-						  while (y <= phase) {
-								if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[1]+phase) {
+						while (x <= coords[0]+phase) {
+						  while (y <= coords[2]+phase) {
+								if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
 									chunk = new Chunk([x, 0, y], mobile);
 							    chunk.mesh.updateMatrix();
 							    chunks.push(chunk);
@@ -186,7 +186,7 @@
 
 						    y++;
 						  }
-							y = coords[1]-phase;
+							y = coords[2]-phase;
 							x++;
 						}
 
