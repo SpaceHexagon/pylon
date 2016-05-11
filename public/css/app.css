@@ -641,6 +641,18 @@ form.search {
     .card h3 {
         max-width: auto;
     }
+    .card.background h3 {
+      opacity: 0;
+    }
+    .card.background:hover h3 {
+      opacity: 1;
+    }
+    .card.background .icon {
+      opacity: 0;
+    }
+    .card.background:hover .icon {
+      opacity: 1;
+    }
 	form.search {
 		position: fixed;
 		top: 0px;
@@ -654,7 +666,7 @@ form.search {
 	.search div.results {
 		position: fixed;
 		overflow-x: hidden;
-		max-width: 50%;
+		max-width: 66%;
 		background: rgba(255, 255, 255, 0.34);
 		left: 25%;
 		padding-bottom: 1em;
@@ -694,13 +706,13 @@ form.search {
 		width: 100%;
 	}
 	.search ul.results {
-        max-width: 64%;
-		top: 42px;
-		padding-top: 1em;
-		margin-top: 1em;
-		max-height: 86%;
-		overflow-y: auto;
-		max-width: 50%;
+    top: 42px;
+    padding-top: 1em;
+    margin-top: 0em;
+    max-height: 86%;
+    overflow-y: auto;
+    max-width: 58%;
+    border-radius: 3px
 	}
 	.search ul li div {
 		float: left;

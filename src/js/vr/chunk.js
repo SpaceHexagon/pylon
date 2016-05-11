@@ -19,6 +19,7 @@ export default class Chunk {
           cell = null,
           localTurbulence = 0,
           globalTurbulence = 0,
+					altitude = 0,
           x = 0,
           y = 0;
 
@@ -26,7 +27,8 @@ export default class Chunk {
         while (y < cellWidth) {
           localTurbulence = Math.sin((x/cellWidth)*Math.PI*2) * Math.cos((y/cellWidth)*Math.PI*2)*3*(x/cellWidth);
 					globalTurbulence = Math.sin(((coords[0]*cellWidth+x)/cellWidth) * Math.PI*2) * Math.cos(((coords[0]*cellWidth+y)/cellWidth)*Math.PI*2);
-					cell = new Cell([x, Math.floor(localTurbulence * globalTurbulence), y], mobile, (localTurbulence > 0 ? 3000*(1+localTurbulence) : 0));
+					altitude = Math.floor(localTurbulence * globalTurbulence);
+					cell = new Cell([x, altitude, y], mobile, (localTurbulence > 0 ? 1600*altitude : 0));
           cell.mesh.updateMatrix();
           base.merge(cell.geometry, cell.mesh.matrix);
           y++;
