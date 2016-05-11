@@ -1,7 +1,7 @@
 export default class Panel {
 	constructor(coords, direction, mobile, data) {
 		var data = {},
-			geometry = new THREE.BoxGeometry(1200, 1854, 3000),
+			geometry = new THREE.BoxGeometry(1600, 2800, 200, ),
 			material = (mobile ? new THREE.MeshLambertMaterial({
              			color: 0xffffff
 					}) : new THREE.MeshPhongMaterial({

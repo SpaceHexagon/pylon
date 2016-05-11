@@ -119,7 +119,7 @@
 									coords = [Math.floor(position.x/32000.004), 0, Math.floor(position.z/32000.004)],
 									lastCoords = app.lastChunkCoords,
 									moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
-									viewDistance = (window.innerWidth > 2100 ?  4  : 3),
+									viewDistance = (app.mobile ? 2 : (window.innerWidth > 2100 ?  4  : 3)),
 									removeDistance = Math.floor(viewDistance*1.5),
 									endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
 									x = coords[0]-viewDistance,
@@ -167,7 +167,7 @@
 
 
 					function loadChunks (coords, phase) {
-						var max = (window.innerWidth > 2100 ?  4  : 3);
+						var max = (app.mobile ? 2 : (window.innerWidth > 2100 ?  4  : 3));
 						var chunk = null,
 								chunks = app.chunks,
 								cMap = app.chunkMap,
@@ -193,25 +193,15 @@
 						phase ++;
 						if (phase < max) {
 							setTimeout(function () { loadChunks(coords, phase); }, 1000)
-						} else {
-							setTimeout(function () { bufferChunks() }, 500)
 						}
 
 					}
 
-
 					loadChunks ([0,0,0], 0);
-					//bufferChunks(true);
-
-
-
-				//baseMesh = new THREE.Mesh(base, baseMaterial);
-				//scene.add(baseMesh);
-	//			var groundGeom = new THREE.PlaneGeometry(100000, 100000, 12, 12);
-	//			var groundMat = new THREE.MeshBasicMaterial({color: 0xf0f0f0});
-	//			var ground = new THREE.Mesh(groundGeom, groundMat);
-	//			ground.rotateX(Math.PI / 2);
-	//			three.scene.add(ground);
+					this.loadChunks = loadChunks;
+					this.bufferChunks = bufferChunks;
+					this.buffering = 0;
+				
 	    }
 
 	};

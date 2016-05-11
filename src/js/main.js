@@ -5,6 +5,7 @@ import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
 // World
 import World from './world.js';
+import Avatar from './vr/avatar.js';
 // User Input
 import UserInput from './user-input.js';
 // UI Components
@@ -47,6 +48,7 @@ const systemEvents = new SystemEvents();
 var content = document.getElementsByTagName('main')[0].innerHTML;
 var token = localStorage.getItem("token"),
 		world = null,
+		avatar = null,
 		userInput = null;
 
 if (window.location.href.split(".net/")[1] == "") {
@@ -77,17 +79,19 @@ window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085}
 window.app = {
 	user: {
 		data: {
-            name: "",
+            name: localStorage.getItem("username"),
             account: "",
             user_id: 0
         },
 		arms: [ ],
+		mesh: null,
 		password: "",
     velocity: new THREE.Vector3(0, 0, 0),
     userInput: null,
 		gravity: 1,
     falling: false
 	},
+	users: [],
     systemEvents: systemEvents,
     username: localStorage.getItem("username"),
 		mobile: (window.innerWidth <= 640),
@@ -145,12 +149,21 @@ window.app = {
 app.world = world = new World();
 app.userInput = userInput = new UserInput();
 
+avatar = new Avatar("default", {username: app.username, profilePicture: ""});
+app.users[app.username] = {
+		"user": app.username,
+		"mesh": avatar.mesh,
+		"arms": avatar.arms
+};
+app.user.mesh = app.users[app.username].mesh;
+app.user.arms = app.users[app.username].arms;
+
 app.userInput.init(three.camera, app.user);
 UserInput.rotationVector = {x: 0, y: Math.PI / 4, z: 0};
 
 document.body.addEventListener("keydown", function (evt) {
 	var visible = true,
-		elemType = "";
+			elemType = "";
 	if (app.mode == "desktop") {
 		if (evt.which == 27) {
 			visible = false;

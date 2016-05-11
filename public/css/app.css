@@ -39,6 +39,8 @@ main {
 }
 canvas {
 	position: fixed;
+  top: 0;
+  left: 0;
 	z-index: -1;
 }
 .vr canvas {
@@ -631,9 +633,10 @@ form.search {
 
 @media screen and (min-width: 961px) {
 	main {
-		min-height: 192px;
-    	margin-top: 3em;
-		width: 66.6% !important;
+    min-height: 148px;
+    margin-top: 1em;
+    width: 66.6% !important;
+    max-width: 1000px;
 	}
     .card h3 {
         max-width: auto;

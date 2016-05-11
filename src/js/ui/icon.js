@@ -4,22 +4,22 @@ export default class Icon extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {
+		this.state = {
 
 		};
-    }
+	}
 
-    componentDidMount () {
+	componentDidMount () {
 
-    }
+	}
 
-    handleClick (component, event) {
+	handleClick (component, event) {
 		var evt = event.nativeEvent;
 		if (evt.which != 3) {
 			this.vibrate();
-        	component.props.open();
+			component.props.open();
 		}
-    }
+	}
 
 	vibrate (data) {
 		if (!! navigator.vibrate) {
@@ -31,21 +31,21 @@ export default class Icon extends React.Component {
 	}
 
 	render() {
-        var iconStyle = {
+		var iconStyle = {
 			cursor: 'pointer',
-            backgroundImage: 'url(' + this.props.src + ')'
-        },
+			backgroundImage: 'url(' + this.props.src + ')'
+		},
 		textClass = (this.props.text.length >1 ? "text" : ""),
-			link = (this.props.link.length > 1 ? <a className="iconLink" href={this.props.link} target="_blank"></a> : ""),
-			text = this.props.text;
+		link = (this.props.link.length > 1 ? <a className="iconLink" href={this.props.link} target="_blank"></a> : ""),
+		text = this.props.text;
 
 		return (
 			<div className={"icon "+this.props.title.replace(" ", "-")+" "+textClass} style={iconStyle} title={this.props.title}  onMouseDown={(event)=>this.handleClick(this, event)}>
-				<span>
-					{text}
-					{link}
-				</span>
-					{!! this.props.uploadInput ? this.props.uploadInput : ""}
+			<span>
+				{text}
+				{link}
+			</span>
+				{!! this.props.uploadInput ? this.props.uploadInput : ""}
 			</div>
 		);
 	}

@@ -6,23 +6,23 @@ export default class UserMenu extends React.Component {
 	constructor() {
 		super();
 		// Initial state of the component
-        this.state = {
-            applet: null,
-            resized: false
-        };
+		this.state = {
+			applet: null,
+			resized: false
+		};
 		this.toggleNotifications = this.toggleNotifications.bind(this);
-    }
+	}
 
-    componentDidMount () {
+	componentDidMount () {
 		var comp = this;
 		this.props.systemEvents.on("window-resized", function (evt) {
 			comp.flagResized();
 		});
 	}
 
-    flagResized () {
-        this.setState({resized: !this.state.resized});
-    }
+	flagResized () {
+		this.setState({resized: !this.state.resized});
+	}
 
 	toggleNotifications () {
 		this.props.systemEvents.emit("toggle-notifications", {});
@@ -34,6 +34,10 @@ export default class UserMenu extends React.Component {
 	toggleVRMode () {
 		app.mode = app.mode == "desktop" ? "vr" : "desktop";
 		document.body.setAttribute("class", app.mode);
+		if (app.world.buffering == 0) {
+			app.world.buffering = 1;
+			setTimeout(function () { app.world.bufferChunks() }, 500);
+		}
 		this.props.systemEvents.emit("toggle-notifications", {visible: false});
 		this.props.systemEvents.emit("toggle-activity-view", {visible: false});
 		this.props.systemEvents.emit("toggle-search-bar", {visible: false});
@@ -50,9 +54,9 @@ export default class UserMenu extends React.Component {
 					iconSRC = iconSRC.replace("/images", "/images/dark");
 				}
 				return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
-            })}
+			})}
 			</aside>
-
+			
 		);
 	}
 }
@@ -60,12 +64,11 @@ export default class UserMenu extends React.Component {
 /**/
 /* <Icon key={2} src="/images/messaging.png" title="Messages" text="" open={()=>{ console.log("opening Messaging app.."); }} /> */
 UserMenu.defaultProps = {
-    name: 'user-menu',
+	name: 'user-menu',
 	username: localStorage.getItem("username") || "Guest",
-    options: [
-			{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
-//			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
-			{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }}
-    ]
+	options: [
+		{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
+		//			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
+		{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }}
+	]
 };
-
