@@ -6,10 +6,10 @@ export default class Chunk {
 	constructor(coords, mobile, data) {
 			var golden = 1.61803398875,
 					material = new THREE.MeshBasicMaterial(),
-			    size = 2666.667 * 12,
           cellSize = 2666.667,
 			    mesh = null,
-          cellWidth = 12,
+          cellWidth = 16,
+					size = cellSize * cellWidth,
           base = new THREE.Geometry(),
           baseMaterial = (app.mobile ? new THREE.MeshLambertMaterial({
              color: 0xffffff
@@ -25,7 +25,7 @@ export default class Chunk {
       while (x < cellWidth) {
         while (y < cellWidth) {
           localTurbulence = Math.sin((x/cellWidth)*Math.PI*2) * Math.cos((y/cellWidth)*Math.PI*2)*3*(x/cellWidth);
-					globalTurbulence = Math.sin(((coords[0]*12+x)/cellWidth) * Math.PI*2) * Math.cos(((coords[0]*12+y)/cellWidth)*Math.PI*2);
+					globalTurbulence = Math.sin(((coords[0]*cellWidth+x)/cellWidth) * Math.PI*2) * Math.cos(((coords[0]*cellWidth+y)/cellWidth)*Math.PI*2);
 					cell = new Cell([x, Math.floor(localTurbulence * globalTurbulence), y], mobile, (localTurbulence > 0 ? 3000*(1+localTurbulence) : 0));
           cell.mesh.updateMatrix();
           base.merge(cell.geometry, cell.mesh.matrix);
@@ -35,7 +35,7 @@ export default class Chunk {
         x++;
       }
       mesh = new THREE.Mesh(base, baseMaterial);
-      mesh.position.set((coords[0]*size*1.1)+ (coords[2] % 2==0 ? 0 : size / golden), (coords[1]*size) / golden, coords[2]*size);
+      mesh.position.set((coords[0]*size)+ (coords[2] % 2==0 ? 0 : size / golden), (coords[1]*size) / golden, coords[2]*size);
 
      return {
 			cell: coords,
@@ -43,4 +43,10 @@ export default class Chunk {
 			mesh: mesh
 		 }
 	}
+
+	getMapKey () {
+		var coords = this.coords;
+		return coords[0]+"."+coords[1]+"."+coords[2];
+	}
+
 }

@@ -110,80 +110,77 @@
 						console.log(response);
 					});
 
-
-					function bufferChunks () {
+					function bufferChunks (force) {
 							var chunks = app.chunks,
+									cMap = app.chunkMap,
+									position = three.camera.position,
 									chunk = null,
 									c = 0,
-									coords = app.chunkCoords,
+									coords = [Math.floor(position.x/32000.004), 0, Math.floor(position.z/32000.004)],
 									lastCoords = app.lastChunkCoords,
-									moveDir = [coords[0]-lastCoords[0], coords[1] - lastCoords[1]];
-									viewDistance = app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4),
-									endCoords = [coords[0]+viewDistance, coords[1]+viewDistance],
+									moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
+									viewDistance = (window.innerWidth > 2100 ?  4  : 3),
+									endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
 									x = coords[0]-viewDistance,
-									y = coords[1]-viewDistance;
+									y = coords[2]-viewDistance;
+									app.chunkCoords = coords;
 
-							if (coords[0] != lastCoords[0] || coords[1] != lastCoords[1] || coords[2] != lastCoords[2]) {
+							console.log("buffering chunks", coords, chunks.length);
+
+							if (!!force || coords[0] != lastCoords[0] || coords[1] != lastCoords[1] || coords[2] != lastCoords[2]) {
 									// remove old chunks
 									for (c in chunks) {
 										chunk = chunks[c];
-										if (chunk.coords[0] < coords[0] - viewDistance || chunk.coords[0] > coords[0] + viewDistance ||
-												chunk.coords[1] < coords[1] - viewDistance || chunk.coords[1] > coords[1] + viewDistance) {
+										if (chunk.cell[0] < coords[0] - viewDistance*2 || chunk.cell[0] > coords[0] + viewDistance*2 ||
+												chunk.cell[2] < coords[2] - viewDistance*2 || chunk.cell[2] > coords[2] + viewDistance*2) {
 												// remove this chunk
 												three.scene.remove(chunk.mesh);
+												cMap[chunk.cell[0]+"0"+chunk.cell[2]] = null;
 												chunks.splice(c, 1);
+
 										}
 									}
 									// load new chunks
+									while (x <= endCoords[0]) {
+										while (y <= endCoords[1]) {
+											if (cMap[x+".0."+y] == null) { // only if its not already loaded
+												chunk = new Chunk([x, 0, y], mobile);
+										    chunk.mesh.updateMatrix();
+										    chunks.push(chunk);
+												cMap[x+".0."+y] = chunk;
+												three.scene.add(chunk.mesh);
+											}
+											y += 1;
+										}
+										y = coords[0]-viewDistance;
+										x += 1;
+									}
 
-												if (moveDir[0] > 1 ) {
-														if (moveDir[1] > 1) {
-
-														} else if (moveDir[1] == 0) {
-
-														} else {
-
-														}
-												} else if (moveDir[0] == 0) {
-														if (moveDir[1] > 1) {
-
-														} else if (moveDir[1] == 0) {
-
-														} else {
-
-														}
-												} else {
-														if (moveDir[1] > 1) {
-
-														} else if (moveDir[1] == 0) {
-
-														} else {
-
-														}
-												}
 							}
-
 
 							lastCoords[0] = coords[0];
 							lastCoords[1] = coords[1];
 							lastCoords[2] = coords[2];
-							setTimeout(function () { bufferChunks(); }, 1000);
+							setTimeout(function () { bufferChunks(); }, 3000);
 					}
 
 
 					function loadChunks (coords, phase) {
-						var max = app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4);
-						var cellWidth = 3 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
+						var max = (window.innerWidth > 2100 ?  4  : 3);
+						var cellWidth = 2 + phase, // app.mobile ? 3 : (window.innerWidth > 2000 ?  7  : 5),
 						    chunk = null,
-						 x = coords[0] - phase,
-						 y = coords[1] - phase;
+								chunks = app.chunks,
+								cMap = app.chunkMap,
+						 		x = coords[0] - phase,
+						 		y = coords[1] - phase;
 
 						while (x <= phase) {
 						  while (y <= phase) {
 								if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[1]+phase) {
 									chunk = new Chunk([x, 0, y], mobile);
 							    chunk.mesh.updateMatrix();
-							    app.chunks.push(chunk);
+							    chunks.push(chunk);
+									cMap[x+".0."+y] = chunk;
 									three.scene.add(chunk.mesh);
 								}
 
@@ -197,14 +194,14 @@
 						if (phase < max) {
 							setTimeout(function () { loadChunks(coords, phase); }, 1000)
 						} else {
-							setTimeout(function () { bufferChunks() })
+							setTimeout(function () { bufferChunks() }, 500)
 						}
 
 					}
 
 
 					loadChunks ([0,0,0], 0);
-
+					//bufferChunks(true);
 
 
 

@@ -90,17 +90,20 @@ window.app = {
 	},
     systemEvents: systemEvents,
     username: localStorage.getItem("username"),
-	mobile: (window.innerWidth <= 640),
-	mode: "desktop",
-    cwd: "/home",
-	cells: [],
-	chunks: [],
-	world: null,
-	activity: "none",
-	userInput: null,
-	sendUpdatePacket: 0,
-	lightboxTimeout: 0,
-	typeToSearch: true,
+		mobile: (window.innerWidth <= 640),
+		mode: "desktop",
+	  cwd: "/home",
+		cells: [],
+		chunks: [],
+		chunkMap: [],
+		chunkCoords: [0, 0, 0],
+		lastChunkCoords: [0, 0, 0],
+		world: null,
+		activity: "none",
+		userInput: null,
+		sendUpdatePacket: 0,
+		lightboxTimeout: 0,
+		typeToSearch: true,
     uploading: false,
     lightbox: document.querySelector(".lightbox"),
 	showChat: function () {},
@@ -125,9 +128,9 @@ window.app = {
 		function successCallback(stream) {
 		  window.stream = stream; // stream available to console
 		  if (window.URL) {
-			video.src = window.URL.createObjectURL(stream);
+				video.src = window.URL.createObjectURL(stream);
 		  } else {
-			video.src = stream;
+				video.src = stream;
 		  }
 		}
 
