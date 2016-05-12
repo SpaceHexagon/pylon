@@ -71,7 +71,7 @@
 					requestAnimationFrame( function () { render(last); } );
 				};
 
-				var skyTexture = THREE.ImageUtils.loadTexture("/images/data-sky-neon-4.jpg", null, function () {
+				var skyTexture = THREE.ImageUtils.loadTexture("/images/depth-sky.jpg", null, function () {
 					var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 					    skyboxFace = null,
 					    skyboxSideMat = new THREE.MeshBasicMaterial({
