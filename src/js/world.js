@@ -119,8 +119,8 @@
 									coords = [Math.floor(position.x/32000.004), 0, Math.floor(position.z/32000.004)],
 									lastCoords = app.lastChunkCoords,
 									moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
-									viewDistance = (app.mobile ? 2 : (window.innerWidth > 2100 ?  4  : 3)),
-									removeDistance = Math.floor(viewDistance*1.5),
+									viewDistance = (app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4)),
+									removeDistance = viewDistance,
 									endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
 									x = coords[0]-viewDistance,
 									y = coords[2]-viewDistance;
@@ -153,7 +153,7 @@
 											}
 											y += 1;
 										}
-										y = coords[0]-viewDistance;
+										y = coords[2]-viewDistance;
 										x += 1;
 									}
 

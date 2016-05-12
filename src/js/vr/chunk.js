@@ -6,9 +6,9 @@ export default class Chunk {
 	constructor(coords, mobile, data) {
 			var golden = 1.61803398875,
 					material = new THREE.MeshBasicMaterial(),
-          cellSize = 2666.667,
+          cellSize = 5333.334,
 			    mesh = null,
-          cellWidth = 16,
+          cellWidth = 6,
 					size = cellSize * cellWidth,
           base = new THREE.Geometry(),
           baseMaterial = (app.mobile ? new THREE.MeshLambertMaterial({
@@ -25,10 +25,9 @@ export default class Chunk {
 
       while (x < cellWidth) {
         while (y < cellWidth) {
-          localTurbulence = Math.sin((x/cellWidth)*Math.PI*2) * Math.cos((y/cellWidth)*Math.PI*2)*3*(x/cellWidth);
 					globalTurbulence = Math.sin(((coords[0]*cellWidth+x)/cellWidth) * Math.PI*2) * Math.cos(((coords[0]*cellWidth+y)/cellWidth)*Math.PI*2);
-					altitude = Math.floor(localTurbulence + globalTurbulence);
-					cell = new Cell([x, altitude, y], mobile, 1500);
+					altitude = Math.floor(globalTurbulence);
+					cell = new Cell([x, altitude, y], mobile, 3000);
           cell.mesh.updateMatrix();
           base.merge(cell.geometry, cell.mesh.matrix);
           y++;
