@@ -76,6 +76,11 @@ ReactDOM.render(
 
 window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
 
+socket.on("chat message", function (evt) {
+	app.systemEvents.emit("add-notification", {icon: "", title:"Message", text: evt.text })
+});
+
+
 window.app = {
 	user: {
 		data: {

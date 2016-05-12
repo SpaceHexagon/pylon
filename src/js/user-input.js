@@ -210,7 +210,7 @@ export default class UserInput {
 
 				if (this.leapMotion && this.moveVector.length() > 0) {
 					if (velocity.y < 0) {
-						velocity.y *= 0.88;
+						velocity.y *= 0.95;
 					}
 				}
 				this.moveVector.set(0, 0, 0);
