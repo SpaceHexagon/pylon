@@ -259,12 +259,19 @@ article.card {
 	text-decoration: none;
 }
 .card.background, .card.background h3 a {
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  color: #FFF;
+  padding: 1em;
+  border-radius: 3px;
+  display: inline-block;
+  overflow: hidden;
 }
 .card h3 a:hover {
 	text-decoration: underline;
 }
+.card.background h3 {
+  margin-top: 0 !important;
+}
+
 .iconLink {
 	padding: 1em;
     position: absolute;
@@ -643,6 +650,7 @@ form.search {
     }
     .card.background h3 {
       opacity: 0;
+      margin-top: 0.25em;
     }
     .card.background:hover h3 {
       opacity: 1;
