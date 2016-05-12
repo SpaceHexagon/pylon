@@ -199,16 +199,16 @@ CreateMenu.defaultProps = {
         {src: "/images/dark/upload.png", title: "Upload Files", open: function(){
 			console.log("Create / Upload Menu");
 		} },
-		{src: "/images/dark/file.png", title: "New File", open: function(){ console.log("New File"); } },
+		{src: "/images/dark/file.png", title: "New File", open: function(){ alert("not implemented"); console.log("New File"); } },
 		{src: "/images/dark/folder.png", title: "New Folder", open: function(evt, menu) {
 			app.systemEvents.emit("toggle-create-menu", {visible: false});
             app.systemEvents.emit("toggle-applet-view", {visible: true});
 			app.systemEvents.emit("open-applet", {name:"file-browser", key: "New Folder | File Browser", data:{newFolder: true}});
             console.log("Open File Browser Applet");
         } },
-		{src: "/images/dark/star.png", title: "New Page", open: function(){ console.log("New Page"); } },
-		{src: "/images/dark/sharing.png", title: "New Share", open: function(){ console.log("New Share"); } },
-		{src: "/images/dark/groups.png", title: "New Group", open: function(){ console.log("New Group"); } }
+		{src: "/images/dark/star.png", title: "New Page", open: function(){ alert("not implemented"); console.log("New Page"); } },
+		{src: "/images/dark/sharing.png", title: "New Share", open: function(){ alert("not implemented"); console.log("New Share"); } },
+		{src: "/images/dark/groups.png", title: "New Group", open: function(){ alert("not implemented"); console.log("New Group"); } }
 
     ]
 };

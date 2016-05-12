@@ -6,7 +6,7 @@ export default class Cell {
 			size = 2666.667,
 			mesh = new THREE.Mesh(geometry, material);
 
-			mesh.position.set((coords[0]*size)+ (coords[2] % 2==0 ? 0 : size / golden), (coords[1]*size), coords[2]*size);
+			mesh.position.set((coords[0]*size)+ (coords[2] % 2==0 ? 0 : size / 2), (coords[1]*size)/2, coords[2]*size);
 
 		 return {
 			cell: coords,

@@ -44,15 +44,24 @@ export default class UserInput {
 					document.addEventListener('webkitpointerlockchange', lockChangeAlert, false);
 				}
 				function lockChangeAlert() {
+					var a = 0;
 					uInput.focus =(document.pointerLockElement===canvas||document.mozPointerLockElement===canvas||document.webkitPointerLockElement===canvas);
 					uInput.fullscreen = uInput.focus;
 					if (!uInput.fullscreen && app.username != "") {
 						app.showChat();
 						app.mode = "desktop";
+						while (a < app.user.arms.length) {
+							app.user.arms[a].visible = false;
+							a ++;
+						}
 						document.body.setAttribute("class", "desktop");
 					} else {
 						if (app.username != "") {
 							app.mode = "vr";
+							while (a < app.user.arms.length) {
+								app.user.arms[a].visible = true;
+								a ++;
+							}
 							document.body.setAttribute("class", "vr");
 						}
 					}
@@ -156,7 +165,6 @@ export default class UserInput {
                                 frame.hands.forEach(function (hand, index) {
                                     var position = hand.screenPosition(),
                                         handIndex = 0;
-                                        app.user.gravity = 0.66;
                                         if (index == 0) { // if its the first hand, control the camera
                                             input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
                                             input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
