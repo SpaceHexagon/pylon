@@ -52,14 +52,18 @@
 						sys.userInput.update(delta);
 					}
 					if (sys.sendUpdatePacket == 30) { // send image
-						image = "image uri";
+						if (app.capturing) {
+							image = "image uri";
+						} else {
+							image = "";
+						}
 						sys.sendUpdatePacket = 0;
 					}
 
 					sys.sendUpdatePacket += 1;
 					if (sys.sendUpdatePacket %2 == 0 && sys.mode == "vr") {
-						socket.emit('user update','{"user":"'+sys.username+'","position": {"x":'+camera.position.x+',"y":'+camera.position.y+',"z":'+camera.position.z+'},'
-							+'"quaternion":{"x":'+camera.quaternion.x+',"y":'+camera.quaternion.y+',"z":'+camera.quaternion.z+',"w":'+camera.quaternion.w+'}}');
+						socket.emit('user update',{user:sys.username, image: image, position: {x:camera.position.x, y:camera.position.y, z: camera.position.z},
+							quaternion: {x: camera.quaternion.x, y: camera.quaternion.y, z: camera.quaternion.z, w:camera.quaternion.w}});
 
 					}
 

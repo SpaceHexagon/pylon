@@ -114,6 +114,7 @@ window.app = {
 		lightboxTimeout: 0,
 		typeToSearch: true,
     uploading: false,
+		capturing: false,
     lightbox: document.querySelector(".lightbox"),
 	showChat: function () {},
 	vibrate: function (data) {
@@ -124,15 +125,15 @@ window.app = {
 			navigator.vibrate(data);
 		}
 	},
-	captureMode: function () {
+	captureMode: function (mode) {
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
 		var constraints = {
 		  audio: false,
 		  video: true
-		};
+		},
+		video = document.querySelector('#webcam');
 
-		var video = document.querySelector('#webcam');
+		app.capturing = !!mode ? mode : true;
 
 		function successCallback(stream) {
 		  window.stream = stream; // stream available to console
