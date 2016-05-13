@@ -144,7 +144,7 @@
 									// load new chunks
 									while (x <= endCoords[0]) {
 										while (y <= endCoords[1]) {
-											if (cMap[x+".0."+y] == null) { // only if its not already loaded
+											if ((x % 6 != 0 && y % 6 != 0) && cMap[x+".0."+y] == null) { // only if its not already loaded
 												chunk = new Chunk([x, 0, y], mobile);
 										    chunk.mesh.updateMatrix();
 										    chunks.push(chunk);
@@ -176,7 +176,7 @@
 
 						while (x <= coords[0]+phase) {
 						  while (y <= coords[2]+phase) {
-								if (Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
+								if ((x % 6 != 0 && y % 6 != 0) && Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
 									chunk = new Chunk([x, 0, y], mobile);
 							    chunk.mesh.updateMatrix();
 							    chunks.push(chunk);
