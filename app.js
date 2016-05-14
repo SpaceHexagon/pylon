@@ -194,7 +194,6 @@ function connection (socket, wio) {
 
     socket.on('chat message', function (msg) {
 	    wio.emit('chat message', msg);
-        messages.push(msg);
     });
 
     socket.on('user update', function (msg) {
