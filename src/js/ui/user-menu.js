@@ -56,7 +56,7 @@ export default class UserMenu extends React.Component {
 				return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
 			})}
 			</aside>
-			
+
 		);
 	}
 }
@@ -68,7 +68,7 @@ UserMenu.defaultProps = {
 	username: localStorage.getItem("username") || "Guest",
 	options: [
 		{src:"/images/eye.png", title:"Virtual Reality Mode" , text: "", open: (evt, menu)=>{menu.toggleVRMode(); } },
-		//			{src:"/images/circle.png", title:"User Preferences" , text: "", open: (evt, menu)=>{} },
+		{src:"/images/record.png", title:"Enable Webcam" , text: "", open: (evt, menu)=>{ app.captureMode(); } },
 		{src:"/images/notification.png", title:"Notifications" , text: "" , open: (evt, menu)=>{ menu.toggleNotifications(); }}
 	]
 };

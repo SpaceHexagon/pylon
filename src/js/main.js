@@ -68,6 +68,7 @@ ReactDOM.render(
 	  	<AppletView systemEvents={systemEvents} />
 	  	<PageEditor systemEvents={systemEvents} />
 	  	<video id="webcam" ></video>
+			<canvas id="webcam-canvas"></canvas>
         <div className="lightbox" style={{display: "none"}}></div>
       </div>
   ),
@@ -77,7 +78,31 @@ ReactDOM.render(
 window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
 
 socket.on("chat message", function (evt) {
-	app.systemEvents.emit("add-notification", {icon: "", title:"Message", text: evt.text })
+	app.systemEvents.emit("add-notification", {icon: "/images/dark/messaging.png", title:"Message", text: evt.text })
+});
+
+socket.on('user update', function (userData) {
+				var user, userShield,
+						sys = app;
+				if (userData.username != sys.username) {
+					if (sys.users[userData.username] == null) {
+						avatar = new Avatar("default", {username: userData.username, profilePicture: ""});
+						sys.users[userData.username] = {
+								"user": userData.username,
+								"mesh": avatar.mesh,
+								"arms": avatar.arms
+						};
+					} else {
+							user = app.users[userData.username];
+							user.mesh.position.set(userData.position.x, userData.position.y, userData.position.z);
+							user.mesh.quaternion.set(userData.quaternion.x, userData.quaternion.x, userData.quaternion.x, userData.quaternion.w);
+							userData.arms.forEach(function (arm, i) {
+								user.arms[i].position.set(arm.pos[0], arm.pos[1], arm.pos[2]);
+								user.arms[i].quaternion.set(arm.quat[0], arm.quat[1], arm.quat[2], arm.quat[3]);
+							});
+					}
+
+				}
 });
 
 
@@ -97,6 +122,7 @@ window.app = {
     falling: false
 	},
 	users: [],
+		webcamImage: "",
     systemEvents: systemEvents,
     username: localStorage.getItem("username"),
 		mobile: (window.innerWidth <= 640),
