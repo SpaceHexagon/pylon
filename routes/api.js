@@ -29,7 +29,7 @@ module.exports = function (app, db) {
 		externalRouter = require("./api/externals.js")(app, db, Users),
 		structureRouter = require("./api/structures.js")(app, db, Users),
 		buildingRouter = require("./api/buildings.js")(app, db, Users),
-		cellRouter = require("./api/cells.js")(app, db, Users),
+		voxelRouter = require("./api/voxels.js")(app, db, Users),
         shareRouter = require("./api/shares.js")(app, db, Users, Pages),
         messageRouter = require("./api/messages.js")(app, db, Users),
         geometryRouter = require("./api/geometries.js")(app, db, Users);
@@ -90,13 +90,13 @@ module.exports = function (app, db) {
                         userFolders = null;
 					online[token] = username;
 					console.log(online[token]);
-					db.createCollection(username + ".cells");
+					db.createCollection(username + ".voxels");
 					db.createCollection(username + ".buildings");
 					db.createCollection(username + ".captures");
-                    db.createCollection(username + ".folders");
+          db.createCollection(username + ".folders");
 					db.createCollection(username + ".thumbs");
-                    userFolders = db.collection(username + ".folders");
-                    userFolders.insert({name: "home", public: false});
+          userFolders = db.collection(username + ".folders");
+          userFolders.insert({name: "home", public: false});
 
 					Users.findOne({username: username}, function(err, foundNewUser) { // work around to get ObjectId of newly created user
 						if (err) throw err;
@@ -158,7 +158,7 @@ module.exports = function (app, db) {
 	router.use('/externals', externalRouter);
 	router.use('/structures', structureRouter);
 	router.use('/buildings', buildingRouter);
-	router.use('/cells', cellRouter);
+	router.use('/voxels', voxelRouter);
     router.use('/shares', shareRouter);
     router.use('/messages', messageRouter);
     router.use('/geometries', geometryRouter);

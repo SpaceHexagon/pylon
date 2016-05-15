@@ -9,7 +9,7 @@ export default class ChunkRow extends React.Component {
 
 	render () {
 		return (
-			<div className="chunk-row">
+			<div className={"chunk-row"+this.props.offset}>
       {this.props.chunks.map(function (chunk, i) {
         return <ChunkMenu key={i} cells={chunk.cells} coords={chunk.coords} />;
       })}
@@ -19,5 +19,6 @@ export default class ChunkRow extends React.Component {
 }
 
 ChunkRow.defaultProps = {
-  chunks: []
+  chunks: [],
+	offset: ""
 }

@@ -7,8 +7,9 @@ export default class CellIcon extends React.Component {
     }
 
 	render () {
+		var cellClass = "cell-icon " + this.props.offset; 
 		return (
-			<div className="cell-icon">
+			<div className={cellClass}>
 
 			</div>
 		);
@@ -16,5 +17,5 @@ export default class CellIcon extends React.Component {
 }
 
 CellIcon.defaultProps = {
-
+	offset: ""
 }

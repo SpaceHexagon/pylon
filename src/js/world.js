@@ -120,11 +120,11 @@ export default class World {
 		};
 
 		//load cells
-		axios.get('/api/cells/all', configure)
+		axios.get('/api/voxels/all', configure)
 		.then(function (response) {
 			app.cells = response.data;
 			app.cells.forEach(function (userCell){
-				var cell = new Cell(userCell.cell);
+				//var cell = new Cell(userCell.cell);
 			});
 		})
 		.catch(function (response) {

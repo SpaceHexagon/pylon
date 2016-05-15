@@ -563,13 +563,18 @@ input#file-upload:hover {
 .cell-icon {
 
 }
+.cell-icon.offset {
+
+}
 .chunk-menu {
 
 }
 .chunk-row {
 
 }
-
+.chunk-row.offset {
+  
+}
 
 form.search {
     position: static;

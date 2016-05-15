@@ -38,7 +38,7 @@ export default class ActivityView extends React.Component {
 		});
 
 		//load cells
-		axios.get('/api/cells/all', configure)
+		axios.get('/api/voxels/all', configure)
 			.then(function (response) {
 				//comp.setState({cells: response.data});
 			})
@@ -57,7 +57,7 @@ export default class ActivityView extends React.Component {
 				<div className="grid">
 				{this.props.chunkRows.map(function(row, i){
 					var rowOffset =	(i % 2 == 0 ? "" : "offset");
-                    return <ChunkRow key={i} className={rowOffset} chunks={row.chunks}/>;
+                    return <ChunkRow key={i} offset={rowOffset} chunks={row.chunks}/>;
                 })}
 				</div>
 			</section>
