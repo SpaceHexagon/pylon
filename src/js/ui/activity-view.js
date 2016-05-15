@@ -1,6 +1,13 @@
 import React from 'react';
 import Icon from './icon.js';
 import Card from './card.js';
+import ChunkMenu from './chunk-menu.js';
+import ChunkRow from './chunk-row.js';
+import CellIcon from './cell-icon.js';
+import CellEditor from './cell-editor.js';
+
+
+
 import EventEmitter from 'events';
 
 export default class ActivityView extends React.Component {
@@ -63,4 +70,3 @@ ActivityView.defaultProps = {
     cells: [{},{},{},{},{},{},{},{}],
 	activities: []
 };
-
