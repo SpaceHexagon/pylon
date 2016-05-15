@@ -55,9 +55,9 @@ export default class ActivityView extends React.Component {
 		return (
 			<section className="activity-view" style={activityViewStyle}>
 				<div className="grid">
-				{this.props.cells.map(function(option, i){
-					var iconSrc = "/images/dark/triangle-"+(i % 2 == 0 ? "round" : "down")+".png";
-                    return <Icon key={i} src={iconSrc} title={""} open={()=>{}} />;
+				{this.props.chunkRows.map(function(row, i){
+					var rowOffset =	(i % 2 == 0 ? "" : "offset");
+                    return <ChunkRow key={i} className={rowOffset} chunks={row.chunks}/>;
                 })}
 				</div>
 			</section>
@@ -67,6 +67,19 @@ export default class ActivityView extends React.Component {
 
 ActivityView.defaultProps = {
     name: 'activity-view',
-    cells: [{},{},{},{},{},{},{},{}],
+    chunkRows: [{
+								chunks: [
+										{coords: [-1, 0, -1], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+										{coords: [1, 0, -1], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
+								]}, {
+									chunks: [
+										{coords: [-1, 0, 0], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+										{coords: [0, 0, 0], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+										{coords: [1, 0, 0], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
+								]}, {
+									chunks: [
+										{coords: [-1, 0, 1], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+										{coords: [1, 0, 1], cells: [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
+								]}],
 	activities: []
 };
