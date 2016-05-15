@@ -157,7 +157,7 @@ export default class World {
 						chunk.cell[2] < coords[2] - removeDistance || chunk.cell[2] > coords[2] + removeDistance) {
 							// remove this chunk
 							three.scene.remove(chunk.mesh);
-							cMap[chunk.cell[0]+"0"+chunk.cell[2]] = null;
+							delete cMap[chunk.cell[0]+".0."+chunk.cell[2]];
 							chunks.splice(c, 1);
 
 						}
