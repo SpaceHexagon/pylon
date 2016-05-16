@@ -56,7 +56,7 @@ export default class Avatar {
 						avatar.remove(face);
 						var img = document.createElement('img');
 						img.onload = function (e) {
-							var face = new THREE.Mesh(new THREE.PlaneGeometry(600, 600),
+							var face = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600),
 							 													new THREE.MeshBasicMaterial({side:2, color: 0xffffff, map: new THREE.Texture(e.target)}));
 							face.material.map.needsUpdate = true;
 							avatar.add(face);

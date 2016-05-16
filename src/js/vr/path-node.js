@@ -1,7 +1,7 @@
-export default class Cell {
-	constructor(coords, mobile, height, data) {
+export default class PathNode {
+	constructor(coords, mobile, data) {
 			var size = 6200,
-					geometry = new THREE.CylinderGeometry(3200, 3200, !!height ? height : 6400, 6),
+					geometry = new THREE.CylinderGeometry(size, size, 600, 6),
 					material = new THREE.MeshBasicMaterial(),
 
 			mesh = new THREE.Mesh(geometry, material);

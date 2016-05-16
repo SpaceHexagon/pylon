@@ -6,20 +6,20 @@ import Avatar from './vr/avatar.js';
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
-		camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 80, 440000 ),
-		renderer = new THREE.WebGLRenderer(),
-		mobile = app.mobile,
-		self = this,
-		sunGeom = new THREE.OctahedronGeometry( 3000, 0),
-		material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
-		sun = new THREE.Mesh(sunGeom, material ),
-		light = new THREE.PointLight(0xffffff, 1.2, 400000),
-		panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
-		cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
-		cell = null,
-		x = 0,
-		y = 0,
-		r = 4000;
+				camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 80, 440000 ),
+				renderer = new THREE.WebGLRenderer(),
+				mobile = app.mobile,
+				self = this,
+				sunGeom = new THREE.OctahedronGeometry( 3000, 0),
+				material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
+				sun = new THREE.Mesh(sunGeom, material ),
+				light = new THREE.PointLight(0xffffff, 1.2, 400000),
+				panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
+				cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
+				cell = null,
+				x = 0,
+				y = 0,
+				r = 4000;
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );

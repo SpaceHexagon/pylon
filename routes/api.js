@@ -14,25 +14,26 @@ var User = require('../app/user.js'),
 	Geometry = require('../app/geometry.js');
 
 module.exports = function (app, db) {
-	var router = express.Router(),
-		Users = db.collection('users'),
-        Groups = db.collection('groups'),
-		Pages = db.collection('pages'),
-        userRouter = require("./api/users.js")(app, db, Users),
-        groupRouter = require("./api/groups.js")(app, db, Users),
-        postsRouter = require("./api/posts.js")(app, db, Users),
-		pageRouter = require("./api/pages.js")(app, db, Users),
-        commentsRouter = require("./api/comments.js")(app, db, Users),
-        fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
-        thumbRouter = require("./api/thumbs.js")(app, db, mongo, fs, Users),
-        folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
-		externalRouter = require("./api/externals.js")(app, db, Users),
-		structureRouter = require("./api/structures.js")(app, db, Users),
-		buildingRouter = require("./api/buildings.js")(app, db, Users),
-		voxelRouter = require("./api/voxels.js")(app, db, Users),
-        shareRouter = require("./api/shares.js")(app, db, Users, Pages),
-        messageRouter = require("./api/messages.js")(app, db, Users),
-        geometryRouter = require("./api/geometries.js")(app, db, Users);
+  var router = express.Router(),
+      Users = db.collection('users'),
+      Groups = db.collection('groups'),
+      Pages = db.collection('pages'),
+      userRouter = require("./api/users.js")(app, db, Users),
+      groupRouter = require("./api/groups.js")(app, db, Users),
+      postsRouter = require("./api/posts.js")(app, db, Users),
+      pageRouter = require("./api/pages.js")(app, db, Users),
+      commentsRouter = require("./api/comments.js")(app, db, Users),
+      fileRouter = require("./api/files.js")(app, db, mongo, fs, Users),
+      thumbRouter = require("./api/thumbs.js")(app, db, mongo, fs, Users),
+      folderRouter = require("./api/folders.js")(app, db, mongo, fs, Users),
+      externalRouter = require("./api/externals.js")(app, db, Users),
+      structureRouter = require("./api/structures.js")(app, db, Users),
+      buildingRouter = require("./api/buildings.js")(app, db, Users),
+      voxelRouter = require("./api/voxels.js")(app, db, Users),
+      pathRouter = require("./api/paths.js")(app, db, Users),
+      shareRouter = require("./api/shares.js")(app, db, Users, Pages),
+      messageRouter = require("./api/messages.js")(app, db, Users),
+      geometryRouter = require("./api/geometries.js")(app, db, Users);
 
     Users.ensureIndex([['username', 1]], true, function(err, replies){});
     Groups.ensureIndex([['name', 1]], true, function(err, replies){});
@@ -91,6 +92,7 @@ module.exports = function (app, db) {
 					online[token] = username;
 					console.log(online[token]);
 					db.createCollection(username + ".voxels");
+          db.createCollection(username + ".paths");
 					db.createCollection(username + ".buildings");
 					db.createCollection(username + ".captures");
           db.createCollection(username + ".folders");
@@ -147,21 +149,22 @@ module.exports = function (app, db) {
 		res.json(results);
 	});
 
-    router.use('/users', userRouter);
-    router.use('/groups', groupRouter);
-    router.use('/posts', postsRouter);
-	router.use('/pages', pageRouter);
-    router.use('/comments', commentsRouter);
-    router.use('/files', fileRouter);
-    router.use('/thumbs', thumbRouter);
-    router.use('/folders', folderRouter);
-	router.use('/externals', externalRouter);
-	router.use('/structures', structureRouter);
-	router.use('/buildings', buildingRouter);
-	router.use('/voxels', voxelRouter);
-    router.use('/shares', shareRouter);
-    router.use('/messages', messageRouter);
-    router.use('/geometries', geometryRouter);
+  router.use('/users', userRouter);
+  router.use('/groups', groupRouter);
+  router.use('/posts', postsRouter);
+  router.use('/pages', pageRouter);
+  router.use('/comments', commentsRouter);
+  router.use('/files', fileRouter);
+  router.use('/thumbs', thumbRouter);
+  router.use('/folders', folderRouter);
+  router.use('/externals', externalRouter);
+  router.use('/structures', structureRouter);
+  router.use('/buildings', buildingRouter);
+  router.use('/voxels', voxelRouter);
+  router.use('/paths', pathRouter);
+  router.use('/shares', shareRouter);
+  router.use('/messages', messageRouter);
+  router.use('/geometries', geometryRouter);
 
 	return router;
 };

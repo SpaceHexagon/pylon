@@ -1,22 +1,19 @@
 export default class Building {
-	constructor(coords) {
-		var data = {},
-			geometry = new THREE.CylinderGeometry(3000, 3000, 2000, 3),
-			material = new THREE.MeshLambertMaterial({
-             			color: 0xffffff
-					}),
+	constructor(coords, height, mobile, data) {
+			var size = 6200,
+					golden = 1.61803398875,
+					geometry = new THREE.CylinderGeometry(3200, 3200, !!height ? height : 6400, 6),
+					matOptions = {
+						color: 0xffff00
+					},
+					material = mobile ? new THREE.MeshLambertMaterial(options) : new THREE.MeshPhongMaterial(options);
+
 			mesh = new THREE.Mesh(geometry, material);
+			mesh.position.set((coords[0]*size)+ (coords[2] % 2==0 ? 0 : size / 2), (coords[1]*size)/3, coords[2]*size);
 
-		three.scene.add(mesh);
-		mesh.position.set(coords[0]*3000, coords[1]*3000, coords[2]*3000);
-        mesh.rotation.set(0, Math.PI / 6, 0);
-
-		 return {
-			cell: coords,
-			data: data,
-			mesh: mesh
-		 }
+			this.cell = coords;
+			this.data = data;
+			this.mesh = mesh;
+			this.geometry = geometry;
 	}
 }
-
-
