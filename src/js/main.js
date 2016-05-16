@@ -8,6 +8,8 @@ import World from './world.js';
 import Avatar from './vr/avatar.js';
 // User Input
 import UserInput from './user-input.js';
+import UIEvents from './ui-events.js';
+import SocketEvents from './socket-events.js';
 // UI Components
 import Menu from './ui/menu.js';
 import UserMenu from './ui/user-menu.js';
@@ -76,39 +78,6 @@ ReactDOM.render(
 )
 
 window.socket = io.connect("https://vpylon.net:8085", {secure: true, port: 8085});
-
-socket.on("chat message", function (evt) {
-	app.systemEvents.emit("add-notification", {icon: "/images/dark/messaging.png", title:"Message", text: evt.text })
-});
-
-socket.on('user update', function (userData) {
-				var user, userShield,
-						sys = app;
-				if (userData.username != sys.username) {
-					if (sys.users[userData.username] == null) {
-						avatar = new Avatar("default", {username: userData.username, profilePicture: userData.image});
-						sys.users[userData.username] = {
-								"user": userData.username,
-								"mesh": avatar.mesh,
-								"arms": avatar.arms
-						};
-					} else {
-							user = app.users[userData.username];
-							user.mesh.position.set(userData.position.x, userData.position.y, userData.position.z);
-							user.mesh.quaternion.set(userData.quaternion.x, userData.quaternion.x, userData.quaternion.x, userData.quaternion.w);
-							if (userData.image != "") {
-								user.updateImage(userData.image);
-							}
-							userData.arms.forEach(function (arm, i) {
-								user.arms[i].position.set(arm.pos[0], arm.pos[1], arm.pos[2]);
-								user.arms[i].quaternion.set(arm.quat[0], arm.quat[1], arm.quat[2], arm.quat[3]);
-							});
-					}
-
-				}
-});
-
-
 window.app = {
 	user: {
 		data: {
@@ -127,6 +96,8 @@ window.app = {
 	users: [],
 		webcamImage: "",
     systemEvents: systemEvents,
+		desktopEvents: null,
+		socketEvents: null,
     username: localStorage.getItem("username"),
 		mobile: (window.innerWidth <= 640),
 		mode: "desktop",
@@ -196,68 +167,5 @@ app.user.arms = app.users[app.username].arms;
 app.userInput.init(three.camera, app.user);
 UserInput.rotationVector = {x: 0, y: Math.PI / 4, z: 0};
 
-document.body.addEventListener("keydown", function (evt) {
-	var visible = true,
-			elemType = "";
-	if (app.mode == "desktop") {
-		if (evt.which == 27) {
-			visible = false;
-			app.typeToSearch = true;
-		} else if (evt.which == 17) {
-			app.typeToSearch = false;
-		}
-		if (app.typeToSearch) {
-			elemType = evt.target.tagName.toLowerCase();
-			if (elemType != "input" && elemType != "textarea") {
-				if (evt.which == 27 || (evt.which > 47 && evt.which < 91)) {
-					systemEvents.emit("toggle-search-bar", {visible: visible});
-					systemEvents.emit("toggle-activity-view", {visible: false});
-					systemEvents.emit("toggle-create-menu", {visible: false});
-					systemEvents.emit("toggle-notifications", {visible: false});
-					systemEvents.emit("toggle-applet-views", {visible: false});
-				}
-			}
-		}
-	} else {
-		if (evt.which == 27) {
-			app.mode = "desktop";
-			document.body.setAttribute("class", "desktop");
-		}
-	}
-}, true);
-
-document.body.addEventListener("keyup", function (evt) {
-	if (evt.which == 17) {
-		app.typeToSearch = true;
-	}
-}, true);
-
-window.onresize = function () {
-    systemEvents.emit("window-resized", {});
-	world.three.renderer.setSize(window.innerWidth, window.innerHeight);
-	world.three.renderer.setSize(innerWidth, innerHeight);
-	world.three.camera.aspect = innerWidth / innerHeight;
-	world.three.camera.updateProjectionMatrix();
-	app.mobile = (window.innerWidth <= 640);
-}
-
-document.body.ondragover = function () {
-       app.lightbox.setAttribute("class", "lightbox hover");
-       clearTimeout(app.lightboxTimeout);
-       app.lightboxTimeout = setTimeout(function () {
-            if (!app.uploading) {
-                app.lightbox.setAttribute("class", "lightbox");
-                app.lightbox.setAttribute("style", "display: none;");
-            }
-       }, 1000);
-       return false;
-};
-
-document.body.ondragend = function () { app.lightbox.setAttribute("class", "lightbox"); return false; };
-
-document.body.ondrop = function (e) {
-	app.lightbox.setAttribute("class", "lightbox");
-	e.preventDefault();
-	document.querySelector("#file-upload").files = e.dataTransfer.files;
-	//systemEvents.emit("start-upload", {files: e.dataTransfer.files});
-};
+app.desktopEvents = new UIEvents(app);
+app.socketEvents = new SocketEvents(app, socket);

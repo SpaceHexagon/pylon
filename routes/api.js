@@ -29,7 +29,7 @@ module.exports = function (app, db) {
       externalRouter = require("./api/externals.js")(app, db, Users),
       structureRouter = require("./api/structures.js")(app, db, Users),
       buildingRouter = require("./api/buildings.js")(app, db, Users),
-      voxelRouter = require("./api/voxels.js")(app, db, Users),
+      cellRouter = require("./api/cells.js")(app, db, Users),
       pathRouter = require("./api/paths.js")(app, db, Users),
       shareRouter = require("./api/shares.js")(app, db, Users, Pages),
       messageRouter = require("./api/messages.js")(app, db, Users),
@@ -91,7 +91,7 @@ module.exports = function (app, db) {
                         userFolders = null;
 					online[token] = username;
 					console.log(online[token]);
-					db.createCollection(username + ".voxels");
+					db.createCollection(username + ".cells");
           db.createCollection(username + ".paths");
 					db.createCollection(username + ".buildings");
 					db.createCollection(username + ".captures");
@@ -160,7 +160,7 @@ module.exports = function (app, db) {
   router.use('/externals', externalRouter);
   router.use('/structures', structureRouter);
   router.use('/buildings', buildingRouter);
-  router.use('/voxels', voxelRouter);
+  router.use('/cells', cellRouter);
   router.use('/paths', pathRouter);
   router.use('/shares', shareRouter);
   router.use('/messages', messageRouter);
