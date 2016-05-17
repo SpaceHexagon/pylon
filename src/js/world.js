@@ -137,7 +137,7 @@ export default class World {
 			position = three.camera.position,
 			chunk = null,
 			c = 0,
-			coords = [Math.floor(position.x/32000.004), 0, Math.floor(position.z/32000.004)],
+			coords = [Math.floor(position.x/37200), 0, Math.floor(position.z/33255.375505322445)],
 			lastCoords = app.lastChunkCoords,
 			moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
 			viewDistance = (app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4)),

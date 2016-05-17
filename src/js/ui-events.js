@@ -39,7 +39,8 @@ export default class UIEvents {
 		}, true);
 
 		window.onresize = function () {
-		    systemEvents.emit("window-resized", {});
+			var world = sys.world;
+		  sys.systemEvents.emit("window-resized", {});
 			world.three.renderer.setSize(window.innerWidth, window.innerHeight);
 			world.three.renderer.setSize(innerWidth, innerHeight);
 			world.three.camera.aspect = innerWidth / innerHeight;
