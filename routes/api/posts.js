@@ -1,7 +1,7 @@
 var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
-// post Routes
+// Post Routes
 module.exports = function (app, db, Users) {
 	var router = express.Router(),
         posts = db.collection('posts');

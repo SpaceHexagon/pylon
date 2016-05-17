@@ -4,7 +4,7 @@ var express = require('express'),
 // Share Routes
 module.exports = function (app, db, Users) {
 	var router = express.Router(),
-        Shares = db.collection('shares');
+      Shares = db.collection('shares');
 
 	router.post('/', function(req, res) {
 		Shares.insert({name: req.body.name, data: req.body.data}, function(err){

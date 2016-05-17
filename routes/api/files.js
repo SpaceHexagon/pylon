@@ -1,11 +1,11 @@
 var express = require('express'),
-	mongo = require('mongodb'),
-	ObjectID = require('mongodb').ObjectID,
-	Busboy = require('busboy'),
-	Grid = require('gridfs-stream'),
-	shortId = require('shortid'),
-	path = require('path'),
-	gfs = null;
+		mongo = require('mongodb'),
+		ObjectID = require('mongodb').ObjectID,
+		Busboy = require('busboy'),
+		Grid = require('gridfs-stream'),
+		shortId = require('shortid'),
+		path = require('path'),
+		gfs = null;
 
 // File Routes
 module.exports = function (app, extDB, mongo2, fs, Users) {

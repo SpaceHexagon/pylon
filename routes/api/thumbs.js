@@ -1,17 +1,17 @@
 var express = require('express'),
-mongo = require('mongodb'),
-ObjectID = require('mongodb').ObjectID,
-Busboy = require('busboy'),
-Grid = require('gridfs-stream'),
-shortId = require('shortid'),
-path = require('path'),
-gfs = null;
+		mongo = require('mongodb'),
+		ObjectID = require('mongodb').ObjectID,
+		Busboy = require('busboy'),
+		Grid = require('gridfs-stream'),
+		shortId = require('shortid'),
+		path = require('path'),
+		gfs = null;
 
 // Thumbnail Routes
 module.exports = function (app, extDB, mongo2, fs, Users) {
 	var router = express.Router(),
-	upload = null,
-	db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
+			upload = null,
+			db = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017));
 
 	db.open(function (err) {
 		if (err) return handleError(err);

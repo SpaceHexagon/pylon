@@ -1,10 +1,10 @@
 var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
-// Share Routes
+// Page Routes
 module.exports = function (app, db, Users) {
 	var router = express.Router(),
-        Pages = db.collection('pages');
+      Pages = db.collection('pages');
 
 	router.post('/', function(req, res) {
 		var online = req.app.get('online'),

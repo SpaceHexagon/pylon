@@ -1,46 +1,40 @@
 var express = require('express'),
-	http = require('http').Server(express),
-    io = require('socket.io')(http),
-	https = require('https'),
-	path = require('path'),
-	favicon = require('serve-favicon'),
-	logger = require('morgan'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-    shortId = require('shortid'),
-	Grid = require('gridfs-stream');
+		http = require('http').Server(express),
+		io = require('socket.io')(http),
+		https = require('https'),
+		path = require('path'),
+		favicon = require('serve-favicon'),
+		logger = require('morgan'),
+		cookieParser = require('cookie-parser'),
+		bodyParser = require('body-parser'),
+		shortId = require('shortid'),
+		Grid = require('gridfs-stream');
 
 var config = require('./app/config.js'),
-    db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
-	gfs = null,
-	mongo = require('mongodb'),
-	gridDB = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017)),
-    ObjectID = mongo.ObjectID,
-    app = express(),
-    secureApp = https.createServer(config, app),
-    secureIO = null,
-	online = [];
+		db = require('mongoskin').db('mongodb://localhost:27017/pylon'),
+		gfs = null,
+		mongo = require('mongodb'),
+		gridDB = new mongo.Db('pylon', new mongo.Server("127.0.0.1", 27017)),
+		ObjectID = mongo.ObjectID,
+		app = express(),
+		secureApp = https.createServer(config, app),
+		secureIO = null,
+		online = [];
 
 var routes = require('./routes/index'),
-	groupRoutes = require('./routes/groups'),
-	shareRoutes = require('./routes/shares'),
-	appRoutes = require('./routes/apps'),
-	apiRoutes = require('./routes/api')(app, db),
-	adminRoutes = require('./routes/admin');
-
-var User = require('./app/user.js'),
-	Group = require('./app/group.js'),
-	Doc = require('./app/doc.js'),
-	Share = require('./app/share.js'),
-	Message = require('./app/message.js');
+		groupRoutes = require('./routes/groups'),
+		shareRoutes = require('./routes/shares')(app, db),
+		pageRoutes = require('./routes/pages')(app, db),
+		apiRoutes = require('./routes/api')(app, db),
+		adminRoutes = require('./routes/admin')(app, db);
 
 var Users = db.collection('users'),
-    Groups = db.collection('groups'),
-	Shares = db.collection('shares'),
-	Pages = db.collection('pages'),
-	Messages = db.collection('messages'),
-	Notifications = db.collection('notifications'),
-	Documents = db.collection('documents');
+		Groups = db.collection('groups'),
+		Shares = db.collection('shares'),
+		Pages = db.collection('pages'),
+		Messages = db.collection('messages'),
+		Notifications = db.collection('notifications'),
+		Documents = db.collection('documents');
 
 gridDB.open(function (err) { // make sure the db instance is open before passing into `Grid`
 	if (err) return handleError(err);

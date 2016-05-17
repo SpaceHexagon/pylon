@@ -3,15 +3,8 @@ var express = require('express'),
     ObjectId = mongo.ObjectID,
     Grid = require('gridfs-stream'),
     fs = require('fs'),
-	jwt = require('jsonwebtoken'),
-	passwordHash = require('password-hash');
-
-var User = require('../app/user.js'),
-	Doc = require('../app/doc.js'),
-	Group = require('../app/group.js'),
-	Share = require('../app/share.js'),
-	Message = require('../app/message.js'),
-	Geometry = require('../app/geometry.js');
+		jwt = require('jsonwebtoken'),
+		passwordHash = require('password-hash');
 
 module.exports = function (app, db) {
   var router = express.Router(),
@@ -168,5 +161,3 @@ module.exports = function (app, db) {
 
 	return router;
 };
-
-//test

@@ -1,7 +1,7 @@
 var express = require('express'),
     ObjectID = require('mongodb').ObjectID;
 
-//  Routes
+//  Structure Routes
 module.exports = function (app, db, Users) {
 	var router = express.Router(),
         structures = db.collection("structures");

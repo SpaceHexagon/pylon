@@ -3,8 +3,7 @@ var express = require('express'),
 
 // User routing...
 module.exports = function (app, db, Users) {
-	var router = express.Router(),
-        User = require('../../app/user.js');
+	var router = express.Router();
 
 
     return router;
