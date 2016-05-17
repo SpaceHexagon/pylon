@@ -54,7 +54,7 @@ export default class ActivityView extends React.Component {
 			<section className="activity-view" style={activityViewStyle}>
 				<div className="grid">
 				{this.props.chunkRows.map(function(row, i){
-					var rowOffset =	(i % 2 == 0 ? "" : "offset");
+					var rowOffset =	(i % 2 == 1 ? "" : "offset");
                     return <ChunkRow key={i} offset={rowOffset} chunks={row.chunks}/>;
                 })}
 				</div>

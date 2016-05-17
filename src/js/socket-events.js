@@ -1,3 +1,5 @@
+import Avatar from './vr/avatar.js';
+
 export default class SocketEvents {
 	constructor (sys, sock) {
 		sock.on("chat message", function (evt) {
@@ -6,7 +8,7 @@ export default class SocketEvents {
 
 		sock.on('user update', function (userData) {
 						var user,
-								userShield,
+								avatar,
 								sys = app;
 
 						if (userData.username != sys.username) {
@@ -14,6 +16,7 @@ export default class SocketEvents {
 								avatar = new Avatar("default", {username: userData.username, profilePicture: userData.image});
 								sys.users[userData.username] = {
 										"user": userData.username,
+										"avatar": avatar,
 										"mesh": avatar.mesh,
 										"arms": avatar.arms
 								};
@@ -22,7 +25,7 @@ export default class SocketEvents {
 									user.mesh.position.set(userData.position.x, userData.position.y, userData.position.z);
 									user.mesh.quaternion.set(userData.quaternion.x, userData.quaternion.x, userData.quaternion.x, userData.quaternion.w);
 									if (userData.image != "") {
-										user.updateImage(userData.image);
+										user.avatar.updateImage(userData.image);
 									}
 									userData.arms.forEach(function (arm, i) {
 										user.arms[i].position.set(arm.pos[0], arm.pos[1], arm.pos[2]);
