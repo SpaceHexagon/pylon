@@ -3,7 +3,15 @@ export default class Cell {
 			var size = 6400,
 					narrow = size*0.9,
 					geometry = new THREE.CylinderGeometry(3400, 3400, !!height ? height : 6400, 6),
-					material = new THREE.MeshBasicMaterial(),
+					material = (mobile ? new THREE.MeshLambertMaterial({
+						color: 0xffffff,
+						shading: THREE.FlatShading
+					}) : new THREE.MeshPhongMaterial({
+						color:  0xffffff,
+						specular: 0xffffff,
+						shininess: 30,
+						shading: THREE.FlatShading
+					})),
 
 			mesh = new THREE.Mesh(geometry, material);
 

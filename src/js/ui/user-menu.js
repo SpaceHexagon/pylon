@@ -36,7 +36,7 @@ export default class UserMenu extends React.Component {
 		document.body.setAttribute("class", app.mode);
 		if (app.world.buffering == 0) {
 			app.world.buffering = 1;
-			setTimeout(function () { app.world.bufferChunks() }, 500);
+			setTimeout(function () { app.world.bufferChunks(false, 1) }, 500);
 		}
 		this.props.systemEvents.emit("toggle-notifications", {visible: false});
 		this.props.systemEvents.emit("toggle-activity-view", {visible: false});

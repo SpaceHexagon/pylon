@@ -17,9 +17,13 @@ export default class Chunk {
 				chunkLength = 3200 * 6 * Math.sqrt(3),
 				base = new THREE.Geometry(),
 				baseMaterial = (app.mobile ? new THREE.MeshLambertMaterial({
-					color: 0xffffff
+					color: (coords[0]+coords[2])%2 == 0 ? 0xafafaf : 0xffffff,
+					shading: THREE.FlatShading
 				}) : new THREE.MeshPhongMaterial({
-					color: 0xffffff
+					color: (coords[0]+coords[2])%2 == 0 ? 0xafafaf : 0xffffff,
+					specular: 0xffffff,
+					shininess: 30,
+					shading: THREE.FlatShading
 				})),
 				cell = null,
 				localTurbulence = 0,

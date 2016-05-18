@@ -147,8 +147,8 @@ export default class UserInput {
                         if (input.leapMode == "movement") {
                             frame.hands.forEach(function (hand, index) {
                                 var position = hand.screenPosition();
-                                input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
-                                input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
+                                input.moveVector.x = ((-window.innerWidth / 2) + position[0]);
+                                input.moveVector.z = ((-window.innerWidth / 2) + position[2]);
                                 input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
                                 input.rotationVector.x += 0.015 * hand.pitch();
                             });
@@ -166,8 +166,8 @@ export default class UserInput {
                                     var position = hand.screenPosition(),
                                         handIndex = 0;
                                         if (index == 0) { // if its the first hand, control the camera
-                                            input.moveVector.x = ((-window.innerWidth / 2) + position[0])/3;
-                                            input.moveVector.z = ((-window.innerWidth / 2) + position[2])/3;
+                                            input.moveVector.x = ((-window.innerWidth / 2) + position[0]);
+                                            input.moveVector.z = ((-window.innerWidth / 2) + position[2]);
                                             input.rotationVector.y -= 0.025 * hand.yaw(); //((-window.innerWidth / 2) + position[0]) / 3000;
                                             input.rotationVector.x += 0.015 * hand.pitch();
                                         } else { // if its the second hand, control the arms/hands

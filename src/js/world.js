@@ -6,14 +6,14 @@ import Avatar from './vr/avatar.js';
 export default class World {
 	constructor() {
 		var scene = new THREE.Scene(),
-				camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 80, 440000 ),
+				camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 100, 800000 ),
 				renderer = new THREE.WebGLRenderer(),
 				mobile = app.mobile,
 				self = this,
 				sunGeom = new THREE.OctahedronGeometry(16000, 0),
 				material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
 				sun = new THREE.Mesh(sunGeom, material),
-				light = new THREE.PointLight(0xffffff, 1.2, 500000),
+				light = new THREE.PointLight(0xffffff, 1.2, 900000),
 				panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
 				cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
 				cell = null,
@@ -69,7 +69,7 @@ export default class World {
 			}
 
 			sys.sendUpdatePacket += 1;
-			if (sys.sendUpdatePacket %2 == 0 && sys.mode == "vr") {
+			if (sys.sendUpdatePacket %(2*(mobile ? 2 : 1)) == 0 && sys.mode == "vr") {
 
 				if (sys.userInput.leapMotion) {
 					userArms.forEach(function (arm) {
@@ -103,11 +103,11 @@ export default class World {
 				color: 0xffffff // too dark.. not dark enough? 0x60daff//  0x80faff too green
 			}),
 			x = 0;
-			skybox = new THREE.Mesh(new THREE.OctahedronGeometry(400000, 4), skyboxSideMat);
+			skybox = new THREE.Mesh(new THREE.OctahedronGeometry(750000, 4), skyboxSideMat);
 			self.skybox = skybox;
 			skybox.add(light);
 			skybox.add(three.sun);
-			three.sun.position.set(0, 0, -380000);
+			three.sun.position.set(0, 120000, -380000);
 			light.position.set(0, 250000, -250000);
 			three.scene.add(skybox);
 			skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
@@ -134,7 +134,7 @@ export default class World {
 			console.log(response);
 		});
 
-		function bufferChunks (force) {
+		function bufferChunks (force, phase) {
 			var chunks = app.chunks,
 			cMap = app.chunkMap,
 			position = three.camera.position,
@@ -143,11 +143,11 @@ export default class World {
 			coords = [Math.floor(position.x/37200), 0, Math.floor(position.z/33255.375505322445)],
 			lastCoords = app.lastChunkCoords,
 			moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
-			viewDistance = (app.mobile ? 3 : (window.innerWidth > 2100 ?  7  : 4)),
+			viewDistance = (app.mobile ? 4 : (window.innerWidth > 2100 ?  12  : 8)),
 			removeDistance = viewDistance,
 			endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
-			x = coords[0]-viewDistance,
-			y = coords[2]-viewDistance;
+			x = coords[0]-phase,
+			y = coords[2]-phase;
 			app.chunkCoords = coords;
 
 			console.log("buffering chunks", coords, chunks.length);
@@ -186,7 +186,11 @@ export default class World {
 				lastCoords[0] = coords[0];
 				lastCoords[1] = coords[1];
 				lastCoords[2] = coords[2];
-				setTimeout(function () { bufferChunks(); }, 2000);
+				phase ++;
+				if (phase > viewDistance) {
+					phase = 1;
+				}
+				setTimeout(function () { bufferChunks(force, phase); }, 500);
 			}
 
 
