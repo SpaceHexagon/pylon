@@ -10,10 +10,10 @@ export default class World {
 				renderer = new THREE.WebGLRenderer(),
 				mobile = app.mobile,
 				self = this,
-				sunGeom = new THREE.OctahedronGeometry( 3000, 0),
+				sunGeom = new THREE.OctahedronGeometry(16000, 0),
 				material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
-				sun = new THREE.Mesh(sunGeom, material ),
-				light = new THREE.PointLight(0xffffff, 1.2, 400000),
+				sun = new THREE.Mesh(sunGeom, material),
+				light = new THREE.PointLight(0xffffff, 1.2, 500000),
 				panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
 				cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
 				cell = null,
@@ -79,6 +79,9 @@ export default class World {
 				}
 				socket.emit('user update', {username:sys.username, image: sys.webcamImage, arms: arms, position: {x:camera.position.x, y:camera.position.y, z: camera.position.z},
 																	 quaternion: {x: camera.quaternion.x, y: camera.quaternion.y, z: camera.quaternion.z, w:camera.quaternion.w}});
+				if (sys.capturing) {
+					sys.webcamImage = "";
+				}
 
 			}
 
@@ -90,7 +93,7 @@ export default class World {
 			requestAnimationFrame( function () { render(last); } );
 		};
 
-		var skyTexture = THREE.ImageUtils.loadTexture("/images/depth-sky.jpg", null, function () {
+		var skyTexture = THREE.ImageUtils.loadTexture("/images/depth-sky-2.jpg", null, function () {
 			var skybox = new THREE.Object3D(), // used to use larger jpeg version sunset-5.jpg
 			skyboxFace = null,
 			skyboxSideMat = new THREE.MeshBasicMaterial({
@@ -102,10 +105,10 @@ export default class World {
 			x = 0;
 			skybox = new THREE.Mesh(new THREE.OctahedronGeometry(400000, 4), skyboxSideMat);
 			self.skybox = skybox;
-			three.sun.add(light);
+			skybox.add(light);
 			skybox.add(three.sun);
-			three.sun.position.set(0, 18000, -24000);
-			light.position.set(0, 18000, 0);
+			three.sun.position.set(0, 0, -380000);
+			light.position.set(0, 250000, -250000);
 			three.scene.add(skybox);
 			skybox.position.set(three.camera.position.x, 0, three.camera.position.z);
 			skyTexture.needsUpdate = true;

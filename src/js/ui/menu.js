@@ -56,9 +56,6 @@ export default class Menu extends React.Component {
 			<aside className="menu">
 				{this.props.options.map(function(option, i){
 					var iconSRC = option.src;
-					if (window.innerWidth <= 640) {
-						iconSRC = iconSRC.replace("/images", "/images/dark");
-					}
                     return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
                 })}
 			</aside>
@@ -87,5 +84,3 @@ Menu.defaultProps = {
 //		{src: "/images/configure.png", title: "Settings", open:function(){ console.log("opening Settings app.."); } },
     ]
 };
-
-

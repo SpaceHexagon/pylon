@@ -50,9 +50,6 @@ export default class UserMenu extends React.Component {
 			<aside className="user-menu">
 			{this.props.options.map(function(option, i){
 				var iconSRC = option.src;
-				if (window.innerWidth <= 640) {
-					iconSRC = iconSRC.replace("/images", "/images/dark");
-				}
 				return <Icon key={i} src={iconSRC} title={option.title} open={(evt)=>{option.open(evt, menu);}} />;
 			})}
 			</aside>

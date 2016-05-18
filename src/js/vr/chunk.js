@@ -6,7 +6,8 @@ export default class Chunk {
 	constructor(coords, mobile, data) {
 		var material = new THREE.MeshBasicMaterial(),
 				geometry = new THREE.Geometry(),
-				cellGeom = new THREE.CylinderGeometry(3400, 3400, 3400, 6),
+				cellGeom = new THREE.CylinderGeometry(3400, 3400, 3000, 6),
+				tallCell = new THREE.CylinderGeometry(3400, 3400, 6800, 6),
 				cellSize = 6200,
 				narrow = cellSize*0.9,
 				mesh = null,
@@ -32,7 +33,7 @@ export default class Chunk {
 				globalTurbulence = Math.sin((coords[0]/12)*Math.PI*2) * Math.cos(((coords[2]/12)+y/cellWidth*12)*Math.PI*2) * 6;
 				altitude = Math.floor(globalTurbulence + localTurbulence);
 				cellMesh = new THREE.Mesh(cellGeom, material);
-				cellMesh.position.set((x*cellSize)+(y % 2==0 ? 0 : cellSize / 2), (altitude * cellSize)/3, y*narrow);
+				cellMesh.position.set((x*cellSize)+(y % 2==0 ? 0 : cellSize / 2), (altitude * cellSize)/4, y*narrow);
 				cellMesh.updateMatrix();
 				base.merge(cellGeom, cellMesh.matrix);
 				y++;
