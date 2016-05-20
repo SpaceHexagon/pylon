@@ -29,6 +29,10 @@
         "events": "^1.1.0",
         "react": "^0.14.2",
         "react-dom": "^0.14.2",
+	"classnames": "^2.1.3",
+	"flux": "^2.0.0",
+	"keymirror": "~0.1.0",
+	"object-assign": "^1.0.0",
         "gridfs-stream": "~1.1.1",
         "shortid": "~2.2.4",
         "busboy": "~0.2.12",
@@ -39,6 +43,3 @@
         "busboy-body-parser": "0.0.10"
     }
 }
-
-
-
