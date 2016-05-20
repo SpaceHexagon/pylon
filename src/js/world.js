@@ -168,8 +168,8 @@ export default class World {
 					// load new chunks
 					while (x <= endCoords[0]) {
 						while (y <= endCoords[1]) {
-							if (cMap[x+".0."+y] == null) { // only if its not already loaded
-								chunk = new Chunk([x, 0, y], mobile);
+							if (( Math.abs(x%6) > 2 && Math.abs(y%6) > 2) && cMap[x+".0."+y] == null) { // only if its not already loaded
+								chunk = new Chunk([x, 3+(Math.sin(x/2)*Math.cos(y/2))*3, y], mobile);
 								chunk.mesh.updateMatrix();
 								chunks.push(chunk);
 								cMap[x+".0."+y] = chunk;

@@ -674,7 +674,8 @@ form.search {
     min-height: 148px;
     margin-top: 1em;
     width: 66.6% !important;
-    max-width: 1000px;
+    max-width: 960px;
+    margin-left: 100px;
 	}
     .card h3 {
         max-width: auto;

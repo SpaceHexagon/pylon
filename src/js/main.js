@@ -165,7 +165,7 @@ app.user.mesh = app.users[app.username].mesh;
 app.user.arms = app.users[app.username].arms;
 
 app.userInput.init(three.camera, app.user);
-UserInput.rotationVector = {x: 0, y: Math.PI / 4, z: 0};
+UserInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
 
 app.desktopEvents = new UIEvents(app);
 app.socketEvents = new SocketEvents(app, socket);
