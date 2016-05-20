@@ -26,7 +26,7 @@ export default class UserInput {
 				} else {
 					//uInput.rotationVector = {x: -0.39666666666666567, y: -14.773333333333277, z: 0};
 				}
-
+				uInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
 				var canvas = document.querySelector("canvas#viewport");
 				canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
 				canvas.onclick = function (event) {
