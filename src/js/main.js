@@ -3,6 +3,11 @@ console.log('Pylon Interface Loading...');
 import ReactDOM from 'react-dom';
 import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
+
+// Stores
+// import AppletStore from './stores/AppletStore';
+// import DocumentStore from './stores/DocumentStore';
+// import MessageStore from './stores/MessageStore';
 // World
 import World from './world.js';
 import Avatar from './vr/avatar.js';
@@ -28,7 +33,6 @@ import Editor from './ui/editor.js';
 import Emojis from './ui/emojis.js';
 import SignIn from './ui/signin.js';
 import PageEditor from './ui/page-editor.js';
-
 // Applets
 import Applet from './applets/applet.js';
 import Upload from './applets/upload.js';
