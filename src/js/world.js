@@ -63,7 +63,7 @@ export default class World {
 					canvas.width = cw;
 					canvas.height = ch;
 					context.drawImage(v, 0, 0, cw, ch);
-					sys.webcamImage = canvas.toDataURL("image/jpg", 0.8);
+					sys.webcamImage = canvas.toDataURL("image/jpg", 0.75);
 				}
 				sys.sendUpdatePacket = 0;
 			}
@@ -84,7 +84,6 @@ export default class World {
 				}
 
 			}
-
 			sun.rotation.x += 0.0025;
 			sun.rotation.y += 0.005;
 			sys.world.skybox.position.set(camera.position.x, camera.position.y, camera.position.z);
@@ -136,19 +135,21 @@ export default class World {
 
 		function bufferChunks (force, phase) {
 			var chunks = app.chunks,
-			cMap = app.chunkMap,
-			position = three.camera.position,
-			chunk = null,
-			c = 0,
-			coords = [Math.floor(position.x/37200), 0, Math.floor(position.z/33255.375505322445)],
-			lastCoords = app.lastChunkCoords,
-			moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
-			viewDistance = (app.mobile ? 4 : (window.innerWidth > 2100 ?  12  : 8)),
-			removeDistance = viewDistance,
-			endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
-			x = coords[0]-phase,
-			y = coords[2]-phase;
-			app.chunkCoords = coords;
+					physicsChunks = [],
+					chunkPos = [],
+				cMap = app.chunkMap,
+				position = three.camera.position,
+				chunk = null,
+				c = 0,
+				coords = [Math.floor(position.x/37200), 0, Math.floor(position.z/33255.375505322445)],
+				lastCoords = app.lastChunkCoords,
+				moveDir = [coords[0]-lastCoords[0], coords[2] - lastCoords[2]],
+				viewDistance = (app.mobile ? 4 : (window.innerWidth > 2100 ?  12  : 8)),
+				removeDistance = viewDistance,
+				endCoords = [coords[0]+viewDistance, coords[2]+viewDistance],
+				x = coords[0]-phase,
+				y = coords[2]-phase;
+				app.chunkCoords = coords;
 
 			console.log("buffering chunks", coords, chunks.length);
 
@@ -174,6 +175,12 @@ export default class World {
 								chunks.push(chunk);
 								cMap[x+".0."+y] = chunk;
 								three.scene.add(chunk.mesh);
+
+								if (Math.abs(x-coords[0]) < 2 && Math.abs(y-coords[1]) < 2) {
+									chunkPos = chunk.mesh.position;
+									physicsChunks.push({coords: [x, 0, y], position: [chunkPos.x, chunkPos.y, chunkPos.z]});
+								}
+
 							}
 							y += 1;
 						}
@@ -181,6 +188,10 @@ export default class World {
 						x += 1;
 					}
 
+				}
+
+				if (physicsChunks.length > 0) {
+					app.worldPhysics.postMessage('{"command":"add chunks","data":'+JSON.stringify(physicsChunks)+'}');
 				}
 
 				lastCoords[0] = coords[0];

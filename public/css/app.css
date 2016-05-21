@@ -784,13 +784,13 @@ form.search {
 		padding-left: 10px;
     }
 	.create-menu {
-		top: 72px;
-		left: 72px;
-		background: rgba(255, 255, 255, 0.9);
-		width: auto;
-		box-shadow: none;
-		border-top-right-radius: 3px;
-		border-bottom-right-radius: 3px;
+    top: 72px;
+    left: 72px;
+    background: #FFF;
+    width: auto;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.14);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 	}
 	.create-menu ul {
         padding-left: 1em;

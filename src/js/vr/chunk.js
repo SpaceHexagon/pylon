@@ -6,8 +6,8 @@ export default class Chunk {
 	constructor(coords, mobile, data) {
 		var material = new THREE.MeshBasicMaterial(),
 				finalGeom = new THREE.Geometry(),
-				cellGeom = new THREE.CylinderGeometry(3500, 3500, 6800, 6),
-				tallCell = new THREE.CylinderGeometry(3400, 3400, 1320, 6),
+				cellGeom = new THREE.CylinderGeometry(3500, 3500, 5600, 6),
+				tallCell = new THREE.CylinderGeometry(3400, 3400, 11200, 6),
 				cellSize = 6200,
 				narrow = cellSize*0.9,
 				mesh = null,

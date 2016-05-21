@@ -11,10 +11,11 @@ import EventEmitter from 'events';
 // World
 import World from './world.js';
 import Avatar from './vr/avatar.js';
-// User Input
+// Events
 import UserInput from './user-input.js';
 import UIEvents from './ui-events.js';
 import SocketEvents from './socket-events.js';
+import WorldPhysics from './world-physics.js';
 // UI Components
 import Menu from './ui/menu.js';
 import UserMenu from './ui/user-menu.js';
@@ -100,6 +101,7 @@ window.app = {
 	users: [],
 		webcamImage: "",
     systemEvents: systemEvents,
+		worldPhysics: null,
 		desktopEvents: null,
 		socketEvents: null,
     username: localStorage.getItem("username"),
@@ -173,3 +175,4 @@ UserInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
 
 app.desktopEvents = new UIEvents(app);
 app.socketEvents = new SocketEvents(app, socket);
+app.worldPhysics = new WorldPhysics(app);
