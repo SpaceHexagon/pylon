@@ -136,6 +136,7 @@ export default class World {
 		function bufferChunks (force, phase) {
 			var chunks = app.chunks,
 					physicsChunks = [],
+					removePhysicsChunks = [],
 					chunkPos = [],
 				cMap = app.chunkMap,
 				position = three.camera.position,
@@ -151,8 +152,6 @@ export default class World {
 				y = coords[2]-phase;
 				app.chunkCoords = coords;
 
-			console.log("buffering chunks", coords, chunks.length);
-
 			if (!!force || coords[0] != lastCoords[0] || coords[1] != lastCoords[1] || coords[2] != lastCoords[2]) {
 				// remove old chunks
 				for (c in chunks) {
@@ -161,9 +160,9 @@ export default class World {
 						chunk.cell[2] < coords[2] - removeDistance || chunk.cell[2] > coords[2] + removeDistance) {
 							// remove this chunk
 							three.scene.remove(chunk.mesh);
+							removePhysicsChunks.push({coords: [chunk.cell[0], 0, chunk.cell[2]]});
 							delete cMap[chunk.cell[0]+".0."+chunk.cell[2]];
 							chunks.splice(c, 1);
-
 						}
 					}
 					// load new chunks
@@ -176,11 +175,8 @@ export default class World {
 								cMap[x+".0."+y] = chunk;
 								three.scene.add(chunk.mesh);
 
-								if (Math.abs(x-coords[0]) < 2 && Math.abs(y-coords[1]) < 2) {
-									chunkPos = chunk.mesh.position;
-									physicsChunks.push({coords: [x, 0, y], position: [chunkPos.x, chunkPos.y, chunkPos.z]});
-								}
-
+								chunkPos = chunk.mesh.position;
+								physicsChunks.push({coords: [x, 0, y], position: [chunkPos.x, chunkPos.y, chunkPos.z]});
 							}
 							y += 1;
 						}
@@ -193,11 +189,15 @@ export default class World {
 				if (physicsChunks.length > 0) {
 					app.worldPhysics.postMessage('{"command":"add chunks","data":'+JSON.stringify(physicsChunks)+'}');
 				}
+				if (removePhysicsChunks.length > 0) {
+					app.worldPhysics.postMessage('{"command":"remove chunks","data":'+JSON.stringify(removePhysicsChunks)+'}');
+				}
 
 				lastCoords[0] = coords[0];
 				lastCoords[1] = coords[1];
 				lastCoords[2] = coords[2];
 				phase ++;
+
 				if (phase > viewDistance) {
 					phase = 1;
 				}
@@ -215,7 +215,7 @@ export default class World {
 
 				while (x <= coords[0]+phase) {
 					while (y <= coords[2]+phase) {
-						if ((x % 9 != 0 && y % 16 != 0) && Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
+						if ((x % 6 != 0 && y % 6 != 0) && Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
 							chunk = new Chunk([x, 0, y], mobile);
 							chunk.mesh.updateMatrix();
 							chunks.push(chunk);

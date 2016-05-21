@@ -53,15 +53,13 @@ self.update = function () {
 
 	for (cKey in chunks) {
 		obj = chunks[cKey];
-		if (Math.abs(obj.coords[0]-coords[0]) < 2 && Math.abs(obj.coords[2]-coords[2]) < 2) {
+
 			if (obj.coords[0] == coords[0] && obj.coords[1] == coords[1]) {
 				if (observer.position[1] > obj.position[1] - 300 && observer.position[1] < obj.position[1] + 300 ) {
 					self.postMessage('{"command": "chunk collision", "data":{"position":[' + observer.prevPos[0] + ',' + observer.prevPos[1] + ',' + observer.prevPos[2] + '] }}');
 				}
 			}
-		} else {
-				delete chunks[chunk.coods[0]+"."+chunk.coords[1]+"."+chunk.coords[2]];
-		}
+
 	}
 	entities = buildings; // do collisions on buildings... just walls at first..
 	i = entities.length - 1;
@@ -140,7 +138,16 @@ self.onmessage = function (event) { // Do some work.
 		c = newChunks.length-1;
 		while (c >= 0) {
 			chunk = newChunks[c];
-			chunks[chunk.coods[0]+"."+chunk.coords[1]+"."+chunk.coords[2]] = chunk;
+			chunks[chunk.coords[0]+"."+chunk.coords[1]+"."+chunk.coords[2]] = chunk;
+			c--;
+		}
+
+	} else if (data.command == "remove chunks") {
+		newChunks = data.data;
+		c = newChunks.length-1;
+		while (c >= 0) {
+			chunk = newChunks[c];
+			delete chunks[chunk.coords[0]+"."+chunk.coords[1]+"."+chunk.coords[2]];
 			c--;
 		}
 
