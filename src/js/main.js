@@ -162,6 +162,7 @@ app.world = world = new World();
 app.userInput = userInput = new UserInput();
 
 avatar = new Avatar("default", {username: app.username, profilePicture: ""});
+avatar.toggleBody(false);
 app.users[app.username] = {
 		"user": app.username,
 		"mesh": avatar.mesh,
