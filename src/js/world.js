@@ -47,6 +47,7 @@ export default class World {
 				delta = ((Date.now() - last) / 10000),
 				time = (Date.now() / 4600),
 				image = "",
+				imageSize = [0, 0],
 				arms = [],
 				userArms = sys.user.arms;
 
@@ -60,9 +61,10 @@ export default class World {
 					var context = canvas.getContext('2d');
 					var cw = Math.floor(v.videoWidth);
 					var ch = Math.floor(v.videoHeight);
-					canvas.width = cw;
-					canvas.height = ch;
-					context.drawImage(v, 0, 0, cw, ch);
+					imageSize = [cw, ch];
+					canvas.width = 512;
+					canvas.height = 512;
+					context.drawImage(v, 0, 0, 512, 512);
 					sys.webcamImage = canvas.toDataURL("image/jpg", 0.75);
 				}
 				sys.sendUpdatePacket = 0;
@@ -77,7 +79,7 @@ export default class World {
 											quat: [arm.quaternion.x, arm.quaternion.y, arm.quaternion.z, arm.quaternion.w] });
 					});
 				}
-				socket.emit('user update', {username:sys.username, image: sys.webcamImage, arms: arms, position: {x:camera.position.x, y:camera.position.y, z: camera.position.z},
+				socket.emit('user update', {username:sys.username, image: sys.webcamImage, imageSize: imageSize, arms: arms, position: {x:camera.position.x, y:camera.position.y, z: camera.position.z},
 																	 quaternion: {x: camera.quaternion.x, y: camera.quaternion.y, z: camera.quaternion.z, w:camera.quaternion.w}});
 				if (sys.capturing) {
 					sys.webcamImage = "";
