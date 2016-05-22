@@ -111,22 +111,22 @@ app.get('/:username/:file', function (req, res) {
 							<head>
 							 <title>${pageResult.title}</title>
 								<meta name='viewport' content='width=device-width, initial-scale=1'>
-								<link rel='icon' type='image/png' sizes='192x192' href='/images/concept icon.2.png'>
-								<meta name='theme-color' content='rgb(255, 255, 255)'>
-								<meta name="msapplication-TileColor" content="#FFFFFF">
+								<link rel='icon' type='image/png' sizes='192x192' href='/images/pylon-icon-g.png'>
+								<meta name='theme-color' content='rgb(20, 20, 20)'>
+								<meta name="msapplication-TileColor" content="#151515">
 				        <meta name="application-name" content="${pageResult.title} | Pylon">
 				        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 				        <meta content="utf-8" http-equiv="encoding">
 				        <meta property="og:title" content="${pageResult.title} | Pylon" />
 								<meta property="og:description" content="${pageResult.title} | Voxel based desktop environment, file manager and visualizer built for web and virtual reality" />
-				        <meta property="og:image" content="https://vpylon.net/images/concept icon.2.png" / >
+				        <meta property="og:image" content="https://vpylon.net/images/pylon-icon-g.png" / >
 				        <meta property="og:image:width" content="192" />
 				        <meta property="og:image:height" content="192" />
 				        <meta name="twitter:card" content="summary" />
 				        <meta name="twitter:site" content="@SpaceHexagon" />
 				        <meta name="twitter:title" content="${pageResult.title} | Pylon" />
 				        <meta name="twitter:description" content="Voxel based desktop environment, file manager and visualizer built for web and virtual reality" />
-				        <meta name="twitter:image" content="https://vpylon.net/images/concept icon.2.png" />
+				        <meta name="twitter:image" content="https://vpylon.net/images/pylon-icon-g.png" />
 								<style> html { font-family: sans-serif; } </style>
 								<link rel='stylesheet' href='/css/app.css'>
 							${!! pageResult.twemoji ? "<script src='//twemoji.maxcdn.com/2/twemoji.min.js'></script>" +
