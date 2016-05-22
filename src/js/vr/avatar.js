@@ -3,7 +3,7 @@ export default class Avatar {
 		var user_id = "user_id",
 				data = {},
 				mesh = new THREE.Object3D(),
-				mat = new THREE.MeshPhongMaterial({color:0xff00ff,
+				mat = new THREE.MeshPhongMaterial({color:0xffaf00,
 																					specular: 0xffffff,
 																					shininess: 30,
 																					 shading: THREE.FlatShading}),
@@ -17,13 +17,14 @@ export default class Avatar {
 				wing = null,
 				wings = [],
 				userShield = null,
+				videoFace = null,
         arm = null,
 				arms = [],
         a = 0;
 
 				tail.position.y = -300;
 				tail.position.z = 400;
-				head.position.y = 400;
+				head.position.y = 300;
 				head.position.z = -200;
 
 				tail.rotation.x = Math.PI / 5;
@@ -46,25 +47,26 @@ export default class Avatar {
 				}
 				a = 0;
 
+				for (a = 0; a < 2; a++) {
+						arm = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 350), new THREE.MeshBasicMaterial({wireframe: true, color:0xffffff}));
+						arm.position.set(-150+(a*300), -180, -300);
+						arm.visible = false;
+						arms.push(arm);
+						mesh.add(arm);
+				}
+
         if (!! options) {
             if (!! options.profilePicture) {
 								var img = document.createElement('img');
 								img.onload = function (e) {
 									var face = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600), new THREE.MeshBasicMaterial({side:2, color: 0xffffff, map: new THREE.Texture(e.target)}));
 									face.material.map.needsUpdate = true;
+									videoFace = face;
 									mesh.add(face);
 								};
 								img.crossOrigin = ''; // no credentials flag. Same as img.crossOrigin='anonymous'
 								img.src = options.profilePicture;
 						}
-        }
-
-        for (a = 0; a < 2; a++) {
-            arm = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 350), new THREE.MeshBasicMaterial({wireframe: true, color:0xffffff}));
-            arm.position.set(-150+(a*300), -180, -300);
-            arm.visible = false;
-            arms.push(arm);
-            mesh.add(arm);
         }
 
         this.mesh = mesh;
@@ -81,6 +83,7 @@ export default class Avatar {
 				body: body,
 				head: head,
 				wings: wings,
+				videoFace: videoFace,
 				bodyVisible: true,
 				toggleBody: function (set) {
 					this.mesh.children[2].visible = set;
@@ -88,7 +91,7 @@ export default class Avatar {
 					this.mesh.children[4].visible = set;
 				},
 				updateImage: function (image) {
-						var face = mesh.children[0],
+						var face = this.videoFace,
 								avatar = mesh;
 
 						avatar.remove(face);
@@ -97,6 +100,8 @@ export default class Avatar {
 							var face = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600),
 							 													new THREE.MeshBasicMaterial({side:2, color: 0xffffff, map: new THREE.Texture(e.target)}));
 							face.material.map.needsUpdate = true;
+							avatar.videoFace = face;
+							face.position.z = -200;
 							avatar.add(face);
 						};
 						img.crossOrigin = '';
