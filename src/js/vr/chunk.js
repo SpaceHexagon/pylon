@@ -8,8 +8,8 @@ export default class Chunk {
 				finalGeom = new THREE.Geometry(),
 				cellGeom = new THREE.CylinderGeometry(3500, 3500, 5600, 6),
 				tallCell = new THREE.CylinderGeometry(3400, 3400, 11200, 6),
-				cellSize = 6200,
-				narrow = cellSize*0.9,
+				cellSize = 6150,
+				narrow = cellSize*0.89,
 				mesh = null,
 				bsp = null,
 				cellMesh = null,
@@ -18,10 +18,10 @@ export default class Chunk {
 				chunkLength = 3200 * 6 * Math.sqrt(3),
 				base = new THREE.Geometry(),
 				baseMaterial = (app.mobile ? new THREE.MeshLambertMaterial({
-					color: (coords[0]+coords[2])%3 == 0 ? 0xdfdfdf : 0xffffff,
+					color: (coords[1] > 2 ? 0xffffff : 0x404040),
 					shading: THREE.FlatShading
 				}) : new THREE.MeshPhongMaterial({
-					color: (coords[0]+coords[2])%3 == 0 ? 0xdfdfdf : 0xffffff,
+					color: (coords[1] > 2  ? 0xffffff : 0x404040),
 					specular: 0xffffff,
 					shininess: 20,
 					shading: THREE.FlatShading
@@ -41,17 +41,11 @@ export default class Chunk {
 				cellMesh.position.set((x*cellSize)+(y % 2==0 ? 0 : cellSize / 2), (altitude * cellSize)/4, y*narrow);
 				cellMesh.updateMatrix();
 				base.merge(cellGeom, cellMesh.matrix);
-				// if (x == 0 && y == 0) {
-				// 	bsp = new ThreeBSP(cellMesh);
-				// } else {
-				// 	bsp = bsp.union(new ThreeBSP(cellMesh));
-				// }
 				y++;
 			}
 			y = 0;
 			x++;
 		}
-		//finalGeom = bsp.toGeometry();
 		mesh = new THREE.Mesh(base, baseMaterial);
 		mesh.position.set((coords[0]*chunkWidth)+ (coords[2] % 2==0 ? 0 : chunkWidth / 2), (coords[1]*chunkWidth) / 2, coords[2]*chunkLength);
 

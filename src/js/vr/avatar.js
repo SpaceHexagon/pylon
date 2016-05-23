@@ -62,7 +62,7 @@ export default class Avatar {
 									var face = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600), new THREE.MeshBasicMaterial({side:2, color: 0xffffff, map: new THREE.Texture(e.target)}));
 									face.material.map.needsUpdate = true;
 									videoFace = face;
-									face.position.set(0, 0, -400);
+									face.position.set(0, 0, -800);
 									mesh.add(face);
 								};
 								img.crossOrigin = ''; // no credentials flag. Same as img.crossOrigin='anonymous'
@@ -102,7 +102,7 @@ export default class Avatar {
 							 													new THREE.MeshBasicMaterial({side:2, color: 0xffffff, map: new THREE.Texture(e.target)}));
 							face.material.map.needsUpdate = true;
 							avatar.videoFace = face;
-							face.position.z = -400;
+							face.position.z = -800;
 							avatar.add(face);
 						};
 						img.crossOrigin = '';
