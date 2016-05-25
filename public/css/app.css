@@ -451,7 +451,7 @@ form.search ul li div span, .create-menu ul li div span {
     width: 36px;
     cursor: pointer;
     background-image: url(/images/search.png);
-	background-color: #FFA500;
+	background-color: rgba(0, 0, 0, 0.55);
 }
 
 ul li div.title {

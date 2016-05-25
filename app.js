@@ -111,7 +111,7 @@ app.get('/:username/:file', function (req, res) {
 							<head>
 							 <title>${pageResult.title}</title>
 								<meta name='viewport' content='width=device-width, initial-scale=1'>
-								<link rel='icon' type='image/png' sizes='192x192' href='/images/bot-icon.png'>
+								<link rel='icon' type='image/png' sizes='192x192' href='/images/voxel.png'>
 								<meta name='theme-color' content='rgb(20, 20, 20)'>
 								<meta name="msapplication-TileColor" content="#151515">
 				        <meta name="application-name" content="${pageResult.title} | Pylon">
@@ -119,14 +119,14 @@ app.get('/:username/:file', function (req, res) {
 				        <meta content="utf-8" http-equiv="encoding">
 				        <meta property="og:title" content="${pageResult.title} | Pylon" />
 								<meta property="og:description" content="${pageResult.title} | Voxel based desktop environment, file manager and visualizer built for web and virtual reality" />
-				        <meta property="og:image" content="https://vpylon.net/images/bot-icon.png" / >
+				        <meta property="og:image" content="https://vpylon.net/images/voxel.png" / >
 				        <meta property="og:image:width" content="192" />
 				        <meta property="og:image:height" content="192" />
 				        <meta name="twitter:card" content="summary" />
 				        <meta name="twitter:site" content="@SpaceHexagon" />
 				        <meta name="twitter:title" content="${pageResult.title} | Pylon" />
 				        <meta name="twitter:description" content="Voxel based desktop environment, file manager and visualizer built for web and virtual reality" />
-				        <meta name="twitter:image" content="https://vpylon.net/images/bot-icon.png" />
+				        <meta name="twitter:image" content="https://vpylon.net/images/voxel.png" />
 								<style> html { font-family: sans-serif; } </style>
 								<link rel='stylesheet' href='/css/app.css'>
 							${!! pageResult.twemoji ? "<script src='//twemoji.maxcdn.com/2/twemoji.min.js'></script>" +

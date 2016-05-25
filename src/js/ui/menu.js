@@ -66,7 +66,7 @@ export default class Menu extends React.Component {
 Menu.defaultProps = {
     name: 'main',
     options: [
-        {src: "/images/pylon-w-a.png", title: "Activities", text: "Activities", open: function(evt, menu) {
+        {src: "/images/voxel.png", title: "Map View", text: "Activities", open: function(evt, menu) {
 			console.log("opening Launcher / activity view..");
 			menu.toggleActivityView();
 		} },
