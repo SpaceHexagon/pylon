@@ -3,10 +3,13 @@ var keyMirror = require('keymirror');
 module.exports = {
 
   ActionTypes: keyMirror({
-    CLICK_THREAD: null,
-    CREATE_MESSAGE: null,
-    RECEIVE_RAW_CREATED_MESSAGE: null,
-    RECEIVE_RAW_MESSAGES: null
+    APPLET_CREATE: null,
+		APPLET_DESTROY: null,
+		DOCUMENT_CREATE: null,
+		DOCUMENT_UPDATE: null,
+		DOCUMENT_DESTROY: null,
+		MESSAGE_CREATE: null,
+		MESSAGE_DESTROY: null
   })
 
 };
