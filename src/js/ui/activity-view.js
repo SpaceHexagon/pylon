@@ -7,6 +7,10 @@ import ChunkMenu from './chunk-menu.js';
 import ChunkRow from './chunk-row.js';
 import CellIcon from './cell-icon.js';
 import CellEditor from './cell-editor.js';
+import TabView from './tab-view.js';
+import ObjectProperties from './object-properties.js';
+import ObjectSearch from './object-search.js';
+import ObjectStack from './object-stack.js';
 
 export default class ActivityView extends React.Component {
 	constructor() {
