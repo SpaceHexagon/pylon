@@ -104,7 +104,7 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 					$regex: new RegExp(".*" + req.params.file + ".*", 'i')
 				}
 			},  {
-				limit: 192
+				limit: 108
 			}).toArray(function (err, files) {
 				if (err) {
 					return console.log("Error searching for files ", err);
