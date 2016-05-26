@@ -6,14 +6,14 @@ import EventEmitter from 'events';
 // Redux
 import reducer from './reducers'
 import App from './containers/App'
-// World
-import World from './world.js';
-import Avatar from './vr/avatar.js';
 // Events
 import UserInput from './user-input.js';
 import UIEvents from './ui-events.js';
 import SocketEvents from './socket-events.js';
 import WorldPhysics from './world-physics.js';
+// World
+import World from './world.js';
+import Avatar from './vr/avatar.js';
 
 class SystemEvents extends EventEmitter {}
 const systemEvents = new SystemEvents();
@@ -25,9 +25,7 @@ var content = document.getElementsByTagName('main')[0].innerHTML,
 		userInput = null;
 
 ReactDOM.render(
-  (
-      <App systemEvents={systemEvents} content={content} />
-  ),
+  (<App systemEvents={systemEvents} content={content} />),
   document.getElementsByTagName('main')[0]
 )
 
