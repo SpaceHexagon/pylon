@@ -51,7 +51,7 @@ export default class SearchBar extends React.Component {
 		if (evt.which == 27) {
 			comp.toggle({visible: false});
 		} else {
-			if (comp.state.lastSearch != evt.target.value) {
+			if (evt.target.value.length > 2 && comp.state.lastSearch != evt.target.value) {
 				comp.search(comp, event);
 			}
 			comp.setState({lastSearch: evt.target.value});
@@ -85,16 +85,17 @@ export default class SearchBar extends React.Component {
 
 	render() {
         var searchBarStyle = {
-				display: this.state.visible ? "inline-block" : "none"
-        	},
-			fileTypes = this.props.fileTypes,
-			atLeastOne = this.props.results.length >= 1;
+					display: this.state.visible ? "inline-block" : "none"
+        },
+				fileTypes = this.props.fileTypes,
+				atLeastOne = this.props.results.length >= 1;
 
 		return (
 			<form className="search" style={searchBarStyle} onSubmit={(event)=>this.search(this, event)} >
 				<div className="options">
 					<div className="searchInputs">
-						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/><input type='submit' id='submit' value="" />
+						<input type='text' id='terms' onKeyDown={(event)=>this.handleKeyDown(this, event)}/>
+						<input type='submit' id='submit' value="" />
 					</div>
 
 				</div>
@@ -104,7 +105,7 @@ export default class SearchBar extends React.Component {
 					 		fileURL = "/api/files/"+result.filename+"?token="+localStorage.getItem("token"),
 					 		thumbURL = "/api/thumbs/"+result.filename+"?token="+localStorage.getItem("token"),
 					 		cardBG = /(\.jpg|\.png|.jpeg)$/.test(result.filename) ? thumbURL : "",
-					 		gif = (/(\.gif)$/.test(fileURL)),
+					 		gif = (/(\.gif)$/.test(result.filename)),
 							cardText = ""; /*" Type "+result.contentType+" Length "+result.length+" Date "+result.uploadDate+" URL "+localStorage.getItem("username")+".vpylon.net/"+result.filename;*/
 						return <li key={i} ><Card CardIcon={<Icon src={cardSrc} open={()=>{ /*window.location.href = fileURL;*/ }} link={fileURL} title={result.filename} />}
 								   thumbURL={cardBG} background={(gif ? fileURL : "")} title={result.filename} text={cardText} link={fileURL} contextMenu={<FileContextMenu theme={(cardBG != "" ? "light" : "dark")} link={fileURL} file_id={result._id} />}/></li>;
