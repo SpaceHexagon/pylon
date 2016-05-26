@@ -212,6 +212,8 @@ export default class World {
 				var chunk = null,
 				chunks = app.chunks,
 				cMap = app.chunkMap,
+				chunkPos = [0, 0, 0],
+				physicsChunks = [],
 				x = coords[0] - phase,
 				y = coords[2] - phase;
 
@@ -223,12 +225,18 @@ export default class World {
 							chunks.push(chunk);
 							cMap[x+".0."+y] = chunk;
 							three.scene.add(chunk.mesh);
+							chunkPos = chunk.mesh.position;
+							physicsChunks.push({coords: [x, 0, y], position: [chunkPos.x, chunkPos.y, chunkPos.z]});
 						}
 
 						y++;
 					}
 					y = coords[2]-phase;
 					x++;
+				}
+
+				if (physicsChunks.length > 0) {
+					app.worldPhysics.postMessage('{"command":"add chunks","data":'+JSON.stringify(physicsChunks)+'}');
 				}
 
 				phase ++;
@@ -238,7 +246,7 @@ export default class World {
 
 			}
 
-			loadChunks ([0,0,0], 0);
+
 			this.loadChunks = loadChunks;
 			this.bufferChunks = bufferChunks;
 			this.buffering = 0;

@@ -8,10 +8,10 @@ export default class SearchBar extends React.Component {
 		super();
 		// Initial state of the component
         this.state = {
-			visible: false,
-			results: [],
-			lastSearch: ""
-		};
+					visible: false,
+					results: [],
+					lastSearch: ""
+				};
     }
 
     toggle (set) {
@@ -44,7 +44,7 @@ export default class SearchBar extends React.Component {
 	}
 
     handleClick (component, event) {
-        component.props.open();
+      component.props.open();
     }
 
 	handleKeyDown (comp, evt) {
@@ -84,7 +84,7 @@ export default class SearchBar extends React.Component {
 	}
 
 	render() {
-        var searchBarStyle = {
+    var searchBarStyle = {
 					display: this.state.visible ? "inline-block" : "none"
         },
 				fileTypes = this.props.fileTypes,
@@ -100,7 +100,7 @@ export default class SearchBar extends React.Component {
 
 				</div>
 					<ul className='results'>
-					{this.state.results.map(function(result, i){
+					{this.state.results.map(function (result, i) {
 					 	var cardSrc = fileTypes[result.contentType] || "",
 					 		fileURL = "/api/files/"+result.filename+"?token="+localStorage.getItem("token"),
 					 		thumbURL = "/api/thumbs/"+result.filename+"?token="+localStorage.getItem("token"),
@@ -118,16 +118,23 @@ export default class SearchBar extends React.Component {
 
 SearchBar.defaultProps = {
     name: 'main',
-	results: [],
-    options: [
+		results: [],
+    options: [],
+	fileTypes: {
+		"image/png": "/images/files/image.png",
+		"image/jpeg": "/images/files/image.png",
+		"text/plain": "/images/dark/file.png",
+		"text/json": "/images/dark/file.png"
+	}
+};
 
-		/*
-		<ul className="modes">
-						{this.props.options.map(function(option, i){
-							return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
-						})}
-					</ul>
-		*/
+/*
+<ul className="modes">
+				{this.props.options.map(function(option, i){
+					return <li key={i} ><Icon src={option.src} title={option.title} text={option.title} open={option.open} /></li>;
+				})}
+			</ul>
+*/
 
 //        {src: "/images/dark/circle.png", title: "People", open: function() {
 //			console.log("searching for people"); } },
@@ -143,11 +150,3 @@ SearchBar.defaultProps = {
 //			console.log("searching for shares"); } },
 //		{src: "/images/dark/groups.png", title: "Groups", open: function(){
 //			console.log("Searching Groups"); } }
-    ],
-	fileTypes: {
-		"image/png": "/images/files/image.png",
-		"image/jpeg": "/images/files/image.png",
-		"text/plain": "/images/dark/file.png",
-		"text/json": "/images/dark/file.png"
-	}
-};

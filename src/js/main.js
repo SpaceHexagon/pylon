@@ -177,3 +177,4 @@ UserInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
 app.desktopEvents = new UIEvents(app);
 app.socketEvents = new SocketEvents(app, socket);
 app.worldPhysics = new WorldPhysics(app);
+app.world.loadChunks([0,0,0], 0);

@@ -181,10 +181,11 @@ self.onmessage = function (event) { // Do some work.
 
 	} else if (data.command == "log") {
 		self.postMessage('{"command":"log","data":[' + observer.position[0] + ',' + observer.position[1] + ',' + observer.position[2] + ']}');
-		for (var o = 0; o < objects.length; o++) {
-			// check stuff
-			self.postMessage('{"command":"log","data":' + JSON.stringify(objects[o]) + '}');
+		var allChunks = [];
+		for (var key in chunks) {
+			allChunks.push(chunks[key]);
 		}
+		self.postMessage('{"command":"log","data":' + JSON.stringify(allChunks)+'}');
 
 	}
 };
