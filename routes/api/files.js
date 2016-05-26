@@ -101,14 +101,16 @@ module.exports = function (app, extDB, mongo2, fs, Users) {
 
 		userFiles.find({
 			filename: {
-				$regex: new RegExp(".*" + req.params.file + ".*", 'i')
-			}
-		}).toArray(function (err, files) {
-			if (err) {
-				return console.log("Error searching for files ", err);
-			}
-			res.json(files);
-		});
+					$regex: new RegExp(".*" + req.params.file + ".*", 'i')
+				}
+			},  {
+				limit: 192
+			}).toArray(function (err, files) {
+				if (err) {
+					return console.log("Error searching for files ", err);
+				}
+				res.json(files);
+			});
 	});
 
 	router.put('/:file', function (req, res) {
