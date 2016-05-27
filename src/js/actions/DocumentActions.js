@@ -1,5 +1,5 @@
 // Document Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_PATH, GET_DOCUMENT, GET_ALL_DOCUMENTS, UPDATE_DOCUMENT, DELETE_DOCUMENT} from '../constants/ActionTypes';
 
 export function addDocument (title, body) {
   return {

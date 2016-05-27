@@ -1,5 +1,5 @@
 // File Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_FILE, GET_FILE, GET_ALL_FILES, UPDATE_FILE, DELETE_FILE} from '../constants/ActionTypes';
 
 export function addFile (title, body) {
   return {

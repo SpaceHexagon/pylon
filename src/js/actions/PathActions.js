@@ -1,9 +1,9 @@
 // Path Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_PATH, GET_PATH, GET_ALL_PATHS, UPDATE_PATH, DELETE_PATH} from '../constants/ActionTypes';
 
 export function addPath (title, body) {
   return {
-    type: types.ADD_PATH,
+    type: ADD_PATH,
     title: title,
 		body: body
   };
@@ -11,28 +11,28 @@ export function addPath (title, body) {
 
 export function getPath (id) {
   return {
-    type: types.GET_PATH,
+    type: GET_PATH,
 		id
   };
 }
 
 export function getAllPaths (id) {
   return {
-    type: types.GET_ALL_PATHS,
+    type: GET_ALL_PATHS,
 		id
   };
 }
 
 export function updatePath (id) {
   return {
-    type: types.UPDATE_PATH,
+    type: UPDATE_PATH,
 		id
   };
 }
 
 export function deletePath (id) {
   return {
-    type: types.DELETE_PATH,
+    type: DELETE_PATH,
     id
   };
 }

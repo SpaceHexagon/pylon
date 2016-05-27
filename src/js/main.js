@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
 // Redux
+import { createStore } from 'redux'
 import reducer from './reducers'
 import App from './containers/App'
 // Events

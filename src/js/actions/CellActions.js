@@ -1,5 +1,5 @@
 // Cell Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_CELL, GET_CELL, GET_ALL_CELLS, UPDATE_CELL, DELETE_CELL} from '../constants/ActionTypes';
 
 export function addCell (title, body) {
   return {

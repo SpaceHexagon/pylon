@@ -1,9 +1,9 @@
 // PAGE Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_PAGE, GET_PAGE, GET_ALL_PAGES, UPDATE_PAGE, DELETE_PAGE} from '../constants/ActionTypes';
 
 export function addPage (title, body) {
   return {
-    type: types.ADD_PAGE,
+    type: ADD_PAGE,
     title: title,
 		body: body
   };
@@ -11,28 +11,28 @@ export function addPage (title, body) {
 
 export function getPage (id) {
   return {
-    type: types.GET_PAGE,
+    type: GET_PAGE,
 		id
   };
 }
 
 export function getAllPages (id) {
   return {
-    type: types.GET_ALL_PAGES,
+    type: GET_ALL_PAGES,
 		id
   };
 }
 
 export function updatePage (id) {
   return {
-    type: types.UPDATE_PAGE,
+    type: UPDATE_PAGE,
 		id
   };
 }
 
 export function deletePage (id) {
   return {
-    type: types.DELETE_PAGE,
+    type: DELETE_PAGE,
     id
   };
 }

@@ -1,5 +1,5 @@
 // Building Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_BUILDING, GET_BUILDING, GET_ALL_BUILDINGS, UPDATE_BUILDING, DELETE_BUILDING} from '../constants/ActionTypes';
 
 export function addBuilding (title, body) {
   return {

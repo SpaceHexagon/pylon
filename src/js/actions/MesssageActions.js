@@ -1,12 +1,19 @@
 // Message Actions
-import * as types from '../constants/ActionTypes';
+import {ADD_MESSAGE, GET_MESSAGE, GET_ALL_MESSAGES, UPDATE_MESSAGE, DELETE_MESSAGE} from '../constants/ActionTypes';
 
 export function addMessage(to, title, body) {
   return {
-    type: types.ADD_MESSAGE,
+    type: ADD_MESSAGE,
 		to: to,
     title: title,
 		body: body
+  };
+}
+
+export function getMessage(id) {
+  return {
+    type: GET_MESSAGE,
+		id
   };
 }
 
