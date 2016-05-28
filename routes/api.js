@@ -66,12 +66,14 @@ module.exports = function (app, db) {
 	  // find the user
 		Users.findOne({username: req.body.username}, function(err, result) {
 			if (err || result == null) {
-				var newUser = User(),
-					token = null,
-					username = req.body.username;
+				var token = null,
+						username = req.body.username,
+						newUser = {
+							name: req.body.username,
+							username: req.body.username,
+              password: passwordHash.generate(req.body.password)
+						};
 
-				newUser.name = newUser.username = req.body.username;
-				newUser.password = passwordHash.generate(req.body.password);
 				token = jwt.sign({ name: newUser.name, username: newUser.username }, app.get('superSecret'), {  // create a token
 				  expiresIn: '24h' // expires in 24 hours
 				});
