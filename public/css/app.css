@@ -351,7 +351,7 @@ img.emoji {
   position: fixed;
   top: 0;
   right: 0;
-  padding-top: 0.1em;
+  padding-top: 0.2em;
   padding-right: 0.33em;
   font-size: 16px;
   z-index: 8;
@@ -419,8 +419,6 @@ form.search ul li div span, .create-menu ul li div span {
     padding-bottom: 1em;
     padding-left: 1em;
     padding-right: 1em;
-    background: #FFF;
-    box-shadow: 0px 2px 3px rgba(0,0,0,.1);
     overflow-x: hidden;
     overflow-y: hidden;
     z-index: 0;
@@ -672,10 +670,10 @@ form.search {
 @media screen and (min-width: 961px) {
 	main {
     min-height: 148px;
-    margin-top: 1em;
-    width: 66.6% !important;
+    margin-top: 78px;
+    width: 469px;
     max-width: 960px;
-    margin-left: 100px;
+    margin-left: 20px;
 	}
     .card h3 {
         max-width: auto;
@@ -747,12 +745,11 @@ form.search {
 	}
 	.search ul.results {
     top: 42px;
-    padding-top: 1em;
-    margin-top: 0em;
+    padding-top: 0.5em;
+    margin-top: 1.75em;
     max-height: 86%;
     overflow-y: auto;
     max-width: 80%;
-    border-radius: 3px
 	}
 	.search ul li div {
 		float: left;
@@ -768,20 +765,24 @@ form.search {
 	.searchInputs {
 		height: 44px;
 		right: 0;
+    top: 60px;
+    position: relative;
 		float: none;
 		background: rgba(0, 0, 0, 0.41);
 		padding-right: 20px;
 	}
     .menu {
-        width: 60px;
-		left: 0;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.9) !important;
-		background: white;
-		margin-top: 0 !important;
-		border-right: 2px rgba(0, 0, 0, 0.26) solid;
-		padding-top: 10px;
-		padding-left: 10px;
+      width: 100%;
+      left: 0;
+      height: 60px;
+      background-color: rgba(0, 0, 0, 0.85) !important;
+      background: #FFF;
+      margin-top: 0 !important;
+      padding-top: 0;
+      padding-left: 10px;
+    }
+    .user-menu {
+      padding-top: 0.4em;
     }
 	.create-menu {
     top: 72px;
