@@ -16,21 +16,26 @@ body {
 	font-size: 20px;
 }
 main {
-    background: #ffffff;
-    border-top: 2px #FFF solid;
+    background: transparent;
+    color: #333;
     min-width: 264px;
     min-height: 320px;
     width: 50%;
     padding: 1.5em;
     padding-top: 1em;
-    margin: auto;
     border-radius: 2px;
     margin-top: 80px;
     position: absolute;
     left: 0;
     right: 0;
-	box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
+main .root {
+  color: white;
+}
+main .root aside {
+  color: #333;
+}
+
 #webcam {
 	visibility: hidden;
   position: fixed;
@@ -296,8 +301,9 @@ article.card {
     bottom: 0.4em;
 }
 .card p {
-	margin-left: 52px;
-    margin-top: 0;
+  margin-left: 52px;
+  margin-top: 0;
+  padding-right: 1em;
 }
 .context-menu {
 
@@ -484,19 +490,22 @@ input#file-upload:hover {
 	/*opacity: 1;*/
 }
 .notifications-area {
-	max-width: 482px;
-	min-width: 120px;
-	display: none;
-	margin: auto;
-	margin-top: 4em;
-	position: fixed;
-	top:0;
-	right: 0px;
-    font-size: 16px;
-    z-index: 3;
+  max-width: 482px;
+  min-width: 120px;
+  display: none;
+  margin: auto;
+  margin-top: 60px;
+  position: fixed;
+  top: 0;
+  right: 0px;
+  font-size: 16px;
+  z-index: 3;
 }
 .notifications-area.visible {
 	display: block;
+}
+.notifications-area .card {
+  font-size: 22px;
 }
 .notifications-area .card h3 {
     margin-top: 14px;
@@ -671,10 +680,19 @@ form.search {
 	main {
     min-height: 148px;
     margin-top: 78px;
-    width: 469px;
-    max-width: 960px;
-    margin-left: 20px;
+    width: 100%;
+    max-width: 540px;
 	}
+  /*canvas {
+    left: 25vw !important;
+    width: 50vw !important;
+    height: 50vh !important;
+  }*/
+  .vr canvas {
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
     .card h3 {
         max-width: auto;
     }
@@ -772,8 +790,6 @@ form.search {
 		padding-right: 20px;
 	}
     .menu {
-      width: 100%;
-      left: 0;
       height: 60px;
       background-color: rgba(0, 0, 0, 0.85) !important;
       background: #FFF;
@@ -785,12 +801,13 @@ form.search {
       padding-top: 0.4em;
     }
 	.create-menu {
-    top: 72px;
-    left: 72px;
+    top: 60px;
+    left: 0px;
     background: #FFF;
     width: auto;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.14);
-    border-top-right-radius: 3px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     border-bottom-right-radius: 3px;
 	}
 	.create-menu ul {
@@ -853,13 +870,14 @@ form.search {
 		right: 0;
 	}
 	.notifications-area {
-		width: 33.3%;
-		display: inline-block;
-		padding-bottom: 1em;
-		border-bottom-left-radius: 7px;
-		border-top-left-radius: 7px;
-		box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 7px;
-		background-color: rgba(255, 255, 255, 0.592157);
+    width: 33.3%;
+    display: inline-block;
+    padding-bottom: 1em;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 7px;
+    background-color: rgba(255, 255, 255, 0.592157);
 	}
 	img.logo {
 		display: inline-block;

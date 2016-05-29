@@ -26,7 +26,7 @@ function CollisionBuilding (data) {
 }
 
 function distance3d (a, b) {
-	return Math.sqrt(Math.pow((a[0]-b[0]),2)+Math.pow((a[1]-b[1]),2)+Math.pow((a[2]-b[2]),2));
+	return Math.sqrt(Math.pow((a[0]-b[0]),2) + Math.pow((a[1]-b[1]),2) + Math.pow((a[2]-b[2]),2));
 }
 
 function distance2d (a, b) {
@@ -55,7 +55,7 @@ self.update = function () {
 		obj = chunks[cKey];
 
 			if (obj.coords[0] == coords[0] && obj.coords[1] == coords[1]) {
-				if (observer.position[1] > obj.position[1] - 300 && observer.position[1] < obj.position[1] + 300 ) {
+				if (observer.position[1] < obj.position[1] + 300 && observer.position[1] > obj.position[1] - 300 ) {
 					self.postMessage('{"command": "chunk collision", "data":{"position":[' + observer.prevPos[0] + ',' + observer.prevPos[1] + ',' + observer.prevPos[2] + '] }}');
 				}
 			}

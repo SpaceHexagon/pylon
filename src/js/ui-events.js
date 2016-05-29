@@ -39,7 +39,8 @@ export default class UIEvents {
 		}, true);
 
 		window.onresize = function () {
-			var world = sys.world;
+			var world = sys.world,
+					rendererDom = three.renderer.domElement;
 		  sys.systemEvents.emit("window-resized", {});
 			world.three.renderer.setSize(window.innerWidth, window.innerHeight);
 			world.three.renderer.setSize(innerWidth, innerHeight);
