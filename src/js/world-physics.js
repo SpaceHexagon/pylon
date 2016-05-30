@@ -57,9 +57,6 @@ export default class WorldPhysics {
           if (data.data.name != sys.venue) {
             //console.log("data.data.name", data.data.name);
             sys.venue = data.data.name;
-            // cooldown here?
-            // only send one event from worker... (if possible... if () { break }... )
-            //console.log("Entering interior [!] ", data.data.name);
             world.enterInterior(data.data.name);
           }
         } else {
