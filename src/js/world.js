@@ -206,47 +206,6 @@ export default class World {
 				setTimeout(function () { bufferChunks(force, phase); }, 500);
 			}
 
-
-			function loadChunks (coords, phase) {
-				var max = (app.mobile ? 2 : (window.innerWidth > 2100 ?  4  : 3));
-				var chunk = null,
-				chunks = app.chunks,
-				cMap = app.chunkMap,
-				chunkPos = [0, 0, 0],
-				physicsChunks = [],
-				x = coords[0] - phase,
-				y = coords[2] - phase;
-
-				while (x <= coords[0]+phase) {
-					while (y <= coords[2]+phase) {
-						if ((x % 6 != 0 && y % 6 != 0) && Math.abs(x) == coords[0]+phase || Math.abs(y) == coords[2]+phase) {
-							chunk = new Chunk([x, 0, y], mobile);
-							chunk.mesh.updateMatrix();
-							chunks.push(chunk);
-							cMap[x+".0."+y] = chunk;
-							three.scene.add(chunk.mesh);
-							chunkPos = chunk.mesh.position;
-							physicsChunks.push({coords: [x, 0, y], position: [chunkPos.x, chunkPos.y, chunkPos.z]});
-						}
-
-						y++;
-					}
-					y = coords[2]-phase;
-					x++;
-				}
-
-				if (physicsChunks.length > 0) {
-					app.worldPhysics.postMessage('{"command":"add chunks","data":'+JSON.stringify(physicsChunks)+'}');
-				}
-
-				phase ++;
-				if (phase < max) {
-					setTimeout(function () { loadChunks(coords, phase); }, 1000)
-				}
-
-			}
-
-
 			this.loadChunks = loadChunks;
 			this.bufferChunks = bufferChunks;
 			this.buffering = 0;

@@ -1,5 +1,5 @@
 console.log('Pylon Interface Loading...');
-
+// React
 import ReactDOM from 'react-dom';
 import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
@@ -80,16 +80,16 @@ window.app = {
 		}
 	},
 	captureMode: function (mode) {
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 		var constraints = {
-		  audio: false,
-		  video: true
-		},
-		video = document.querySelector('#webcam');
+			  audio: false,
+			  video: true
+			},
+			video = document.querySelector('#webcam');
 
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 		app.capturing = !!mode ? mode : true;
 
-		function successCallback(stream) {
+		function successCallback (stream) {
 		  window.stream = stream; // stream available to console
 		  if (window.URL) {
 				video.src = window.URL.createObjectURL(stream);
@@ -97,8 +97,7 @@ window.app = {
 				video.src = stream;
 		  }
 		}
-
-		function errorCallback(error) {
+		function errorCallback (error) {
 		  console.log('navigator.getUserMedia error: ', error);
 		}
 
@@ -120,9 +119,13 @@ app.user.mesh = app.users[app.username].mesh;
 app.user.arms = app.users[app.username].arms;
 
 app.userInput.init(three.camera, app.user);
-UserInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
+//UserInput.rotationVector = {x: 0.2, y: 5.65, z: 0};
+UserInput.rotationVector = {x: 0, y: -0.7, z: 0};
+three.camera.position.y = 10000;
 
 app.desktopEvents = new UIEvents(app);
 app.socketEvents = new SocketEvents(app, socket);
 app.worldPhysics = new WorldPhysics(app);
-app.world.loadChunks([0,0,0], 0);
+app.world.bufferChunks(true, 0);
+
+//app.world.loadChunks([0,0,0], 0);
