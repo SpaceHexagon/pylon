@@ -747,8 +747,8 @@ form.search {
 		position: inherit !important;
 	}
 	.search .card.background {
-		min-width: 320px;
-    	min-height: 320px;
+	   width: 320px;
+     height: 320px;
 	}
 	.search div.options {
 		background: transparent;

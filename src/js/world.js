@@ -206,10 +206,8 @@ export default class World {
 				setTimeout(function () { bufferChunks(force, phase); }, 500);
 			}
 
-			this.loadChunks = loadChunks;
 			this.bufferChunks = bufferChunks;
 			this.buffering = 0;
-
 		}
 
 	};

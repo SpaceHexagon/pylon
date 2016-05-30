@@ -4,9 +4,9 @@ Jeremy Evans Openspacehexagon@gmail.com
 var observer = {
 		position: [0, 0, 0],
 		prevPos: [0, 0, 0],
-		velocity: [0, 0, 0]
+		velocity: [0, 0, 0],
+		coords: [0, 0, 0]
 	},
-	coords = [0, 0, 0],
 	objects = [],
 	chunks = [],
 	buildings = [],
@@ -35,27 +35,29 @@ function distance2d (a, b) {
 
 self.update = function () {
 	var objectCollision = false,
-		entities = [],
-		distance = 0,
-		position = observer.position,
-		i = 0,
-		size = 2600,
-		obj = null,
-		delta = [0, 0],
-		innerBox = [false, false],
-		oPos = [],
-		speed = 0,
-		velocity = observer.velocity,
-		closeToVenue =  false;
-		entities = objects; // do collisions on misc objects / structures etc..
-		i = chunks.length -1,
-		cKey = "";
+			entities = [],
+			distance = 0,
+			position = observer.position,
+			coords = observer.coords,
+			i = 0,
+			size = 2600,
+			obj = null,
+			delta = [0, 0],
+			innerBox = [false, false],
+			oPos = [],
+			speed = 0,
+			velocity = observer.velocity,
+			closeToVenue =  false,
+			i = chunks.length -1,
+			cKey = "";
+
+		entities = objects;
 
 	for (cKey in chunks) {
 		obj = chunks[cKey];
 
 			if (obj.coords[0] == coords[0] && obj.coords[1] == coords[1]) {
-				if (observer.position[1] < obj.position[1] + 300 && observer.position[1] > obj.position[1] - 300 ) {
+				if (position[1] < obj.position[1] + 300 && position[1] > obj.position[1] - 300 ) {
 					self.postMessage('{"command": "chunk collision", "data":{"position":[' + observer.prevPos[0] + ',' + observer.prevPos[1] + ',' + observer.prevPos[2] + '] }}');
 				}
 			}
@@ -120,14 +122,16 @@ self.update = function () {
 
 self.onmessage = function (event) { // Do some work.
 	var data = JSON.parse(event.data),
+			user = observer,
 			c = 0,
 			chunk = null,
 			newChunks = [];
 
 	if (data.command == "update") {
-		observer.prevPos = [observer.position[0], observer.position[1], observer.position[2]];
-		observer.position = data.data.position;
-		observer.velocity = data.data.velocity;
+		user.coords = data.data.coords;
+		user.prevPos = [user.position[0], user.position[1], user.position[2]];
+		user.position = data.data.position;
+		user.velocity = data.data.velocity;
 		//self.postMessage(JSON.stringify(self.observer));
 	} else if (data.command == "add object") {
 		var cObject = new CollisionObject(data.data);
@@ -180,7 +184,7 @@ self.onmessage = function (event) { // Do some work.
 		self.stop();
 
 	} else if (data.command == "log") {
-		self.postMessage('{"command":"log","data":[' + observer.position[0] + ',' + observer.position[1] + ',' + observer.position[2] + ']}');
+		self.postMessage('{"command":"log","data":[' + user.position[0] + ',' + user.position[1] + ',' + user.position[2] + ']}');
 		var allChunks = [];
 		for (var key in chunks) {
 			allChunks.push(chunks[key]);
