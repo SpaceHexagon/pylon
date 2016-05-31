@@ -181,6 +181,14 @@ input[type=button]:hover, input[type=submit]:hover {
     width: 48px;
     color: rgba(0, 0, 0, 0);
 }
+.icon.text span {
+  bottom: 0.2em;
+  position: relative;
+  padding-left: 0;
+}
+.icon.text span span {
+  bottom: 0;
+}
 .icon.text.showText {
 	color: #303030;
 	width: auto;
@@ -386,6 +394,7 @@ img.emoji {
 .create-menu ul {
 	padding-left: 0.5em;
   margin-top: 0.5em;
+  background-color: white;
 }
 .create-menu ul li {
 	list-style-type: none;
@@ -630,7 +639,7 @@ form.search {
   height: 50px;
   width: 100%;
   box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
-  background: rgba(0, 0, 0, 0.86);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 8;
 }
 .emojis {
@@ -791,7 +800,7 @@ form.search {
 	}
     .menu {
       height: 60px;
-      background-color: rgba(0, 0, 0, 0.85) !important;
+      background-color: rgba(0, 0, 0, 0.7) !important;
       background: #FFF;
       margin-top: 0 !important;
       padding-top: 0;
@@ -803,7 +812,7 @@ form.search {
 	.create-menu {
     top: 60px;
     left: 0px;
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.59);
     width: auto;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.14);
     border-top-right-radius: 0;
@@ -811,10 +820,12 @@ form.search {
     border-bottom-right-radius: 3px;
 	}
 	.create-menu ul {
-        padding-left: 1em;
-		margin-top: 0.5em;
-		margin-bottom: 0.5em;
-		width: 200px;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      width: 200px;
+      margin-left: 12px;
+      margin-right: 12px;
+      padding-left: 0;
 	}
 	.activity-view {
 		width: 100%;

@@ -58,7 +58,7 @@ self.update = function () {
 		obj = chunks[cKey];
 
 			if (obj.coords[0] == coords[0] && obj.coords[1] == coords[1]) {
-				if (position[1] < obj.position[1] + 300 && position[1] > obj.position[1] - 300 ) {
+				if (position[1] < obj.position[1] + 2400 && position[1] > obj.position[1] ) {
 					if (position[0] > obj.position[0]  && position[2] > obj.position[2] && position[0] < obj.position[0] + chunkDimensions[0] && position[2] < obj.position[2] + chunkDimensions[1]) {
 						self.postMessage('{"command": "chunk collision", "data":{"position":[' + observer.prevPos[0] + ',' + observer.prevPos[1] + ',' + observer.prevPos[2] + '] }}');
 					}
