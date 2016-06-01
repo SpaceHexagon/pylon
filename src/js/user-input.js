@@ -201,7 +201,7 @@ export default class UserInput {
                 if (app.mode == "vr") {
 					this.handleKeys();
 					if (this.device.gravity > 0.25 ) {
-						velocity.y -= 32 * this.device.gravity;
+						velocity.y -= 320 * this.device.gravity;
 					}
 				}
 

@@ -18,10 +18,10 @@ export default class Chunk {
 				chunkLength = 3200 * 6 * Math.sqrt(3),
 				base = new THREE.Geometry(),
 				baseMaterial = (app.mobile ? new THREE.MeshLambertMaterial({
-					color: (coords[1] > 2 ? 0xffffff : 0x404040),
+					color: (coords[1] > 3 ? 0xffffff : 0x00ffff),
 					shading: THREE.FlatShading
 				}) : new THREE.MeshPhongMaterial({
-					color: (coords[1] > 2  ? 0xffffff : 0x404040),
+					color: (coords[1] > 3  ? 0xffffff : 0x00ffff),
 					specular: 0xffffff,
 					shininess: 20,
 					shading: THREE.FlatShading
@@ -35,7 +35,7 @@ export default class Chunk {
 
 		while (x < cellWidth) {
 			while (y < cellWidth) {
-				globalTurbulence = Math.sin((coords[0]/12)*Math.PI*2) * Math.cos(((coords[2]/12)+y/cellWidth*12)*Math.PI*2) * 6;
+				globalTurbulence = Math.sin((coords[0]/12)*Math.PI*2) * Math.cos(((coords[2]/12))*Math.PI*2) * 6;
 				altitude = Math.floor(globalTurbulence + localTurbulence);
 				cellMesh = new THREE.Mesh(cellGeom, material);
 				cellMesh.position.set((x*cellSize)+(y % 2==0 ? 0 : cellSize / 2), (altitude * cellSize)/4, y*narrow);

@@ -27,9 +27,9 @@ export default class WorldPhysics {
           //console.log("chunk collision");
           //console.log(data.data);
           three.camera.position.set(data.data.position[0], data.data.position[1], data.data.position[2]);
-					app.user.velocity.x *= -1;
-					app.user.velocity.y *= -1;
-					app.user.velocity.z *= -1;
+					app.user.velocity.x *= -0.95;
+					app.user.velocity.y *= -0.95;
+					app.user.velocity.z *= -0.95;
 
         } else if (data.command == "user collision") {
           console.log("user collision");

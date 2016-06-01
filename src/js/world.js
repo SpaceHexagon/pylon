@@ -13,7 +13,7 @@ export default class World {
 				sunGeom = new THREE.OctahedronGeometry(16000, 0),
 				material = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.9, transparent: true} ),
 				sun = new THREE.Mesh(sunGeom, material),
-				light = new THREE.PointLight(0xffffff, 1.2, 900000),
+				light = new THREE.PointLight(0xfcfcff, 2, 900000),
 				panelMat = new THREE.MeshLambertMaterial({ color: 0xe1e1e1 }),
 				cellGeometry = new THREE.CylinderGeometry(192, 192, 128, 6),
 				cell = null,
@@ -65,7 +65,7 @@ export default class World {
 					canvas.width = 512;
 					canvas.height = 512;
 					context.drawImage(v, 0, 0, 512, 512);
-					sys.webcamImage = canvas.toDataURL("image/jpg", 0.75);
+					sys.webcamImage = canvas.toDataURL("image/jpg", 0.5);
 				}
 				sys.sendUpdatePacket = 0;
 			}
