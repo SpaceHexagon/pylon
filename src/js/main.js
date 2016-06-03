@@ -55,6 +55,7 @@ window.app = {
     username: localStorage.getItem("username"),
 		mobile: (window.innerWidth <= 640),
 		mode: "desktop",
+		stereo: window.location.search("stereo") > -1,
 	  cwd: "/home",
 		cells: [],
 		chunks: [],
