@@ -1,19 +1,27 @@
 import { combineReducers } from 'redux'
-// import file from './file'
-// import folder from './folder'
-// import applet from './applet'
-// import comment from './comment'
-// import share from './share'
-// import post from './post'
-// import page from './page'
-// import building from './building'
-// import cell from './cell'
-// import path from './path'
+import files from './file'
+import folders from './folder'
+import applets from './applet'
+import comments from './comment'
+import shares from './share'
+import posts from './post'
+import pages from './page'
+import buildings from './building'
+import cells from './cell'
+import paths from './path'
 
 
 const PylonApp = combineReducers({
-  function () {},
-  function () {}
+  files,
+  folders,
+  applets,
+  comments,
+  shares,
+  posts,
+  pages,
+  buildings,
+  cells,
+  paths
 });
 
-export default PylonApp
+export default PylonApp;

@@ -5,8 +5,9 @@ import React, { Component, PropTypes } from 'react';
 import EventEmitter from 'events';
 // Redux
 import { createStore } from 'redux'
-import reducer from './reducers'
+import PylonApp from './reducers'
 import App from './containers/App'
+let store = createStore(PylonApp);
 // Events
 import UserInput from './user-input.js';
 import UIEvents from './ui-events.js';
@@ -55,7 +56,7 @@ window.app = {
     username: localStorage.getItem("username"),
 		mobile: (window.innerWidth <= 640),
 		mode: "desktop",
-		stereo: window.location.search("stereo") > -1,
+		stereo: false,
 	  cwd: "/home",
 		cells: [],
 		chunks: [],

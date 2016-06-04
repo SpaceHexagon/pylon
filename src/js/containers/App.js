@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 // UI Containers
-//import ProductsContainer from './ProductsContainer'
-//import CartContainer from './CartContainer'
 
 // UI Components
 import Menu from '../ui/menu.js';
